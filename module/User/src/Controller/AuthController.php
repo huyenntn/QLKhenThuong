@@ -1,4 +1,6 @@
 <?php
+use My\Auth\Adapter;
+use Zend\Authentication\AuthenticationService;
 
 class AuthController extends Zend_Controller_Action
 {

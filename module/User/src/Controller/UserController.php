@@ -11,13 +11,18 @@ namespace User\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use User\Model\UserTable;
-use Zend\Authentication\Adapter\DbTable\CredentialTreatmentAdapter;
+use Zend\Authentication\AuthenticationService;
 
 include "vendor/autoload.php";
 
 class UserController extends AbstractActionController {
 
     public $userTable;
+    public $authenticate;
+
+    public function getAuthenticate() {
+        return $this->authenticate;
+    }
 
     function __construct(UserTable $userTable) {
         $this->userTable = $userTable;
@@ -105,7 +110,7 @@ class UserController extends AbstractActionController {
     }
 
     public function loginAction() {
-        
+
     }
 
     public function listAction() {
