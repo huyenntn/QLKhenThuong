@@ -1,0 +1,42 @@
+
+<div class="container">
+    <div class="row same-heigh">
+        <div class="col-xs-12 col-sm-6 left same-heigh-col body-login" > 
+            <?php
+            $form->setAttribute('action', $this->url('user', ['action' => 'login', 'acc' => $acc, 'pass' => $pass]));
+            $form->prepare();
+            echo $this->form()->openTag($form);
+            ?>
+            <img style="margin: 0 auto;" src="<?= $this->basePath('img/logo.png') ?>" alt="" class="img-responsive" />
+            <div>
+                <?php
+                echo $this->formRow($form->get('acc'));
+                ?>
+                <span class="glyphicon glyphicon-user"></span>
+            </div>
+
+            <div>
+                <?php
+                echo $this->formRow($form->get('pass'));
+                ?>
+                <span class="glyphicon glyphicon-lock"></span>
+            </div>
+
+            <div>
+                <?php
+                echo $this->formRow($form->get('submit'));
+                ?>
+            </div>
+            <?php
+            echo $this->form()->closeTag();
+            ?>
+
+
+
+
+        </div>
+        <div class="hidden-xs col-sm-6 right same-heigh-col">
+            <img src="<?= $this->basePath('img/115TDH.jpg') ?>" class="img-responsive" alt="" style="width: 100%; max-height: 600px" />
+        </div>
+    </div>
+</div>

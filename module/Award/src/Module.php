@@ -5,7 +5,7 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Application;
+namespace Award;
 
 class Module
 {
@@ -15,6 +15,4 @@ class Module
     {
         return include __DIR__ . '/../config/module.config.php';
     }
-
-
 }

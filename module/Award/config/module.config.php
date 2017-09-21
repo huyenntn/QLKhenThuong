@@ -5,32 +5,32 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace User;
+namespace Award;
 
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
-use Zend\Db\ResultSet\ResultSet;
-use Zend\Db\TableGateway\TableGateway;
-use User\Controller\UserController;
-use User\Modal\UserTable;
+
 return [
     'router' => [
         'routes' => [
-            
-            'user' => [
+            'award' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/user[/:action[/:acc[/:pass]]]',
+                    'route'    => '/award[/:action]',
                     'defaults' => [
-                        'controller' => Controller\UserController::class,
+                        'controller' => Controller\AwardController::class,
                         'action'     => 'index',
                     ],
                 ],
             ],
         ],
     ],
-
+    'controllers' => [
+        'factories' => [
+            Controller\AwardController::class => Controller\Factory\AwardControllerFactory::class,
+        ],
+    ],
     'view_manager' => [
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
@@ -39,7 +39,7 @@ return [
         'exception_template'       => 'error/index',
         'template_map' => [
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'user/index/index' => __DIR__ . '/../view/user/index/index.phtml',
+            'award/index/index' => __DIR__ . '/../view/award/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ],

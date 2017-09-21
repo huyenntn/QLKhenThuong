@@ -3,8 +3,8 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <?= $this->headTitle('Admin')->setSeparator(' - ')->setAutoEscape(false) ?>
-
+        
+        <?= $this->headTitle('Adm')->setSeparator(' - ')->setAutoEscape(false) ?>
         <?= $this->headMeta()
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
             ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
@@ -43,13 +43,13 @@
                 </div>
             </div>
         </nav>
-        <div class="container">
-            <?= $this->content ?>
-            <hr>
+        <?= $this->content ?>
+        <hr>
+        <div class="container"> 
             <footer>
                 <p>&copy; 2005 - <?= date('Y') ?> by Zend Technologies Ltd. All rights reserved.</p>
             </footer>
         </div>
-        <?= $this->inlineScript() ?>
+        
     </body>
 </html>
