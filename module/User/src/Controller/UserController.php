@@ -11,7 +11,6 @@ namespace User\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use User\Model\UserTable;
-use Zend\Authentication\AuthenticationService;
 
 include "vendor/autoload.php";
 
@@ -39,9 +38,11 @@ class UserController extends AbstractActionController {
         $form->get('submit')->setAttribute('class', 'btn btn-danger');
         $request = $this->getRequest();
         if (!$request->isPost()) {
-            return new ViewModel([
+            $viewModel = new ViewModel([
                 'form' => $form
             ]);
+            $viewModel->setTerminal(true);
+            return $viewModel;
         }
 
         $user = new \User\Model\User();
@@ -111,6 +112,39 @@ class UserController extends AbstractActionController {
 
     public function loginAction() {
 
+        $form = new \User\Form\LoginFrom();
+
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            $viewModel = new ViewModel([
+                'form' => $form
+            ]);
+            $viewModel->setTerminal(TRUE);
+            return  $viewModel ;
+        }
+
+        $user = new \User\Model\User();
+        $form->setData($request->getPost());
+
+        if (!$form->isValid()) {
+            exit('not valid');
+        }
+        $user->exchangeArray($form->getData());
+        $acc = $user->acc;
+        $pass = $user->pass;
+
+        $check = $this->userTable->selectByAccAndPass($acc,$pass);
+        if ($check) {
+            return $this->redirect()->toRoute('user', [
+                        'controller' => 'index',
+                        'action' => 'list'
+            ]);
+        } else {
+            return $this->redirect()->toRoute('user', [
+                        'controller' => 'index',
+                        'action' => 'login'
+            ]);
+        }
     }
 
     public function listAction() {

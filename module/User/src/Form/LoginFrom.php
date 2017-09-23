@@ -25,7 +25,6 @@ class LoginFrom extends Form
         $this->add([
             'name' => 'acc',
             'type' => 'text',
-
             'attributes' => [
                 'class' => 'form-control input-lg input-login',
                 'placeholder' => 'Tên đăng nhập',
@@ -34,8 +33,7 @@ class LoginFrom extends Form
         ]);
         $this->add([
             'name' => 'pass',
-            'type' => 'password',
-
+            'type' => 'text',
             'attributes' => [
                 'class' => 'form-control input-lg input-login',
                 'placeholder' => 'Mật khẩu',
@@ -47,7 +45,7 @@ class LoginFrom extends Form
             'type' => 'submit',
             'attributes' => [
                 'class' => 'btn btn-block btn-success btn-lg',
-                'value' => 'Login',
+                'value' => 'Đăng nhập',
                 'id' => 'btnLogin'
             ]
         ]);

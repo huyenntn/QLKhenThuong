@@ -20,7 +20,8 @@
         "zendframework/zend-mvc-i18n": "^1.0",
         "zendframework/zend-form": "^2.10",
         "zendframework/zend-authentication": "^2.5",
-        "zendframework/zend-crypt": "^3.2"
+        "zendframework/zend-crypt": "^3.2",
+        "zendframework/zend-mvc-plugins": "^1.0"
     },
     "autoload": {
         "psr-4": {
