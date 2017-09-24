@@ -28,4 +28,5 @@ return [
     'Application',
     'User',
     'Award',
+    'Auth',
 ];

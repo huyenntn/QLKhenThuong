@@ -47,4 +47,15 @@ return [
             __DIR__ . '/../view',
         ],
     ],
+    'service_manager' => [
+        'aliases' => [
+            // Update this line:
+            Model\PostRepositoryInterface::class => Model\ZendDbSqlRepository::class,
+        ],
+        'factories' => [
+            Model\PostRepository::class => InvokableFactory::class,
+            // Add this line:
+            Model\ZendDbSqlRepository::class => Factory\ZendDbSqlRepositoryFactory::class,
+        ],
+    ],
 ];

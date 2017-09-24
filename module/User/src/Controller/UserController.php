@@ -113,39 +113,7 @@ class UserController extends AbstractActionController {
 
     public function loginAction() {
 
-        $form = new \User\Form\LoginFrom();
-
-        $request = $this->getRequest();
-        if (!$request->isPost()) {
-            $viewModel = new ViewModel([
-                'form' => $form
-            ]);
-            $viewModel->setTerminal(TRUE);
-            return  $viewModel ;
-        }
-
-        $user = new \User\Model\User();
-        $form->setData($request->getPost());
-
-        if (!$form->isValid()) {
-            exit('not valid');
-        }
-        $user->exchangeArray($form->getData());
-        $acc = $user->acc;
-        $pass = $user->pass;
-
-        $check = $this->userTable->selectByAccAndPass($acc,$pass);
-        if ($check) {
-            return $this->redirect()->toRoute('user', [
-                        'controller' => 'index',
-                        'action' => 'list'
-            ]);
-        } else {
-            return $this->redirect()->toRoute('user', [
-                        'controller' => 'index',
-                        'action' => 'login'
-            ]);
-        }
+        
     }
 
     public function listAction() {

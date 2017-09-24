@@ -6,21 +6,22 @@
  * and open the template in the editor.
  */
 
-namespace User\Model;
-
+namespace Auth\Model;
 use RuntimeException;
+use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\TableGateway\TableGatewayInterface;
 
-class UserTable {
+/**
+ * Description of UserRepository
+ *
+ * @author Ngoc
+ */
+class UserRepository {
 
     public $tableGateway;
 
-    public function __construct(TableGatewayInterface $tableGateway) {
+    public function __construct(TableGateway $tableGateway) {
         $this->tableGateway = $tableGateway;
-    }
-
-    public function fetchAllUser() {
-        return $this->tableGateway->select();
     }
 
     public function getUser($id) {
@@ -35,11 +36,33 @@ class UserTable {
         return $row;
     }
 
+    public function deleteUser($id) {
+        return $this->tableGateway->delete(['id' => (int) $id]);
+    }
 
+    public function getTable() {
+        return $this->tableGateway->getTable();
+    }
+
+    public function insert($set) {
+        $this->tableGateway->insert($set);
+        return $this->tableGateway->getLastInsertValue();
+    }
+
+    public function select($where = null) {
+        return $this->tableGateway->select($where);
+    }
+
+    public function update($set, $where = null) {
+        return $this->tableGateway->update($set, $where);
+    }
+
+    public function findAll() {
+        return $this->tableGateway->select();
+    }
 
     public function saveUser(User $user) {
         $data = [
-      
             'acc' => $user->acc,
             'name' => $user->name,
             'pass' => $user->pass,
@@ -53,23 +76,6 @@ class UserTable {
             $this->tableGateway->insert($data);
 //            return $this->getUser($user->id);
         }
-    }
-
-    public function deleteUser($id) {
-        return $this->tableGateway->delete(['id' => (int) $id]);
-    }
-
-    public function selectByAcc($where) {
-        return $this->tableGateway->select($where);
-    }
-
-    public function selectByAccAndPass($acc, $pass) {
-        $resultSet = $this->tableGateway->select()->where(array('acc'=>$acc, 'pass'=>$pass));
-        $row = $resultSet->current();
-        if (!$row) {
-            throw new Exception('No row found');
-        }
-        return $row;
     }
 
 }

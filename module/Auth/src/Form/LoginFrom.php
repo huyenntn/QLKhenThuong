@@ -9,6 +9,8 @@
 namespace Auth\Form;
 
 use Zend\Form\Form;
+use Interop\Container\ContainerInterface;
+use Auth\Form\LoginFilter;
 /**
  * Description of LoginFrom
  *
@@ -16,10 +18,12 @@ use Zend\Form\Form;
  */
 class LoginFrom extends Form
 {
-    public function __construct($name = null) {
-        parent::__construct('auth');
+    public function __construct(ContainerInterface $containerinterface, $name = "login", array $options=[]) {
+        parent::__construct($name,$options);
+        $this->setInputFilter($containerinterface->get(LoginFilter::class));
         $this->setAttribute('method', 'POST');
         $this->setAttribute('role', 'login');
+        $this->setAttribute('action', 'login');
 
 
         $this->add([
@@ -33,7 +37,7 @@ class LoginFrom extends Form
         ]);
         $this->add([
             'name' => 'pass',
-            'type' => 'text',
+            'type' => 'password',
             'attributes' => [
                 'class' => 'form-control input-lg input-login',
                 'placeholder' => 'Mật khẩu',

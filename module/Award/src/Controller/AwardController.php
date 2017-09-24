@@ -15,7 +15,7 @@ use Interop\Container\ContainerInterface;
 class AwardController extends AbstractActionController
 {
     private $container;
-    function __construct(ContainerInterface $container) {
+    function __construct(zz $container) {
         $this->container = $container;
     }
 

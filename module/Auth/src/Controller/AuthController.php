@@ -9,100 +9,79 @@
 namespace Auth\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Form\Annotation\AnnotationBuilder;
+use Auth\Model\UserRepository;
+use Interop\Container\ContainerInterface;
 use Zend\View\Model\ViewModel;
-use Auth\Model\User;
-
 class AuthController extends AbstractActionController {
-
-    protected $form;
-    protected $storage;
-    protected $authservice;
-
-    public function getAuthService() {
-        if (!$this->authservice) {
-            $this->authservice = $this->getServiceLocator()
-                    ->get('AuthService');
-        }
-
-        return $this->authservice;
+    public $containerinterface;
+    public function __construct(ContainerInterface $containerinterface) {
+        $this->containerinterface = $containerinterface;
     }
-
-    public function getSessionStorage() {
-        if (!$this->storage) {
-            $this->storage = $this->getServiceLocator()
-                    ->get('Auth\Model\MyAuthStorage');
-        }
-
-        return $this->storage;
+    public function indexAction() {
+        $alluser = $this->containerinterface->get(UserRepository::class)->findAll();
+        return new ViewModel(['alluser' => $alluser,]);
     }
-
-    public function getForm() {
-        if (!$this->form) {
-            $user = new User();
-            $builder = new AnnotationBuilder();
-            $this->form = $builder->createForm($user);
-        }
-
-        return $this->form;
-    }
-
-    public function loginAction() {
-        //if already login, redirect to success page 
-        if ($this->getAuthService()->hasIdentity()) {
-            return $this->redirect()->toRoute('success');
-        }
-
-        $form = $this->getForm();
-
-        return array(
-            'form' => $form,
-            'messages' => $this->flashmessenger()->getMessages()
-        );
-    }
-
-    public function authenticateAction() {
-        $form = $this->getForm();
-        $redirect = 'login';
-
+    
+    public function addAction() {
+        $form = new \Auth\Form\AddUserForm();
+        $form->get('submit')->setAttribute('class', 'btn btn-danger');
+        $form->get('submit')->setAttribute('value', 'Lưu');
         $request = $this->getRequest();
-        if ($request->isPost()) {
-            $form->setData($request->getPost());
-            if ($form->isValid()) {
-                //check authentication...
-                $this->getAuthService()->getAdapter()
-                        ->setIdentity($request->getPost('username'))
-                        ->setCredential($request->getPost('password'));
-
-                $result = $this->getAuthService()->authenticate();
-                foreach ($result->getMessages() as $message) {
-                    //save message temporary into flashmessenger
-                    $this->flashmessenger()->addMessage($message);
-                }
-
-                if ($result->isValid()) {
-                    $redirect = 'success';
-                    //check if it has rememberMe :
-                    if ($request->getPost('rememberme') == 1) {
-                        $this->getSessionStorage()
-                                ->setRememberMe(1);
-                        //set storage again 
-                        $this->getAuthService()->setStorage($this->getSessionStorage());
-                    }
-                    $this->getAuthService()->getStorage()->write($request->getPost('username'));
-                }
-            }
+        if (!$request->isPost()) {
+            $viewModel = new ViewModel([
+                'form' => $form
+            ]);
+            return $viewModel;
         }
 
-        return $this->redirect()->toRoute($redirect);
+        $user = new \Auth\Model\User();
+        $form->setData($request->getPost());
+
+        if (!$form->isValid()) {
+            exit('not valid');
+        }
+        $user->exchangeArray($form->getData());
+        $this->containerinterface->get(UserRepository::class)->saveUser($user);
+        return $this->redirect()->toRoute('auth');
     }
 
-    public function logoutAction() {
-        $this->getSessionStorage()->forgetMe();
-        $this->getAuthService()->clearIdentity();
-
-        $this->flashmessenger()->addMessage("You've been logged out");
-        return $this->redirect()->toRoute('login');
+    public function editAction() {
+        $id = (int) $this->params()->fromRoute('acc', 0);
+        if ($id == 0) {
+            exit('invalid acc');
+        }
+        try {
+            $user = $this->containerinterface->get(UserRepository::class)->getUser($id);
+        } catch (\Exception $e) {
+            exit('Error with User table');
+        }
+        $form = new \Auth\Form\AddUserForm();
+        $form->get('acc')->setAttribute('type', 'hidden');
+        $form->get('id')->setAttribute('type', 'hidden');
+        $form->get('submit')->setAttribute('value', 'Lưu');
+        $form->bind($user);
+        $request = $this->getRequest();
+        //if not post request
+        if (!$request->isPost()) {
+            return new ViewModel([
+                'form' => $form,
+                'id' => $id
+            ]);
+        }
+        $form->setData($request->getPost());
+        if (!$form->isValid()) {
+            exit('not valid');
+        }
+        $this->containerinterface->get(UserRepository::class)->saveUser($user);
+        return $this->redirect()->toRoute('auth');
     }
 
+    public function deleteAction() {
+        $id = (int) $this->params()->fromRoute('acc', 0);
+        if ($id == 0) {
+            exit('invalid acc');
+        }
+        $this->containerinterface->get(UserRepository::class)->deleteUser($id);
+        return $this->redirect()->toRoute('auth');
+    }
 }

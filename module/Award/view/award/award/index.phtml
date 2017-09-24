@@ -1,1 +1,35 @@
-hjhj
+<?php
+// module/Album/view/album/album/index.phtml:
+
+$title = 'Danh sách loại giải thưởng';
+$this->headTitle($title);
+?>
+
+<meta charset='utf-8'>
+<div class="container">
+    <h3><?php echo $title; ?></h3>
+    <hr>
+    <p style="text-align: right">
+        <a class="btn btn-success"  href="<?php echo $this->url('user',['action' => 'add']); ?>">Thêm mới</a>
+    </p>
+    <table class="table">
+    <thead>
+      <tr>
+        <th>Tên loai</th>
+        <th>Tên</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+        <?php
+        foreach ($awards as $award):
+        ?>
+      <tr>
+          <td><?=$this->escapeHtml($award->awardName)?></td>
+          <td><a class="btn btn-danger" href="<?php echo $this->url('user',['action' => 'edit', 'acc' => $use->id]);?>">Sửa</a>  
+              <a class="btn btn-warning" href="<?php echo $this->url('user',['action' => 'delete', 'acc' => $use->id]);?>">Xóa</a></td>
+      </tr>
+      <?php endforeach; ?>
+    </tbody>
+  </table>
+</div>
