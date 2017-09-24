@@ -10,7 +10,7 @@ $this->headTitle($title);
     <hr>
 </div>
 <?php
-    $form->setAttribute('action',$this->url('user',['action'=>'edit','acc'=>$acc]));
+    $form->setAttribute('action',$this->url('user',['action'=>'edit','acc'=>$id]));
     $form->prepare();
 ?>
 
@@ -21,6 +21,10 @@ $this->headTitle($title);
 <br>
 <?php
     echo $this->formRow($form->get('pass'));
+?>
+<br>
+<?php
+    echo $this->formRow($form->get('id'));
 ?>
 <br>
 <?php

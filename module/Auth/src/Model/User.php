@@ -6,4 +6,11 @@
  * and open the template in the editor.
  */
 
-namespace User\Form;
+namespace Auth\Model;
+
+class User{
+    public $username;
+    public $password;
+    public $rememberme;
+    public $submit;
+}

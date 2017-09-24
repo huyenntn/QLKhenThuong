@@ -36,12 +36,12 @@ class UserController extends AbstractActionController {
     public function addAction() {
         $form = new \User\Form\AddUserForm();
         $form->get('submit')->setAttribute('class', 'btn btn-danger');
+        $form->get('submit')->setAttribute('value', 'Lưu');
         $request = $this->getRequest();
         if (!$request->isPost()) {
             $viewModel = new ViewModel([
                 'form' => $form
             ]);
-            $viewModel->setTerminal(true);
             return $viewModel;
         }
 
@@ -60,25 +60,26 @@ class UserController extends AbstractActionController {
     }
 
     public function editAction() {
-        $acc = (string) $this->params()->fromRoute('acc', null);
-        if ($acc == null) {
+        $id = (int) $this->params()->fromRoute('acc', 0);
+        if ($id == 0) {
             exit('invalid acc');
         }
         try {
-            $user = $this->userTable->getUser($acc);
+            $user = $this->userTable->getUser($id);
         } catch (\Exception $e) {
             exit('Error with User table');
         }
         $form = new \User\Form\AddUserForm();
-        $form->get('submit')->setAttribute('class', 'btn btn-danger');
         $form->get('acc')->setAttribute('type', 'hidden');
+        $form->get('id')->setAttribute('type', 'hidden');
+        $form->get('submit')->setAttribute('value', 'Lưu');
         $form->bind($user);
         $request = $this->getRequest();
         //if not post request
         if (!$request->isPost()) {
             return new ViewModel([
                 'form' => $form,
-                'acc' => $acc
+                'id' => $id
             ]);
         }
         $form->setData($request->getPost());
@@ -93,17 +94,17 @@ class UserController extends AbstractActionController {
     }
 
     public function deleteAction() {
-        $acc = (string) $this->params()->fromRoute('acc', null);
-        if ($acc == null) {
+        $id = (int) $this->params()->fromRoute('acc', 0);
+        if ($id == 0) {
             exit('invalid acc');
         }
         try {
-            $user = $this->userTable->getUser($acc);
+            $user = $this->userTable->getUser($id);
         } catch (\Exception $e) {
             exit('Error with User table');
         }
 
-        $this->userTable->deleteUser($acc);
+        $this->userTable->deleteUser($id);
         return $this->redirect()->toRoute('user', [
                     'controller' => 'index',
                     'action' => 'list'

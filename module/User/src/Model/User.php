@@ -9,12 +9,14 @@ namespace User\Model;
 
 class User
 {
+    public $id;
     public $acc;
     public $name;
     public $pass;
     protected $inputFilter;
     public function exchangeArray(array $data)
     {
+        $this->id = !empty($data['id'])?$data['id']:NULL;
         $this->acc = !empty($data['acc'])?$data['acc']:NULL;
         $this->name = !empty($data['name'])?$data['name']:NULL;
         $this->pass = !empty($data['pass'])?$data['pass']:NULL;
@@ -22,84 +24,12 @@ class User
     public function getArrayCopy()
     {
         return [
+            'id' => $this->id,
             'acc' => $this->acc,
             'name' => $this->name,
             'pass' => $this->pass
         ];
     }
-    function getAcc() {
-        return $this->acc;
-    }
-
-    function getName() {
-        return $this->name;
-    }
-
-    function getPass() {
-        return $this->pass;
-    }
-
-    function setAcc($acc) {
-        $this->acc = $acc;
-    }
-
-    function setName($name) {
-        $this->name = $name;
-    }
-
-    function setPass($pass) {
-        $this->pass = $pass;
-    }
     
-
-
-//     public function getInputFilter(): InputFilterInterface {
-//         if (!$this->inputFilter) {
-//             $inputFilter = new InputFilter();
-//             $factory     = new InputFactory();
-//             $inputFilter->add($factory->createInput(array(
-//                 'name'     => 'acc',
-//                 'required' => true,
-//                 'filters'  => array(
-//                     array('name' => 'StripTags'),
-//                     array('name' => 'StringTrim'),
-//                 ),
-//                 'validators' => array(
-//                     array(
-//                         'name'    => 'StringLength',
-//                         'options' => array(
-//                             'encoding' => 'UTF-8',
-//                             'min'      => 1,
-//                             'max'      => 100,
-//                         ),
-//                     ),
-//                 ),
-//             )));
-//             $inputFilter->add($factory->createInput(array(
-//                 'name'     => 'pass',
-//                 'required' => true,
-//                 'filters'  => array(
-//                     array('name' => 'StripTags'),
-//                     array('name' => 'StringTrim'),
-//                 ),
-//                 'validators' => array(
-//                     array(
-//                         'name'    => 'StringLength',
-//                         'options' => array(
-//                             'encoding' => 'UTF-8',
-//                             'min'      => 1,
-//                             'max'      => 100,
-//                         ),
-//                     ),
-//                 ),
-//             )));
-//             $this->inputFilter = $inputFilter;
-//         }
-//         return $this->inputFilter;
-//     }
-
-//     public function setInputFilter(InputFilterInterface $inputFilter): \Zend\InputFilter\InputFilterAwareInterface {
-        
-//     }
 
 }

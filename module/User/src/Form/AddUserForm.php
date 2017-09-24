@@ -28,7 +28,8 @@ class AddUserForm extends Form
                 'label' => 'Account',
             ],
             'attributes' => [
-                'class' => 'form-control'
+                'class' => 'form-control',
+                'required' => 'required'
             ]
         ]);
         $this->add([
@@ -38,7 +39,8 @@ class AddUserForm extends Form
                 'label' => 'User name',
             ],
             'attributes' => [
-                'class' => 'form-control'
+                'class' => 'form-control',
+                'required' => 'required'
             ]
         ]);
         $this->add([
@@ -48,15 +50,26 @@ class AddUserForm extends Form
                 'label' => 'Password'
             ],
             'attributes' => [
-                'class' => 'form-control'
+                'class' => 'form-control',
+                'required' => 'required'
             ]
         ]);
         $this->add([
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
-                'value' => 'GO',
-                'id' => 'btnLogin'
+                'id' => 'btnLogin',
+                'class' => 'btn btn-success'
+            ]
+        ]);
+        $this->add([
+            'name' => 'id',
+            'type' => 'text',
+            'options' => [
+                'label' => 'ID'
+            ],
+            'attributes' => [
+                'class' => 'form-control'
             ]
         ]);
     }

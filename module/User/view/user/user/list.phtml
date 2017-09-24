@@ -27,7 +27,8 @@ $this->headTitle($title);
       <tr>
           <td><?=$this->escapeHtml($use->acc)  ?></td>
           <td><?=$this->escapeHtml($use->name)  ?></td>
-          <td><a class="btn btn-danger" href="<?php echo $this->url('user',['action' => 'edit', 'acc' => $use->acc]);?>">Sửa</a>  <a class="btn btn-warning" href="<?php echo $this->url('user',['action' => 'delete', 'acc' => $use->acc]);?>">Xóa</a></td>
+          <td><a class="btn btn-danger" href="<?php echo $this->url('user',['action' => 'edit', 'acc' => $use->id]);?>">Sửa</a>  
+              <a class="btn btn-warning" href="<?php echo $this->url('user',['action' => 'delete', 'acc' => $use->id]);?>">Xóa</a></td>
       </tr>
       <?php endforeach; ?>
     </tbody>

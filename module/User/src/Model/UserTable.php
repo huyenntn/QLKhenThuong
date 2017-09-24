@@ -24,52 +24,40 @@ class UserTable {
         return $this->tableGateway->select();
     }
 
-    public function getUser($acc) {
-        $acc = (string) $acc;
-        $rowset = $this->tableGateway->select(['acc' => $acc]);
+    public function getUser($id) {
+        $id = (int) $id;
+        $rowset = $this->tableGateway->select(['id' => $id]);
         $row = $rowset->current();
         if (!$row) {
             throw new RuntimeException(\sprintf(
-                    'Could not find row with identifier %d', $acc
+                    'Could not find row with identifier %d', $id
             ));
         }
         return $row;
     }
 
-    public function getUserByToken($token) {
-        $rowset = $this->tableGateway->select(array('usr_registration_token' => $token));
-        $row = $rowset->current();
-        if (!$row) {
-            throw new \Exception("Could not find row $token");
-        }
-        return $row;
-    }
 
-    public function activateUser($acc) {
-        $data['usr_active'] = 1;
-        $data['usr_email_confirmed'] = 1;
-        $this->tableGateway->update($data, array('acc' => (string) $acc));
-    }
 
     public function saveUser(User $user) {
         $data = [
+      
             'acc' => $user->acc,
             'name' => $user->name,
             'pass' => $user->pass,
         ];
 
-        if ($user->acc) {
+        if ($user->id) {
             $this->tableGateway->update($data, [
                 'acc' => $user->acc
             ]);
         } else {
             $this->tableGateway->insert($data);
-            return $this->getUser($user->acc);
+//            return $this->getUser($user->id);
         }
     }
 
-    public function deleteUser($acc) {
-        return $this->tableGateway->delete(['acc' => (string) $acc]);
+    public function deleteUser($id) {
+        return $this->tableGateway->delete(['id' => (int) $id]);
     }
 
     public function selectByAcc($where) {
