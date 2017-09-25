@@ -6,8 +6,12 @@
  */
 
 namespace Auth;
-use Zend\Router\Http\Segment;
 
+
+use Auth\Controller\Factory\AuthControllerFactory;
+use Auth\Controller\Factory\LoginControllerFactory;
+use Zend\Authentication\AuthenticationService;
+use Zend\Router\Http\Segment;
 return [
     'router' => [
         'routes' => [
@@ -24,7 +28,7 @@ return [
             'login' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/login[/:action[/:acc[/:pass]]]',
+                    'route'    => '/login[/:action[/:id]]',
                     'defaults' => [
                         'controller' => Controller\LoginController::class,
                         'action'     => 'login',
@@ -35,8 +39,13 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            Controller\AuthController::class => Controller\Factory\AuthControllerFactory::class,
-            Controller\LoginController::class => Controller\Factory\LoginControllerFactory::class,
+            Controller\AuthController::class => AuthControllerFactory::class,
+            Controller\LoginController::class => LoginControllerFactory::class,
+        ],
+    ],
+    'service_manager' => [
+        'invokables' => [
+            'my_auth_service' => AuthenticationService::class,
         ],
     ],
     'view_manager' => [

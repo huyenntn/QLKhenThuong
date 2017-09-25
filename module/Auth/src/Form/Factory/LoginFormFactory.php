@@ -7,7 +7,7 @@
  */
 
 namespace Auth\Form\Factory;
-use Auth\Form\LoginFrom;
+use Auth\Form\LoginForm;
 use Interop\Container\ContainerInterface;
 /**
  * Description of LoginFormFactory
@@ -16,6 +16,6 @@ use Interop\Container\ContainerInterface;
  */
 class LoginFormFactory {
     public function __invoke(ContainerInterface $containerinterface) {
-        return new LoginFrom($containerinterface);
+        return new LoginForm($containerinterface);
     }
 }

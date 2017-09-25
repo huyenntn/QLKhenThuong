@@ -8,27 +8,45 @@
 
 namespace Auth;
 
+use Auth\Form\Factory\LoginFilterFactory;
+use Auth\Form\Factory\LoginFormFactory;
+use Auth\Form\LoginFilter;
+use Auth\Form\LoginForm;
+use Auth\Model\Factory\UserRepositoryFactory;
+use Auth\Model\Factory\UserFactory;
+use Auth\Model\User;
+use Auth\Model\UserRepository;
+use Auth\Storage\Authenticate;
+use Auth\Storage\Factory\AuthenticateFactory;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
-
-class Module  implements ConfigProviderInterface, ServiceProviderInterface{
-
-    const VERSION = '3.0.3-dev';
-
-    public function getConfig() {
-        return include __DIR__ . '/../config/module.config.php';
+class Module implements ConfigProviderInterface, ServiceProviderInterface
+{
+    /**
+     * Returns configuration to merge with application configuration
+     *
+     * @return array|\Traversable
+     */
+    public function getConfig()
+    {
+        return include __DIR__.'/../config/module.config.php';
     }
-
-
-    public function getServiceConfig() {
+    /**
+     * Expected to return \Zend\ServiceManager\Config object or array to
+     * seed such an object.
+     *
+     * @return array|\Zend\ServiceManager\Config
+     */
+    public function getServiceConfig()
+    {
         return [
-            'factories' => [
-            Model\User::class => Model\Factory\UserFactory::class,
-            Model\UserRepository::class => Model\Factory\UserRepositoryFactory::class,
-            Form\LoginFrom::class => Form\Factory\LoginFormFactory::class,
-            Form\LoginFilter::class => Form\Factory\LoginFilterFactory::class
+            'factories'=>[
+                LoginForm::class=>LoginFormFactory::class,
+                LoginFilter::class=>LoginFilterFactory::class,
+                User::class=>UserFactory::class,
+                UserRepository::class=>UserRepositoryFactory::class,
+                Authenticate::class=>AuthenticateFactory::class
             ]
         ];
     }
-
 }

@@ -16,7 +16,7 @@ use Auth\Form\LoginFilter;
  *
  * @author Ngoc
  */
-class LoginFrom extends Form
+class LoginForm extends Form
 {
     public function __construct(ContainerInterface $containerinterface, $name = "login", array $options=[]) {
         parent::__construct($name,$options);
