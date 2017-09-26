@@ -33,6 +33,7 @@ class Authenticate {
     {
         $this->getAuthService()->getAdapter()->setIdentity($identity)->setCredential($credential);
         $result = $this->getAuthService()->authenticate();
+        var_dump($result);
         if($result->isValid())
         {
             $columnsToOmit = ['pass'];
@@ -40,6 +41,7 @@ class Authenticate {
             $user->ip_address = $ip_address;
             $user->user_agent = $user_agent;
             $this->storeIdentity($user);
+            
         }
         return $result;
     }

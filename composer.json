@@ -28,7 +28,8 @@
             "Application\\": "module/Application/src/",
             "User\\": "module/User/src/",
             "Award\\": "module/Award/src/",
-            "Auth\\": "module/Auth/src/"
+            "Auth\\": "module/Auth/src/",
+            "Subaward\\": "module/Subaward/src/"
 
         }
     },

@@ -29,4 +29,5 @@ return [
     'User',
     'Award',
     'Auth',
+    'Subaward',
 ];

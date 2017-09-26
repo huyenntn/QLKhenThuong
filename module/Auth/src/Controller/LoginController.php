@@ -12,8 +12,6 @@ use Auth\Form\LoginForm;
 use Auth\Storage\Authenticate;
 use Auth\Storage\Result;
 use Interop\Container\ContainerInterface;
-use Zend\Authentication\AuthenticationService;
-use Zend\Db\Adapter\Adapter;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 class LoginController extends AbstractActionController
@@ -62,8 +60,9 @@ class LoginController extends AbstractActionController
                //CARREGA AS MENSSAGENS COM A CLASS RESULT
                $messagesResult=new Result($result->getCode(),$result->getIdentity());
                //SE VALIDO O USUARIO ENTRA AQUI
-                var_dump($messagesResult);
+
                if ($result->isValid()) {
+                   
                    //AUTHENTICADO COM SUCESSO
                   // $request['message']=$messagesResult->getMessage();
                   // $request['success']=$result->getCode();
