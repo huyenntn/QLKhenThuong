@@ -6,16 +6,17 @@
  * and open the template in the editor.
  */
 
-namespace Award\Controller;
+namespace Subaward\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Interop\Container\ContainerInterface;
-use Award\Model\AwardRepository;
-use Award\Model\Award;
-use Award\Form\AwardForm;
+use Subaward\Model\SubawardRepository;
+use Subaward\Model\Subaward;
+use Subaward\Form\SubawardForm;
 
-class AwardController extends AbstractActionController
+
+class SubawardController extends AbstractActionController
 {
     private $containerinterface;
     function __construct(ContainerInterface $containerinterface) {
@@ -23,14 +24,21 @@ class AwardController extends AbstractActionController
     }
 
     public function indexAction() {
-        $awards = $this->containerinterface->get(AwardRepository::class)->findAll();
-        return new ViewModel(['awards' => $awards,]);
+        $subawards = $this->containerinterface->get(SubawardRepository::class)->JoinfetchAll();
+        
+        return new ViewModel(['subawards' => $subawards,]);
     }
     
     public function addAction() {
-        $form = new AwardForm();
+        $selectOption = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
+        $selectData = [];
+        foreach ($selectOption as $res) {
+             $selectData[$res->id] = $res->awardName;
+        }
+        $form = new SubawardForm();
         $form->get('submit')->setAttribute('class', 'btn btn-danger');
         $form->get('submit')->setAttribute('value', 'Lưu');
+        $form->get('awardId')->setAttribute('options', $selectData);
         $request = $this->getRequest();
         if (!$request->isPost()) {
             $viewModel = new ViewModel([
@@ -39,32 +47,37 @@ class AwardController extends AbstractActionController
             return $viewModel;
         }
 
-        $award = new Award();
+        $subaward = new Subaward();
         $form->setData($request->getPost());
 
         if (!$form->isValid()) {
             exit('not valid');
         }
-        $award->exchangeArray($form->getData());
-        $this->containerinterface->get(AwardRepository::class)->saveRow($award);
-        return $this->redirect()->toRoute('award');
+        $subaward->exchangeArray($form->getData());
+        $this->containerinterface->get(SubawardRepository::class)->saveRow($subaward);
+        return $this->redirect()->toRoute('subaward');
     }
 
     public function editAction() {
         $id = (int) $this->params()->fromRoute('id', 0);
-        
+        $selectOption = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
+        $selectData = [];
+        foreach ($selectOption as $res) {
+             $selectData[$res->id] = $res->awardName;
+        }
         if ($id == 0) {
             exit('invalid');
         }
         try {
-            $award = $this->containerinterface->get(AwardRepository::class)->getRow($id);
+            $subaward = $this->containerinterface->get(SubawardRepository::class)->getRow($id);
         } catch (\Exception $e) {
-            exit('Error');
+            exit('Errorrrrrr');
         }
-        $form = new AwardForm();
+        $form = new SubawardForm();
         $form->get('id')->setAttribute('type', 'hidden');
         $form->get('submit')->setAttribute('value', 'Lưu');
-        $form->bind($award);
+        $form->get('awardId')->setAttribute('options', $selectData);
+        $form->bind($subaward);
         $request = $this->getRequest();
         //if not post request
         if (!$request->isPost()) {
@@ -77,8 +90,9 @@ class AwardController extends AbstractActionController
         if (!$form->isValid()) {
             exit('not valid');
         }
-        $this->containerinterface->get(AwardRepository::class)->saveRow($award);
-        return $this->redirect()->toRoute('award');
+        
+        $this->containerinterface->get(SubawardRepository::class)->saveRow($subaward);
+        return $this->redirect()->toRoute('subaward');
     }
 
     public function deleteAction() {
@@ -86,7 +100,7 @@ class AwardController extends AbstractActionController
         if ($id == 0) {
             exit('invalid');
         }
-        $this->containerinterface->get(AwardRepository::class)->delete($id);
-        return $this->redirect()->toRoute('award');
+        $this->containerinterface->get(SubawardRepository::class)->delete($id);
+        return $this->redirect()->toRoute('subaward');
     }
 }

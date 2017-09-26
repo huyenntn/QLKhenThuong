@@ -6,14 +6,14 @@
  * and open the template in the editor.
  */
 
-namespace Award\Model\Factory;
+namespace Subaward\Model\Factory;
 
 /**
  * Description of AwardFactory
  *
  * @author Ngoc
  */
-class AwardFactory {
+class SubawardFactory {
     public function __invoke(\Interop\Container\ContainerInterface $containerinterface) {
         return new \Award\Model\Award();
     }

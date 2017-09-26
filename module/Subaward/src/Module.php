@@ -5,7 +5,7 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Award;
+namespace Subaward;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
 
@@ -21,8 +21,8 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
     public function getServiceConfig() {
         return [
             'factories'=>[
-                Model\Award::class=> Model\Factory\AwardFactory::class,
-                Model\AwardRepository::class=> Model\Factory\AwardRepositoryFactory::class,
+                Model\Subaward::class=> Model\Factory\SubawardFactory::class,
+                Model\SubawardRepository::class=> Model\Factory\SubawardRepositoryFactory::class,
             ]
         ];
     }

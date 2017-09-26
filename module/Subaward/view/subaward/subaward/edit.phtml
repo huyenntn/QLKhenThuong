@@ -10,7 +10,7 @@ $this->headTitle($title);
     <hr>
 </div>
 <?php
-    $form->setAttribute('action',$this->url('award',['action'=>'edit','id'=>$id]));
+    $form->setAttribute('action',$this->url('subaward',['action'=>'edit','id'=>$id]));
     $form->prepare();
 ?>
 <?php
@@ -20,7 +20,16 @@ $this->headTitle($title);
 <br>
 <?php
     echo $this->form()->openTag($form);
-    echo $this->formRow($form->get('awardName'));
+    echo $this->formRow($form->get('subAwardName'));
+?>
+<br>
+<?php
+    echo $this->form()->openTag($form);
+    echo $this->formRow($form->get('awardId'));
+?>
+<br>
+<?php
+    echo $this->formRow($form->get('institute'));
 ?>
 <br>
 <?php

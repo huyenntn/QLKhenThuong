@@ -11,23 +11,27 @@
  *
  * @author Ngoc
  */
-namespace Award\Model;
+
+namespace Subaward\Model;
+
 use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\TableGateway\TableGateway;
-class AwardRepository extends AbstractTableGateway{
+
+class SubawardRepository extends AbstractTableGateway {
+
     public $tableGateway;
- 
-    public function __construct(TableGateway $tableGateway)
-    {
+
+    public function __construct(TableGateway $tableGateway) {
         $this->tableGateway = $tableGateway;
     }
+
     public function getRow($id) {
         $id = (int) $id;
-        $rowset = $this->tableGateway->select(['id' => $id]);
+        $rowset = $this->tableGateway->select($id);
         $row = $rowset->current();
         if (!$row) {
-            throw new RuntimeException(\sprintf(
+            throw new \Zend\Db\Exception\RuntimeException(\sprintf(
                     'Could not find row with identifier %d', $id
             ));
         }
@@ -59,16 +63,27 @@ class AwardRepository extends AbstractTableGateway{
         return $this->tableGateway->select();
     }
 
-    public function saveRow(Award $award) {
+    public function saveRow(Subaward $subaward) {
+        var_dump($subaward);
         $data = [
-            'awardName' => $award->awardName
+            'subAwardName' => $subaward->subAwardName,
+            'awardId' => $subaward->awardId,
+            'institute' => $subaward->institute,
         ];
-        if ($award->id) {
+        if ($subaward->id) {
             $this->tableGateway->update($data, [
-                'id' => $award->id
+                'id' => $subaward->id
             ]);
         } else {
             $this->tableGateway->insert($data);
         }
     }
+
+    public function JoinfetchAll() {
+        $sqlSelect = $this->tableGateway->getSql()
+                ->select()
+                ->join('award', 'award.id = subaward.awardId', array('awardName'), 'left');
+        return $this->tableGateway->selectWith($sqlSelect);
+    }
+
 }

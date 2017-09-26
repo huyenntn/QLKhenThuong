@@ -5,7 +5,7 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Award;
+namespace Subaward;
 
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
@@ -14,12 +14,12 @@ use Zend\ServiceManager\Factory\InvokableFactory;
 return [
     'router' => [
         'routes' => [
-            'award' => [
+            'subaward' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/award[/:action[/:id]]',
+                    'route'    => '/subaward[/:action[/:id]]',
                     'defaults' => [
-                        'controller' => Controller\AwardController::class,
+                        'controller' => Controller\SubawardController::class,
                         'action'     => 'index',
                     ],
                 ],
@@ -28,7 +28,7 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            Controller\AwardController::class => Controller\Factory\AwardControllerFactory::class,
+            Controller\SubawardController::class => Controller\Factory\SubawardControllerFactory::class,
         ],
     ],
     'view_manager' => [
@@ -39,7 +39,7 @@ return [
         'exception_template'       => 'error/index',
         'template_map' => [
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'award/index/index' => __DIR__ . '/../view/award/index/index.phtml',
+            'subaward/index/index' => __DIR__ . '/../view/subaward/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ],

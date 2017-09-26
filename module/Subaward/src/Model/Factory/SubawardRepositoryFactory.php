@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace Award\Model\Factory;
+namespace Subaward\Model\Factory;
 
 /**
  * Description of AwardRepository
@@ -15,14 +15,15 @@ namespace Award\Model\Factory;
  */
 use Interop\Container\ContainerInterface;
 use Zend\Db\ResultSet\ResultSet;
-use Award\Model\Award;
-use Award\Model\AwardRepository;
+use Subaward\Model\Subaward;
+use Subaward\Model\SubawardRepository;
+
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\AdapterInterface;
-class AwardRepositoryFactory {
+class SubawardRepositoryFactory {
     public function __invoke(ContainerInterface $containerinterfacw) {
         $resultProtype = new ResultSet();
-        $resultProtype->setArrayObjectPrototype(new Award());
-        return new AwardRepository(new TableGateway('award', $containerinterfacw->get(AdapterInterface::class),null,$resultProtype));
+        $resultProtype->setArrayObjectPrototype(new Subaward());
+        return new SubawardRepository(new TableGateway('subaward', $containerinterfacw->get(AdapterInterface::class),null,$resultProtype));
     }
 }

@@ -1,0 +1,47 @@
+<?php
+// module/Album/view/album/album/index.phtml:
+
+$title = 'Danh sách loại khen thưởng';
+$this->headTitle($title);
+?>
+
+<meta charset='utf-8'>
+<div class="container">
+    <h3><?php echo $title; ?></h3>
+    <hr>
+    <p style="text-align: right">
+        <a class="btn btn-success"  href="<?php echo $this->url('subaward', ['action' => 'add']); ?>">Thêm mới</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Hình thức khen thưởng</th>
+                <th>Loại khen thưởng</th>
+                <th>Loại tổ chức</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <?php
+            foreach ($subawards as $item):
+                ?>
+                <tr>
+                    <td><?= $this->escapeHtml($item->subAwardName) ?></td>
+                    <td><?= $this->escapeHtml($item->awardName) ?></td>
+                    <td><?php
+                        if($this->escapeHtml($item->institute)==0){
+                        echo 'Cá nhân';
+
+                        } else if($this->escapeHtml($item->institute)==1){
+                        echo 'Tập thể';
+                        } else {
+                        echo '';
+                        }?></td>
+                    <td><a class="btn btn-danger" href="<?php echo $this->url('subaward', ['action' => 'edit', 'id' => $item->id]); ?>">Sửa</a>  
+                        <a class="btn btn-warning" href="<?php echo $this->url('subaward', ['action' => 'delete', 'id' => $item->id]); ?>">Xóa</a></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
