@@ -28,7 +28,7 @@ class SubawardRepository extends AbstractTableGateway {
 
     public function getRow($id) {
         $id = (int) $id;
-        $rowset = $this->tableGateway->select($id);
+        $rowset = $this->tableGateway->select(['id' => $id]);
         $row = $rowset->current();
         if (!$row) {
             throw new \Zend\Db\Exception\RuntimeException(\sprintf(
@@ -62,9 +62,12 @@ class SubawardRepository extends AbstractTableGateway {
     public function findAll() {
         return $this->tableGateway->select();
     }
+    
+    public function fetchByType($where){
+        return $this->tableGateway->select(['institute' => $where]);
+    }
 
     public function saveRow(Subaward $subaward) {
-        var_dump($subaward);
         $data = [
             'subAwardName' => $subaward->subAwardName,
             'awardId' => $subaward->awardId,

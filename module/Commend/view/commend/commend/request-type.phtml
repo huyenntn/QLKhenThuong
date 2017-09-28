@@ -1,0 +1,16 @@
+<?php
+// module/Album/view/album/album/index.phtml:
+
+$title = 'Chọn loại đối tượng';
+$this->headTitle($title);
+?>
+
+<meta charset='utf-8'>
+<div class="container">
+    <h3><?php echo $title; ?></h3>
+    <hr>
+    <p style="text-align: center;">
+        <a class="btn btn-primary "  href="<?php echo $this->url('commend', ['action' => 'addPersonal','id' => 1]); ?>">Cá nhân</a>
+        <a class="btn btn-info "  href="<?php echo $this->url('commend', ['action' => 'addGroup','id' => 2]); ?>">Tập thể</a>
+    </p>
+</div>

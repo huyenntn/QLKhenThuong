@@ -1,21 +1,18 @@
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Created by PhpStorm.
+ * User: Ale
+ * Date: 29/12/2016
+ * Time: 11:19
  */
 
 namespace Auth\Storage;
 use Zend\Authentication\Storage\Session as SessionStorage;
-/**
- * Description of AuthStorage
- *
- * @author Ngoc
- */
-class AuthStorage extends SessionStorage {
 
+class AuthStorage extends SessionStorage
+{
     protected $session;
+
     /**
      * @param int $rememberMe
      * @param int $time
@@ -25,12 +22,14 @@ class AuthStorage extends SessionStorage {
             $this->session->getManager()->rememberMe($time);
         }
     }
+
     /**
      * Encerra a sessão
      */
     public function forgetMe() {
         $this->session->getManager()->forgetMe();
     }
+
     /**
      * @return O Id Da Sessão
      */
@@ -38,5 +37,4 @@ class AuthStorage extends SessionStorage {
     {
         return $this->session->getManager()->getId();
     }
-
 }

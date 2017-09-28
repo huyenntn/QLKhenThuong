@@ -23,6 +23,9 @@ class AwardController extends AbstractActionController
     }
 
     public function indexAction() {
+        if (!$this->identity()) {
+            return $this->redirect()->toRoute('login');
+        }
         $awards = $this->containerinterface->get(AwardRepository::class)->findAll();
         return new ViewModel(['awards' => $awards,]);
     }

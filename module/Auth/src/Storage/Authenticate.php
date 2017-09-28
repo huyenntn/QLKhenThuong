@@ -33,7 +33,6 @@ class Authenticate {
     {
         $this->getAuthService()->getAdapter()->setIdentity($identity)->setCredential($credential);
         $result = $this->getAuthService()->authenticate();
-        var_dump($result);
         if($result->isValid())
         {
             $columnsToOmit = ['pass'];

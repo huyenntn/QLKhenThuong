@@ -5,36 +5,35 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Subaward;
+namespace Subject;
 
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
-
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\TableGateway\TableGateway;
+use User\Controller\UserController;
+use User\Modal\UserTable;
 return [
     'router' => [
         'routes' => [
-            'subaward' => [
+            
+            'subject' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/subaward[/:action[/:id]]',
+                    'route'    => '/subject[/:action[/:id[/:type]]]',
                     'defaults' => [
-                        'controller' => Controller\SubawardController::class,
+                        'controller' => Controller\SubjectController::class,
                         'action'     => 'index',
                     ],
                 ],
             ],
         ],
     ],
-    'controllers' => [
-        'factories' => [
-            Controller\SubawardController::class => Controller\Factory\SubawardControllerFactory::class,
-        ],
-    ],
+
     'view_manager' => [
         'template_path_stack' => [
             __DIR__ . '/../view',
         ],
     ],
-    
 ];

@@ -18,6 +18,9 @@ class AuthController extends AbstractActionController {
         $this->containerinterface = $containerinterface;
     }
     public function indexAction() {
+        if (!$this->identity()) {
+            return $this->redirect()->toRoute('login');
+        }
         $alluser = $this->containerinterface->get(UserRepository::class)->findAll();
         return new ViewModel(['alluser' => $alluser,]);
     }
