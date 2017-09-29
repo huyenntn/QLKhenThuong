@@ -20,8 +20,13 @@ class CommendController extends AbstractActionController
     }
 
     public function indexAction() {
+        if (!$this->identity()) {
+            return $this->redirect()->toRoute('login');
+        }
         $commends = $this->containerinterface->get(CommendRepository::class)->JoinfetchAll();
-        return new ViewModel(['commends' => $commends,]);
+        $listSubaward = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
+        $this->layout()->setVariable('listSub', $listSubaward);
+        return new ViewModel(['commends' => $commends]);
     }
     
     public function listbytypeAction(){

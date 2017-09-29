@@ -30,7 +30,12 @@ class SubjectController extends AbstractActionController {
     }
 
     public function indexAction() {
+        if (!$this->identity()) {
+            return $this->redirect()->toRoute('login');
+        }
         $type = (int) $this->params()->fromRoute('type', 0);
+        $listSubaward = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
+        $this->layout()->setVariable('listSub', $listSubaward);
         return new ViewModel([
             'subjects' =>  $this->subjectTable->selectByType(['typeS' => $type]),
         ]);

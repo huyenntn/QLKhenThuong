@@ -82,9 +82,10 @@ class SubawardRepository extends AbstractTableGateway {
         }
     }
 
-    public function JoinfetchAll() {
+    public function JoinfetchAll($where) {
         $sqlSelect = $this->tableGateway->getSql()
                 ->select()
+                ->where(['awardId' => $where])
                 ->join('award', 'award.id = subaward.awardId', array('awardName'), 'left');
         return $this->tableGateway->selectWith($sqlSelect);
     }

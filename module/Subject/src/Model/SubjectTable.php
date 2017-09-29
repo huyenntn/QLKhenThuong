@@ -57,7 +57,7 @@ class SubjectTable {
     }
 
     public function selectByType($where) {
-        return $this->tableGateway->select($where);
+        return $this->tableGateway->select(['typeS' => $where]);
     }
 
 

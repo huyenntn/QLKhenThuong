@@ -24,8 +24,13 @@ class SubawardController extends AbstractActionController
     }
 
     public function indexAction() {
-        $subawards = $this->containerinterface->get(SubawardRepository::class)->JoinfetchAll();
-        
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$this->identity()) {
+            return $this->redirect()->toRoute('login');
+        }
+        $listSubaward = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
+        $this->layout()->setVariable('listSub', $listSubaward);
+        $subawards = $this->containerinterface->get(SubawardRepository::class)->JoinfetchAll($id);
         return new ViewModel(['subawards' => $subawards,]);
     }
     

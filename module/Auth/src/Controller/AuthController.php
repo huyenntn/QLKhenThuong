@@ -18,6 +18,8 @@ class AuthController extends AbstractActionController {
         $this->containerinterface = $containerinterface;
     }
     public function indexAction() {
+        $listSubaward = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
+        $this->layout()->setVariable('listSub', $listSubaward);
         if (!$this->identity()) {
             return $this->redirect()->toRoute('login');
         }

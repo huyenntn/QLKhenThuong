@@ -43,7 +43,7 @@ class LoginController extends AbstractActionController {
     public function loginAction() {
         $auth = $this->getAuthenticate();
         if ($auth->hasIdentity()) {
-            return $this->redirect()->toRoute('auth');
+            return $this->redirect()->toRoute('commend');
         }
         $form = $this->containerInterface->get(LoginForm::class);
         if ($this->params()->fromPost()):
@@ -65,7 +65,7 @@ class LoginController extends AbstractActionController {
                     // $request['message']=$messagesResult->getMessage();
                     // $request['success']=$result->getCode();
                     // $request['redirect']="/admin";
-                    return $this->redirect()->toRoute('auth');
+                    return $this->redirect()->toRoute('commend');
                 }
             }
         endif;
