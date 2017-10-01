@@ -10,12 +10,14 @@ namespace Commend\Model;
 
 use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\TableGateway\TableGateway;
+
 /**
  * Description of CommendRepository
  *
  * @author Ngoc
  */
-class CommendRepository extends AbstractTableGateway{
+class CommendRepository extends AbstractTableGateway {
+
     public $tableGateway;
 
     public function __construct(TableGateway $tableGateway) {
@@ -26,21 +28,26 @@ class CommendRepository extends AbstractTableGateway{
         return $this->tableGateway->select();
     }
 
-    public function fetchByType($where){
+    public function fetchByType($where) {
 
-        
+
         $sqlSelect = $this->tableGateway->getSql()
                 ->select()
-                ->join(array('a' => 'subaward'), 'a.id = commend.idSubAward', array('subAwardName','institute'))
+                ->join(array('a' => 'subaward'), 'a.id = commend.idSubAward', array('subAwardName', 'institute'))
                 ->join(array('b' => 'subject'), 'b.idS = commend.idS', array('nameS'))
-                ->join(array('c' => 'award'),'a.awardId = c.id', array('awardName'))
+                ->join(array('c' => 'award'), 'a.awardId = c.id', array('awardName'))
                 ->where(['a.institute' => $where]);
         return $this->tableGateway->selectWith($sqlSelect);
     }
 
     public function getRow($id) {
-        $id = (int) $id;
-        $rowset = $this->tableGateway->select(['idCmd' => $id]);
+        $sqlSelect = $this->tableGateway->getSql()
+                ->select()
+                ->join(array('a' => 'subaward'), 'a.id = commend.idSubAward', array('subAwardName', 'institute'))
+                ->join(array('b' => 'subject'), 'b.idS = commend.idS', array('nameS'))
+                ->join(array('c' => 'award'), 'a.awardId = c.id', array('awardName'))
+                ->where(['idCmd' => $id]);
+        $rowset = $this->tableGateway->selectWith($sqlSelect);
         $row = $rowset->current();
         if (!$row) {
             throw new RuntimeException(\sprintf(
@@ -49,8 +56,6 @@ class CommendRepository extends AbstractTableGateway{
         }
         return $row;
     }
-
-
 
     public function saveRow(Commend $commend) {
         $data = [
@@ -71,16 +76,14 @@ class CommendRepository extends AbstractTableGateway{
     public function delete($id) {
         return $this->tableGateway->delete(['idCmd' => $id]);
     }
-    
+
     public function JoinfetchAll() {
-      $sqlSelect = $this->tableGateway->getSql()
+        $sqlSelect = $this->tableGateway->getSql()
                 ->select()
-                ->join(array('a' => 'subaward'), 'a.id = commend.idSubAward', array('subAwardName','institute'))
+                ->join(array('a' => 'subaward'), 'a.id = commend.idSubAward', array('subAwardName', 'institute'))
                 ->join(array('b' => 'subject'), 'b.idS = commend.idS', array('nameS'))
-                ->join(array('c' => 'award'),'a.awardId = c.id', array('awardName'));
+                ->join(array('c' => 'award'), 'a.awardId = c.id', array('awardName'));
         return $this->tableGateway->selectWith($sqlSelect);
     }
-    
-
 
 }

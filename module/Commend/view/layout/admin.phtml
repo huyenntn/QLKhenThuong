@@ -24,7 +24,9 @@
                 $this->headScript()
                 ->prependFile($this->basePath('js/bootstrap.min.js'))
                 ->prependFile($this->basePath('js/jquery-3.1.0.min.js'))
+                ->prependFile($this->basePath('js/myjs.js'))
         ?>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     </head>
     <body>
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -35,20 +37,42 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a  href="<?= $this->url('home') ?>">
+                    <a  href="<?=
+                    $this->url('commend', [
+                        'action' => 'listbytype',
+                        'id' => '1',
+                    ])
+                    ?>">
                         <img class="navbar-brand" src="<?= $this->basePath('img/logo.png') ?>" style="max-height: 300px;" alt="Zend Framework <?= \Commend\Module::VERSION ?>"/>
                     </a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="<?= $this->url('home') ?>" >Trang chủ</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Kết quả thi đua
+                                <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?=
+                                    $this->url('commend', [
+                                        'action' => 'listbytype',
+                                        'id' => '1',
+                                    ])
+                                    ?>">Cá nhân</a></li>
+                                <li><a href="<?=
+                                    $this->url('commend', [
+                                        'action' => 'listbytype',
+                                        'id' => '2',
+                                    ])
+                                    ?>">Tập thể</a></li>
+                            </ul>
+                        </li>
                         <li class=""><a href="<?= $this->url('award') ?>">Danh mục</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Danh hiệu
                                 <span class="caret"></span></a>
 
                             <ul class="dropdown-menu">
-                                <?php foreach ($this->listSub as $award) {?>
+                                <?php foreach ($this->listSub as $award) { ?>
                                     <li>
                                         <a href="<?=
                                         $this->url('subaward', [
@@ -69,36 +93,17 @@
                                     $this->url('subject', [
                                         'action' => 'index',
                                         'id' => '1',
-                                        
                                     ])
                                     ?>">Cá nhân</a></li>
                                 <li><a href="<?=
                                     $this->url('subject', [
                                         'action' => 'index',
                                         'id' => '2',
-                                        
                                     ])
                                     ?>">Tập thể</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Kết quả thi đua
-                                <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="<?=
-                                    $this->url('commend', [
-                                        'action' => 'listbytype',
-                                        'id' => '1',
-                                    ])
-                                    ?>">Cá nhân</a></li>
-                                <li><a href="<?=
-                                    $this->url('commend', [
-                                        'action' => 'listbytype',
-                                        'id' => '2',
-                                    ])
-                                    ?>">Tập thể</a></li>
-                            </ul>
-                        </li>
+
                         <li class=""><a href="<?= $this->url('auth') ?>">Quản lý người dùng</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">

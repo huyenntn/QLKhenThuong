@@ -10,8 +10,9 @@ namespace Subject\Model;
 
 use RuntimeException;
 use Zend\Db\TableGateway\TableGatewayInterface;
+use Zend\Db\TableGateway\AbstractTableGateway;
 
-class SubjectTable {
+class SubjectTable extends AbstractTableGateway {
 
     public $tableGateway;
 

@@ -71,7 +71,6 @@ class SubawardForm extends Form {
             'options' => [
                 'label' => 'Loại tổ chức',
                 'value_options' => [
-                    '3' => 'Không',
                     '1' => 'Cá nhân',
                     '2' => 'Tập thể',
                 ]

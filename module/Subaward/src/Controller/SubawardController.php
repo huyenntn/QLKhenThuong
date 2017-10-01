@@ -30,11 +30,15 @@ class SubawardController extends AbstractActionController
         }
         $listSubaward = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
         $this->layout()->setVariable('listSub', $listSubaward);
+        
         $subawards = $this->containerinterface->get(SubawardRepository::class)->JoinfetchAll($id);
-        return new ViewModel(['subawards' => $subawards,]);
+        return new ViewModel(['subawards' => $subawards,'idAward' => $id,]);
     }
     
     public function addAction() {
+        $listSubaward = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
+        $this->layout()->setVariable('listSub', $listSubaward);
+        $id = (int) $this->params()->fromRoute('id', 0);
         $selectOption = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
         $selectData = [];
         foreach ($selectOption as $res) {
@@ -44,23 +48,29 @@ class SubawardController extends AbstractActionController
         $form->get('submit')->setAttribute('class', 'btn btn-danger');
         $form->get('submit')->setAttribute('value', 'Lưu');
         $form->get('awardId')->setAttribute('options', $selectData);
+        $form->get('awardId')->setAttribute('value', $id);
+
         $request = $this->getRequest();
         if (!$request->isPost()) {
             $viewModel = new ViewModel([
-                'form' => $form
+                'form' => $form,
             ]);
+            
             return $viewModel;
         }
 
         $subaward = new Subaward();
         $form->setData($request->getPost());
-
+        
         if (!$form->isValid()) {
             exit('not valid');
         }
         $subaward->exchangeArray($form->getData());
         $this->containerinterface->get(SubawardRepository::class)->saveRow($subaward);
-        return $this->redirect()->toRoute('subaward');
+        return $this->redirect()->toRoute('subaward', [
+                                            'action' => 'index',
+                                            'id' => $subaward->awardId,
+                                        ]);
     }
 
     public function editAction() {
@@ -97,7 +107,10 @@ class SubawardController extends AbstractActionController
         }
         
         $this->containerinterface->get(SubawardRepository::class)->saveRow($subaward);
-        return $this->redirect()->toRoute('subaward');
+        return $this->redirect()->toRoute('subaward', [
+                                            'action' => 'index',
+                                            'id' => $subaward->awardId,
+                                        ]);
     }
 
     public function deleteAction() {
@@ -105,7 +118,16 @@ class SubawardController extends AbstractActionController
         if ($id == 0) {
             exit('invalid');
         }
+        try {
+            $subaward = $this->containerinterface->get(SubawardRepository::class)->getRow($id);
+        } catch (\Exception $e) {
+            exit('Errorrrrrr');
+        }
+        
         $this->containerinterface->get(SubawardRepository::class)->delete($id);
-        return $this->redirect()->toRoute('subaward');
+        return $this->redirect()->toRoute('subaward', [
+                                            'action' => 'index',
+                                            'id' => $subaward->awardId,
+                                        ]);
     }
 }

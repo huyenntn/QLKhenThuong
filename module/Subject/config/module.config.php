@@ -30,7 +30,11 @@ return [
             ],
         ],
     ],
-
+    'controllers' => [
+        'factories' => [
+            Controller\SubjectController::class => Controller\Factory\SubjectControllerFactory::class,
+        ],
+    ],
     'view_manager' => [
         'template_path_stack' => [
             __DIR__ . '/../view',

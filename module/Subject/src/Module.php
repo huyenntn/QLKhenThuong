@@ -12,7 +12,7 @@ use Zend\Db\TableGateway\TableGateway;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 
 
-class Module implements ConfigProviderInterface
+class Module implements ConfigProviderInterface, \Zend\ModuleManager\Feature\ServiceProviderInterface
 {
     const VERSION = '3.0.3-dev';
 
@@ -24,31 +24,12 @@ class Module implements ConfigProviderInterface
     public function getServiceConfig() {
         return [
             'factories' => [
-                Model\SubjectTable::class => function($container) {
-                    $tableGateway = $container->get(Model\SubjectTableGateway::class);
-                    return new Model\SubjectTable($tableGateway);
-                },
-                Model\SubjectTableGateway::class => function ($container) {
-                    $dbAdapter = $container->get(AdapterInterface::class);
-                    $resultSetPrototype = new ResultSet();
-                    $resultSetPrototype->setArrayObjectPrototype(new Model\Subject());
-                    return new TableGateway('subject', $dbAdapter, null, $resultSetPrototype);
-                },
-            ],
+                Model\Subject::class => Model\Factory\Subjec::class,
+                Model\SubjectTable::class => Model\Factory\SubjectTableFactory::class,
+            ]
         ];
     }
 
-    public function getControllerConfig()
-    {
-        return [
-            'factories' => [
-                Controller\SubjectController::class => function($container) {
-                    return new Controller\SubjectController(
-                        $container->get(Model\SubjectTable::class)
-                    );
-                },
-            ],
-        ];
-    }
+    
 
 }

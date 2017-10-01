@@ -6,15 +6,15 @@
  * and open the template in the editor.
  */
 
-namespace Subaward\Model\Factory;
+namespace Subject\Controller\Factory;
 
 /**
- * Description of AwardFactory
+ * Description of SubjectControllerFactory
  *
  * @author Ngoc
  */
-class SubawardFactory {
+class SubjectControllerFactory {
     public function __invoke(\Interop\Container\ContainerInterface $containerinterface) {
-        return new \Subaward\Model\Subaward();
+        return new \Subject\Controller\SubjectController($containerinterface);
     }
 }

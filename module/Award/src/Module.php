@@ -11,7 +11,7 @@ namespace Award;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
 
-class Module implements ConfigProviderInterface, ServiceProviderInterface {
+class Module implements ConfigProviderInterface {
 
     const VERSION = '3.0.3-dev';
 
@@ -27,6 +27,8 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface {
             ]
         ];
     }
+    
+    
 
 
 }

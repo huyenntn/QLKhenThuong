@@ -10,7 +10,7 @@ $this->headTitle($title);
     <h3><?php echo $title; ?></h3>
     <hr>
     <p style="text-align: right">
-        <a class="btn btn-success"  href="<?php echo $this->url('commend', ['action' => 'requestType']); ?>">Thêm mới</a>
+        <a class="btn btn-success"  href="<?php echo $this->url('commend', ['action' => 'add', 'id' => $type]); ?>">Thêm mới</a>
     </p>
     <table class="table">
         <thead>
