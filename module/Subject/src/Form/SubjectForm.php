@@ -47,7 +47,7 @@ class SubjectForm extends Form
             'name' => 'typeS',
             'type' => 'select',
             'options' => [
-                'label' => 'Loại tổ chức',
+                'label' => 'Đối tượng',
                 'value_options' => [
                     '1' => 'Cá nhân',
                     '2' => 'Tập thể',
