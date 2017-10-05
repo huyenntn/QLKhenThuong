@@ -7,7 +7,7 @@ namespace Subject\Model;
  */
 
 
-class Subject
+class Subject 
 {
     public $idS;
     public $nameS;

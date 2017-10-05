@@ -30,6 +30,6 @@ class Module implements ConfigProviderInterface, \Zend\ModuleManager\Feature\Ser
         ];
     }
 
-    
+   
 
 }

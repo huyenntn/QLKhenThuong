@@ -517,4 +517,7 @@ nav.sidebar, .main{
       padding: 0;
       line-height: 20px;
   }
-  
+  .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover{
+      background-color: #68b604;
+      border-color: #68b604;
+  }

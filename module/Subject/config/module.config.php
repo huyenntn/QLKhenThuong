@@ -22,7 +22,7 @@ return [
             'subject' => [
                 'type' => Segment::class,
                 'options' => [
-                    'route' => '/subject[/:action[/:id[/:type[page/:page]]]]',
+                    'route' => '/subject[/:action[/:id[/:type[/:page]]]]',
                     'defaults' => [
                         'controller' => Controller\SubjectController::class,
                         'action' => 'index',
@@ -42,6 +42,6 @@ return [
         ],
         'strategies' => [
             'ViewJsonStrategy',
-        ]
+        ],
     ],
 ];

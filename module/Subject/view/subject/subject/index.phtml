@@ -22,7 +22,7 @@ $this->headTitle($title);
         </thead>
         <tbody>
             <?php
-            foreach ($subjects as $subject):
+            foreach ($this->paginator as $subject):
                 ?>
                 <tr>
                     <td><?= $this->escapeHtml($subject->nameS) ?></td>
@@ -34,5 +34,21 @@ $this->headTitle($title);
             <?php endforeach; ?>
         </tbody>
     </table>
+
+    <?php
+    // add at the end of the file after the table
+    echo $this->paginationControl(
+            // the paginator object
+            $this->paginator,
+            // the scrolling style
+            'sliding',
+            // the partial to use to render the control
+            'subject/partials/paginator.phtml',
+            // the route to link to when a user clicks a control link
+            array(
+                'type' => $type,
+            )
+    );
+    ?>
 
 </div>

@@ -29,12 +29,16 @@ class SubjectController extends AbstractActionController {
         $id = (int) $this->params()->fromRoute('id', 0);
         $listSubaward = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
         $this->layout()->setVariable('listSub', $listSubaward);
-        $subjects = $this->containerinterface->get(\Subject\Model\SubjectTable::class)->selectByType($id);
-        return new ViewModel([
-            'subjects' => $subjects,
+        $paginator = $this->containerinterface->get(\Subject\Model\SubjectTable::class)->selectByType($id,true);
+        // set the current page to what has been passed in query string, or to 1 if none set
+        $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+        // set the number of items per page to 10
+        $paginator->setItemCountPerPage(10);
+
+        return new ViewModel(array(
+            'paginator' => $paginator,
             'type' => $id,
-        ]);
-        
+        ));
     }
 
     public function addAction() {
@@ -61,11 +65,11 @@ class SubjectController extends AbstractActionController {
         }
         $subject->exchangeArray($form->getData());
         $this->containerinterface->get(\Subject\Model\SubjectTable::class)->saveRow($subject);
-        
-        return $this->redirect()->toRoute('subject',[
-                                            'action' => 'index',
-                                            'id' => $subject->typeS,
-                                        ]);
+
+        return $this->redirect()->toRoute('subject', [
+                    'action' => 'index',
+                    'id' => $subject->typeS,
+        ]);
     }
 
     public function editAction() {
@@ -82,7 +86,7 @@ class SubjectController extends AbstractActionController {
         $form = new SubjectForm();
         $form->get('idS')->setAttribute('type', 'hidden');
         $form->get('submit')->setAttribute('value', 'Lưu');
-        
+
         $form->bind($subject);
         $form->get('typeS')->setAttribute('type', 'hidden');
         $request = $this->getRequest();
