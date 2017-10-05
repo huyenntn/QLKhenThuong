@@ -29,6 +29,7 @@ class SubjectForm extends Form
             ],
             'attributes' => [
                 'class' => 'form-control',
+                'id' => 'nameS',
                 'required' => 'required'
             ]
         ]);
@@ -40,7 +41,8 @@ class SubjectForm extends Form
             ],
             'attributes' => [
                 'class' => 'form-control',
-                'required' => 'required'
+                'required' => 'required',
+                'id' => 'email'
             ]
         ]);
         $this->add([
@@ -55,7 +57,8 @@ class SubjectForm extends Form
             ],
             'attributes' => [
                 'class' => 'form-control',
-                'required' => 'required'
+                'required' => 'required',
+                'id' => 'typeS'
             ]
         ]);
         $this->add([

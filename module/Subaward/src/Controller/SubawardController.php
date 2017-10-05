@@ -14,7 +14,8 @@ use Interop\Container\ContainerInterface;
 use Subaward\Model\SubawardRepository;
 use Subaward\Model\Subaward;
 use Subaward\Form\SubawardForm;
-
+use Zend\View\Model\JsonModel;
+use Zend\Json\Encoder;
 
 class SubawardController extends AbstractActionController
 {
@@ -25,14 +26,21 @@ class SubawardController extends AbstractActionController
 
     public function indexAction() {
         $id = (int) $this->params()->fromRoute('id', 0);
-        if (!$this->identity()) {
-            return $this->redirect()->toRoute('login');
+        $sj = $this->containerinterface->get(SubawardRepository::class)->JoinfetchAll($id);
+        $request = $this->getRequest();
+        $query = $request->getQuery();
+        if ($request->isXmlHttpRequest() || $query->get('showJson') == 1) {
+            $jsonData = array();
+            $idx = 0;
+            foreach ($sj as $sampledata) {
+                $jsonData[$idx++] = $sampledata;
+            }
+            $view = new JsonModel($jsonData);
+            $view->setTerminal(true);
+        } else {
+            $view = new ViewModel(['idAward' => $id]);
         }
-        $listSubaward = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
-        $this->layout()->setVariable('listSub', $listSubaward);
-        
-        $subawards = $this->containerinterface->get(SubawardRepository::class)->JoinfetchAll($id);
-        return new ViewModel(['subawards' => $subawards,'idAward' => $id,]);
+        return $view;
     }
     
     public function addAction() {

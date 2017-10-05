@@ -34,6 +34,7 @@ class SubjectController extends AbstractActionController {
             'subjects' => $subjects,
             'type' => $id,
         ]);
+        
     }
 
     public function addAction() {

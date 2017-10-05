@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
  * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
@@ -14,17 +15,17 @@ use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 use User\Controller\UserController;
 use User\Modal\UserTable;
+
 return [
     'router' => [
         'routes' => [
-            
             'subject' => [
-                'type'    => Segment::class,
+                'type' => Segment::class,
                 'options' => [
-                    'route'    => '/subject[/:action[/:id[/:type]]]',
+                    'route' => '/subject[/:action[/:id[/:type[page/:page]]]]',
                     'defaults' => [
                         'controller' => Controller\SubjectController::class,
-                        'action'     => 'index',
+                        'action' => 'index',
                     ],
                 ],
             ],
@@ -39,5 +40,8 @@ return [
         'template_path_stack' => [
             __DIR__ . '/../view',
         ],
+        'strategies' => [
+            'ViewJsonStrategy',
+        ]
     ],
 ];

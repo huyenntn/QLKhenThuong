@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_k1oncaQfEee-JfGb8xLsvA" elementId="org.eclipse.e4.legacy.ide.application" contributorURI="platform:/plugin/org.eclipse.ui.workbench" selectedElement="_k1pOgKQfEee-JfGb8xLsvA" bindingContexts="_k1p1kqQfEee-JfGb8xLsvA">
-  <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;workbench>&#xD;&#xA;&lt;mruList>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;org.eclipse.php.editor&quot; name=&quot;index.phtml&quot; tooltip=&quot;C:\Users\Ngoc\Desktop\LearnZF2Ajax\view\learn-zf2-ajax\index\index.phtml&quot;>&#xD;&#xA;&lt;persistable uri=&quot;file:/C:/Users/Ngoc/Desktop/LearnZF2Ajax/view/learn-zf2-ajax/index/index.phtml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.zend.php.common.welcome.WelcomePageEditorInput&quot; id=&quot;org.zend.customization.welcome.welcomePageEditor&quot; name=&quot;Welcome&quot; tooltip=&quot;Welcome&quot;>&#xD;&#xA;&lt;persistable categories=&quot;true&quot; discoveryFile=&quot;/directory.xml&quot; id=&quot;welcomeBrowser&quot; progressDialogMsg=&quot;Updating Zend Studio&quot; style=&quot;16&quot; url=&quot;file:/D:/Program Files/Zend/Zend Studio 13.0.0/plugins/com.zend.php.ui_13.0.0.v20150925-1108/resources/welcome/index-zend-studio-10-welcome-page.html&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;/mruList>&#xD;&#xA;&lt;/workbench>"/>
+  <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;workbench>&#xD;&#xA;&lt;mruList>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;org.eclipse.php.editor&quot; name=&quot;index.phtml&quot; tooltip=&quot;C:\Users\Ngoc\AppData\Local\Temp\Rar$DIa0.039\index.phtml&quot;>&#xD;&#xA;&lt;persistable uri=&quot;file:/C:/Users/Ngoc/AppData/Local/Temp/Rar$DIa0.039/index.phtml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;org.eclipse.php.editor&quot; name=&quot;index.phtml&quot; tooltip=&quot;C:\Users\Ngoc\Desktop\LearnZF2Ajax\view\learn-zf2-ajax\index\index.phtml&quot;>&#xD;&#xA;&lt;persistable uri=&quot;file:/C:/Users/Ngoc/Desktop/LearnZF2Ajax/view/learn-zf2-ajax/index/index.phtml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.zend.php.common.welcome.WelcomePageEditorInput&quot; id=&quot;org.zend.customization.welcome.welcomePageEditor&quot; name=&quot;Welcome&quot; tooltip=&quot;Welcome&quot;>&#xD;&#xA;&lt;persistable categories=&quot;true&quot; discoveryFile=&quot;/directory.xml&quot; id=&quot;welcomeBrowser&quot; progressDialogMsg=&quot;Updating Zend Studio&quot; style=&quot;16&quot; url=&quot;file:/D:/Program Files/Zend/Zend Studio 13.0.0/plugins/com.zend.php.ui_13.0.0.v20150925-1108/resources/welcome/index-zend-studio-10-welcome-page.html&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;/mruList>&#xD;&#xA;&lt;/workbench>"/>
   <tags>activeSchemeId:org.eclipse.ui.defaultAcceleratorConfiguration</tags>
   <tags>ModelMigrationProcessor.001</tags>
   <children xsi:type="basic:TrimmedWindow" xmi:id="_k1pOgKQfEee-JfGb8xLsvA" elementId="IDEWindow" contributorURI="platform:/plugin/org.eclipse.ui.workbench" selectedElement="_l3xZ46QfEee-JfGb8xLsvA" x="52" y="52" width="1024" height="768">
@@ -86,9 +86,8 @@
           <tags>persp.newWizSC:org.zend.php.framework.ui.wizards.NewZendItemWizard</tags>
           <tags>persp.actionSet:org.zend.php.framework.ZendToolActionSet</tags>
           <tags>persp.viewSC:org.zend.php.server.ui.views.ServersView</tags>
-          <children xsi:type="basic:PartSashContainer" xmi:id="_mPeIMKQfEee-JfGb8xLsvA" selectedElement="_mPeIMaQfEee-JfGb8xLsvA" horizontal="true">
+          <children xsi:type="basic:PartSashContainer" xmi:id="_mPeIMKQfEee-JfGb8xLsvA" selectedElement="_mPeINKQfEee-JfGb8xLsvA" horizontal="true">
             <children xsi:type="basic:PartStack" xmi:id="_mPeIMaQfEee-JfGb8xLsvA" elementId="topLeft" containerData="2200" selectedElement="_mPeIMqQfEee-JfGb8xLsvA">
-              <tags>active</tags>
               <children xsi:type="advanced:Placeholder" xmi:id="_mPeIMqQfEee-JfGb8xLsvA" elementId="org.eclipse.php.ui.explorer" ref="_mPBcbqQfEee-JfGb8xLsvA"/>
               <children xsi:type="advanced:Placeholder" xmi:id="_mPeIM6QfEee-JfGb8xLsvA" elementId="org.eclipse.rse.ui.view.systemView" ref="_mPbr8KQfEee-JfGb8xLsvA"/>
             </children>
@@ -135,17 +134,24 @@
       <tags>categoryTag:Help</tags>
     </sharedElements>
     <sharedElements xsi:type="advanced:Area" xmi:id="_mOuhUKQfEee-JfGb8xLsvA" elementId="org.eclipse.ui.editorss" selectedElement="_mOuhUaQfEee-JfGb8xLsvA">
-      <children xsi:type="basic:PartStack" xmi:id="_mOuhUaQfEee-JfGb8xLsvA" elementId="org.eclipse.e4.primaryDataStack">
+      <children xsi:type="basic:PartStack" xmi:id="_mOuhUaQfEee-JfGb8xLsvA" elementId="org.eclipse.e4.primaryDataStack" selectedElement="_ItXWwKllEeewgKMv4_ckYQ">
         <tags>org.eclipse.e4.primaryDataStack</tags>
         <tags>EditorStack</tags>
+        <tags>active</tags>
+        <children xsi:type="basic:Part" xmi:id="_ItXWwKllEeewgKMv4_ckYQ" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="index.phtml" iconURI="platform:/plugin/org.eclipse.php.ui/icons/full/obj16/phpfile.png" closeable="true">
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.php.editor&quot; name=&quot;index.phtml&quot; partName=&quot;index.phtml&quot; title=&quot;index.phtml&quot; tooltip=&quot;C:\Users\Ngoc\AppData\Local\Temp\Rar$DIa0.039\index.phtml&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; uri=&quot;file:/C:/Users/Ngoc/AppData/Local/Temp/Rar$DIa0.039/index.phtml&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;0&quot; selectionTopPixel=&quot;0&quot;/>&#xD;&#xA;&lt;/editor>"/>
+          <tags>Editor</tags>
+          <tags>org.eclipse.php.editor</tags>
+          <tags>removeOnHide</tags>
+          <tags>active</tags>
+          <tags>activeOnClose</tags>
+        </children>
       </children>
     </sharedElements>
     <sharedElements xsi:type="basic:Part" xmi:id="_mPBcbqQfEee-JfGb8xLsvA" elementId="org.eclipse.php.ui.explorer" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="PHP Explorer" iconURI="platform:/plugin/org.eclipse.php.ui/icons/full/obj16/php_explorer.png" tooltip="" closeable="true">
       <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view group_libraries=&quot;1&quot; isWindowWorkingSet=&quot;false&quot; layout=&quot;1&quot; linkWithEditor=&quot;0&quot; rootMode=&quot;1&quot; workingSetName=&quot;&quot;>&#xD;&#xA;&lt;customFilters userDefinedPatternsEnabled=&quot;false&quot;>&#xD;&#xA;&lt;xmlDefinedFilters>&#xD;&#xA;&lt;child filterId=&quot;org.eclipse.php.ui.explorer.NonScriptProjectsFilter&quot; isEnabled=&quot;false&quot;/>&#xD;&#xA;&lt;child filterId=&quot;org.eclipse.php.ui.explorer.SMFileFilter&quot; isEnabled=&quot;false&quot;/>&#xD;&#xA;&lt;child filterId=&quot;org.eclipse.php.ui.explorer.LibraryFilter&quot; isEnabled=&quot;false&quot;/>&#xD;&#xA;&lt;child filterId=&quot;org.eclipse.php.ui.explorer.NonPublicFilter&quot; isEnabled=&quot;false&quot;/>&#xD;&#xA;&lt;child filterId=&quot;org.eclipse.php.ui.explorer.PHPHTMLFilter&quot; isEnabled=&quot;false&quot;/>&#xD;&#xA;&lt;child filterId=&quot;org.eclipse.php.ui.explorer.ClosedProjectsFilter&quot; isEnabled=&quot;false&quot;/>&#xD;&#xA;&lt;child filterId=&quot;org.eclipse.php.ui.explorer.FieldsFilter&quot; isEnabled=&quot;false&quot;/>&#xD;&#xA;&lt;child filterId=&quot;org.eclipse.php.ui.explorer.NonScriptElementFilter&quot; isEnabled=&quot;false&quot;/>&#xD;&#xA;&lt;child filterId=&quot;org.eclipse.php.ui.explorer.RSEProjectFilter&quot; isEnabled=&quot;true&quot;/>&#xD;&#xA;&lt;child filterId=&quot;org.eclipse.php.ui.explorer.NonFrameworkProjectsFilter&quot; isEnabled=&quot;false&quot;/>&#xD;&#xA;&lt;child filterId=&quot;org.eclipse.php.ui.explorer.EmptyPackageFilter&quot; isEnabled=&quot;false&quot;/>&#xD;&#xA;&lt;child filterId=&quot;org.eclipse.php.ui.explorer.EmptyInnerPackageFilter&quot; isEnabled=&quot;false&quot;/>&#xD;&#xA;&lt;child filterId=&quot;org.eclipse.php.ui.explorer.DotFilesFilter&quot; isEnabled=&quot;true&quot;/>&#xD;&#xA;&lt;child filterId=&quot;org.eclipse.php.ui.explorer.ContainMembersFilter&quot; isEnabled=&quot;false&quot;/>&#xD;&#xA;&lt;child filterId=&quot;org.eclipse.php.ui.explorer.NonSharedProjectsFilter&quot; isEnabled=&quot;false&quot;/>&#xD;&#xA;&lt;child filterId=&quot;org.eclipse.php.ui.explorer.ContainedLibraryFilter&quot; isEnabled=&quot;false&quot;/>&#xD;&#xA;&lt;child filterId=&quot;org.eclipse.php.ui.explorer.UseStatementFilter&quot; isEnabled=&quot;true&quot;/>&#xD;&#xA;&lt;/xmlDefinedFilters>&#xD;&#xA;&lt;/customFilters>&#xD;&#xA;&lt;/view>"/>
       <tags>View</tags>
       <tags>categoryTag:PHP Tools</tags>
-      <tags>active</tags>
-      <tags>activeOnClose</tags>
       <menus xmi:id="_mdOQUKQfEee-JfGb8xLsvA" elementId="org.eclipse.php.ui.explorer">
         <tags>ViewMenu</tags>
         <tags>menuContribution:menu</tags>
@@ -219,7 +225,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_l_hnsKQfEee-JfGb8xLsvA" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_l_rYt6QfEee-JfGb8xLsvA" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" enabled="false" command="_k4yCN6QfEee-JfGb8xLsvA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_Hq_TwKllEeewgKMv4_ckYQ" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_k4yCN6QfEee-JfGb8xLsvA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_l_hnsaQfEee-JfGb8xLsvA" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -240,7 +246,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_l_hntaQfEee-JfGb8xLsvA" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_l_rYwaQfEee-JfGb8xLsvA" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_k4w0K6QfEee-JfGb8xLsvA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_Hq_TyqllEeewgKMv4_ckYQ" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_k4w0K6QfEee-JfGb8xLsvA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_l_hntqQfEee-JfGb8xLsvA" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>

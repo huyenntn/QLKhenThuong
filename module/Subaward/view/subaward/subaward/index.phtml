@@ -12,36 +12,40 @@ $this->headTitle($title);
     <p style="text-align: right">
         <a class="btn btn-success"  href="<?php echo $this->url('subaward', ['action' => 'add', 'id' => $idAward]); ?>">Thêm mới</a>
     </p>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Danh hiệu</th>
-                <th>Danh mục</th>
-                <th>Đối tượng</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-
-            <?php
-            foreach ($subawards as $item):
-                ?>
-                <tr>
-                    <td><?= $this->escapeHtml($item->subAwardName) ?></td>
-                    <td><?= $this->escapeHtml($item->awardName) ?></td>
-                    <td><?php
-                        if($this->escapeHtml($item->institute)==1){
-                        echo 'Cá nhân';
-
-                        } else if($this->escapeHtml($item->institute)==2){
-                        echo 'Tập thể';
-                        } else {
-                        echo '';
-                        }?></td>
-                    <td><a class="btn btn-danger" href="<?php echo $this->url('subaward', ['action' => 'edit', 'id' => $item->id]); ?>">Sửa</a>  
-                        <a class="btn btn-warning" href="<?php echo $this->url('subaward', ['action' => 'delete', 'id' => $item->id]); ?>">Xóa</a></td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
+    <table class = "table"> 
+        <tbody id = "list"> 
+        </tbody> 
     </table>
 </div>
+
+<script language = "javascript">
+    $(document).ready(function () {
+        $.ajax({
+            url: '/subaward/index/'.$idAward,
+            type: 'POST',
+            dataType: 'json',
+            async: true,
+            success: function (data, status) {
+                var e = $('<tr><th>Danh hiệu</th><th>Danh mục</th><th>Đối tượng</th><th></th></tr>');
+                $('#list').html('');
+                $('#list').append(e);
+                for (i = 0; i < data.length; i++) {
+                    subaward = data[i];
+                    idvalue = subaward['id'];
+                    urledit = "/subaward/edit/".idvalue;
+                    var e = $('<tr><td id = "id" style="display: none"><td id = "name"></td><td id = "awardname"></td><td id = "institute"></td><td id = "btnedit"></td></tr>');
+                    $('#id', e).html(subaward['id']);
+                    $('#name', e).html(subaward['subAwardName']);
+                    $('#awardname', e).html(subaward['awardName']);
+                    subaward['institute'] == 1 ? $('#institute', e).html('Cá nhân') : $('#institute', e).html('Tập thể');
+                    $('#btnedit', e).html("<a class='btn btn-danger' href='/subaward/edit/"+subaward['id']+"'>Sửa</a> | <a class='btn btn-warning' href='/subaward/delete/"+subaward['id']+"'>Xóa</a>");
+                    $('#list').append(e);
+                }
+
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                alert('Ajax request failed.');
+            }
+        });
+    });
+</script>

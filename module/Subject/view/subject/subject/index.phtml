@@ -1,6 +1,5 @@
 <?php
 // module/Album/view/album/album/index.phtml:
-
 $title = 'Danh sách cá nhân/tập thể';
 $this->headTitle($title);
 ?>
@@ -10,29 +9,30 @@ $this->headTitle($title);
     <h3><?php echo $title; ?></h3>
     <hr>
     <p style="text-align: right">
-        <a class="btn btn-success"  href="<?php echo $this->url('subject',['action' => 'add','id' => $type]); ?>">Thêm mới</a>
+        <a class="btn btn-success"  href="<?php echo $this->url('subject', ['action' => 'add', 'id' => $type]); ?>">Thêm mới</a>
     </p>
     <table class="table">
-    <thead>
-      <tr>
-        <th>Họ tên cá nhân/Tập thể</th>
-        <th>Email</th>
-        <th>Đối tượng</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-        <?php
-        foreach ($subjects as $subject):
-        ?>
-      <tr>
-          <td><?=$this->escapeHtml($subject->nameS)  ?></td>
-           <td><?=$this->escapeHtml($subject->email)  ?></td>
-          <td><?=$this->escapeHtml($subject->typeS)==1? 'Cá nhân':'Tập thể'  ?></td>
-          <td><a class="btn btn-danger" href="<?php echo $this->url('subject',['action' => 'edit', 'id' => $subject->idS]);?>">Sửa</a>  
-              <a class="btn btn-warning" href="<?php echo $this->url('subject',['action' => 'delete', 'id' => $subject->idS]);?>">Xóa</a></td>
-      </tr>
-      <?php endforeach; ?>
-    </tbody>
-  </table>
+        <thead>
+            <tr>
+                <th>Họ tên cá nhân/Tập thể</th>
+                <th>Email</th>
+                <th>Đối tượng</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            foreach ($subjects as $subject):
+                ?>
+                <tr>
+                    <td><?= $this->escapeHtml($subject->nameS) ?></td>
+                    <td><?= $this->escapeHtml($subject->email) ?></td>
+                    <td><?= $this->escapeHtml($subject->typeS) == 1 ? 'Cá nhân' : 'Tập thể' ?></td>
+                    <td><a class="btn btn-danger" href="<?php echo $this->url('subject', ['action' => 'edit', 'id' => $subject->idS]); ?>">Sửa</a>  
+                        <a class="btn btn-warning" href="<?php echo $this->url('subject', ['action' => 'delete', 'id' => $subject->idS]); ?>">Xóa</a></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
 </div>
