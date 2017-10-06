@@ -42,13 +42,16 @@ class SubjectController extends AbstractActionController {
     }
 
     public function addAction() {
+        if (!$this->identity()) {
+            return $this->redirect()->toRoute('login');
+        }
         $listSubaward = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
         $this->layout()->setVariable('listSub', $listSubaward);
-        $id = (int) $this->params()->fromRoute('id', 0);
+        $type = (int) $this->params()->fromQuery('type', 0);
         $form = new SubjectForm();
         $form->get('submit')->setAttribute('class', 'btn btn-danger');
         $form->get('submit')->setAttribute('value', 'Lưu');
-        $form->get('typeS')->setAttribute('value', $id);
+        $form->get('typeS')->setAttribute('value', $type);
         $form->get('typeS')->setAttribute('type', 'hidden');
         $request = $this->getRequest();
         if (!$request->isPost()) {
@@ -73,10 +76,10 @@ class SubjectController extends AbstractActionController {
     }
 
     public function editAction() {
-        $id = (int) $this->params()->fromRoute('id', 0);
-
+        $id = (int) $this->params()->fromQuery('id', 0);
+      
         if ($id == 0) {
-            exit('invalid acc');
+            exit('invalid accccc');
         }
         try {
             $subject = $this->containerinterface->get(\Subject\Model\SubjectTable::class)->getRow($id);
@@ -102,11 +105,14 @@ class SubjectController extends AbstractActionController {
             exit('not valid');
         }
         $this->containerinterface->get(\Subject\Model\SubjectTable::class)->saveRow($subject);
-        return $this->redirect()->toRoute('subject');
+        return $this->redirect()->toRoute('subject', [
+                    'action' => 'index',
+                    'id' => $subject->typeS,
+        ]);
     }
 
     public function deleteAction() {
-        $id = (int) $this->params()->fromRoute('id', 0);
+        $id = (int) $this->params()->fromQuery('id', 0);
         if ($id == 0) {
             exit('invalid acc');
         }
@@ -117,7 +123,10 @@ class SubjectController extends AbstractActionController {
         }
 
         $this->containerinterface->get(\Subject\Model\SubjectTable::class)->delete($id);
-        return $this->redirect()->toRoute('subject');
+        return $this->redirect()->toRoute('subject', [
+                    'action' => 'index',
+                    'id' => $subject->typeS,
+        ]);
     }
 
     public function selectByType() {

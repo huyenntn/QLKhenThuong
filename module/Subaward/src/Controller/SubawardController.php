@@ -26,6 +26,11 @@ class SubawardController extends AbstractActionController
     }
 
     public function indexAction() {
+        if (!$this->identity()) {
+            return $this->redirect()->toRoute('login');
+        }
+        $listSubaward = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
+        $this->layout()->setVariable('listSub', $listSubaward);
         $id = (int) $this->params()->fromRoute('id', 0);
         $sj = $this->containerinterface->get(SubawardRepository::class)->JoinfetchAll($id);
         $request = $this->getRequest();
@@ -45,6 +50,9 @@ class SubawardController extends AbstractActionController
     }
     
     public function addAction() {
+        if (!$this->identity()) {
+            return $this->redirect()->toRoute('login');
+        }
         $listSubaward = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
         $this->layout()->setVariable('listSub', $listSubaward);
         $id = (int) $this->params()->fromRoute('id', 0);

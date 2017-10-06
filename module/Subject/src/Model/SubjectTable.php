@@ -11,10 +11,7 @@ namespace Subject\Model;
 use RuntimeException;
 use Zend\Db\TableGateway\TableGatewayInterface;
 use Zend\Db\TableGateway\AbstractTableGateway;
-use Zend\Db\Sql\Select;
-use Zend\Paginator\Adapter\DbSelect;
 use Zend\Paginator\Paginator;
-use Zend\Db\TableGateway\TableGateway;
 use Zend\Paginator\Adapter\DbTableGateway;
 
 class SubjectTable extends AbstractTableGateway {
@@ -26,7 +23,7 @@ class SubjectTable extends AbstractTableGateway {
     }
 
     public function fetchAll($paginated = false) {
-        
+        return $this->tableGateway->select();
     }
 
     public function getRow($id) {
@@ -64,11 +61,15 @@ class SubjectTable extends AbstractTableGateway {
 
     public function selectByType($where, $paginated = false) {
         if ($paginated) {
-            $dbTableGatewayAdapter = new DbTableGateway($this->tableGateway,['typeS' => $where], null, null, null);
-            $paginator = new Paginator($dbTableGatewayAdapter);
+            $sql = $this->tableGateway->getSql();
+            $select = $sql->select();
+            $select->where(['typeS' => $where]);
+            $select->order('nameS ASC');
+            $adapter = new \Zend\Paginator\Adapter\DbSelect($select, $sql);
+            $paginator = new \Zend\Paginator\Paginator($adapter);
             return $paginator;
         }
-        
+
         $sqlSelect = $this->tableGateway->getSql()
                 ->select()
                 ->where(['typeS' => $where]);

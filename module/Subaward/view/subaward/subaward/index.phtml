@@ -13,6 +13,14 @@ $this->headTitle($title);
         <a class="btn btn-success"  href="<?php echo $this->url('subaward', ['action' => 'add', 'id' => $idAward]); ?>">Thêm mới</a>
     </p>
     <table class = "table"> 
+        <thead>
+            <tr>
+                <th>Danh hiệu</th>
+                <th>Danh mục</th>
+                <th>Đối tượng</th>
+                <th></th>
+            </tr>
+        </thead>
         <tbody id = "list"> 
         </tbody> 
     </table>
@@ -26,9 +34,7 @@ $this->headTitle($title);
             dataType: 'json',
             async: true,
             success: function (data, status) {
-                var e = $('<tr><th>Danh hiệu</th><th>Danh mục</th><th>Đối tượng</th><th></th></tr>');
                 $('#list').html('');
-                $('#list').append(e);
                 for (i = 0; i < data.length; i++) {
                     subaward = data[i];
                     idvalue = subaward['id'];

@@ -10,7 +10,7 @@ $this->headTitle($title);
     <hr>
 </div>
 <?php
-    $form->setAttribute('action',$this->url('subject',['action'=>'edit','id'=>$id]));
+    $form->setAttribute('action','/subject/edit?id='.$id);
     $form->prepare();
 ?>
 

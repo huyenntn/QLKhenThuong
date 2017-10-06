@@ -32,16 +32,47 @@ class CommendController extends AbstractActionController {
     }
 
     public function listbytypeAction() {
-        $type = (int) $this->params()->fromRoute('id', 0);
-
-        $commends = $this->containerinterface->get(CommendRepository::class)->fetchByType($type);
+        if (!$this->identity()) {
+            return $this->redirect()->toRoute('login');
+        }
         $listSubaward = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
         $this->layout()->setVariable('listSub', $listSubaward);
-        return new ViewModel(['commends' => $commends, 'type'=>$type]);
+        $selectOptionSubject = $this->containerinterface->get(CommendRepository::class)->getListYear();
+        $selectDataSubject = [];
+
+        foreach ($selectOptionSubject as $resS) {
+            $selectDataSubject[$resS->year] = $resS->year;
+        }
+        $form = new \Commend\Form\CommendForm();
+        $yearselect = 0;
+        $form->get('selectYear')->setAttribute('options', $selectDataSubject);
+
+
+        $type = (int) $this->params()->fromRoute('id', 0);
+
+        $paginator = $this->containerinterface->get(CommendRepository::class)->fetchByType($type, $yearselect, true);
+        // set the current page to what has been passed in query string, or to 1 if none set
+        $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+        // set the number of items per page to 10
+        $paginator->setItemCountPerPage(10);
+
+        
+        
+        
+        return new ViewModel(array(
+            'paginator' => $paginator,
+            'type' => $type,
+            'form' => $form,
+        ));
     }
 
     public function addAction() {
-        $type = (int) $this->params()->fromRoute('id', 0);
+        $typeObj = (int) $this->params()->fromRoute('type', 0);
+        if ($typeObj == 0) {
+            $type = (int) $this->params()->fromQuery('type', 0);
+        } else {
+            $type = (int) $this->params()->fromRoute('type', 0);
+        }
         $selectOptionSubject = $this->containerinterface->get(\Subject\Model\SubjectTable::class)->selectByType($type);
         $selectDataSubject = [];
         foreach ($selectOptionSubject as $resS) {
@@ -68,7 +99,7 @@ class CommendController extends AbstractActionController {
             ]);
             return $viewModel;
         }
-       
+
         $commend = new \Commend\Model\Commend();
         $form->setData($request->getPost());
 
@@ -77,14 +108,18 @@ class CommendController extends AbstractActionController {
         }
 
         $commend->exchangeArray($form->getData());
-        
+
         $this->containerinterface->get(CommendRepository::class)->saveRow($commend);
-        return $this->redirect()->toRoute('commend', ['action'=> 'listbytype','id'=>$type]);
+        return $this->redirect()->toRoute('commend', ['action' => 'listbytype', 'id' => $type, 'type' => '1', 'page' => '1']);
     }
 
     public function editAction() {
-        $id = (int) $this->params()->fromRoute('id', 0);
-
+        if ($this->params()->fromRoute('type', 0) == 0) {
+            $type = (int) $this->params()->fromQuery('type', 0);
+        } else {
+            $type = $this->params()->fromRoute('type', 0);
+        }
+        $id = (int) $this->params()->fromQuery('id', 0);
         if ($id == 0) {
             exit('invalid');
         }
@@ -117,11 +152,11 @@ class CommendController extends AbstractActionController {
         if (!$request->isPost()) {
             return new ViewModel([
                 'form' => $form,
-                'id' => $id
+                'id' => $id,
+                'type' => $type
             ]);
         }
         $form->setData($request->getPost());
-        var_dump($form);
         if (!$form->isValid()) {
             exit('not valid');
         }
@@ -142,7 +177,7 @@ class CommendController extends AbstractActionController {
             exit('invalid');
         }
         $this->containerinterface->get(CommendRepository::class)->delete($id);
-        return $this->redirect()->toRoute('commend', ['action'=> 'listbytype','id'=>$type]);
+        return $this->redirect()->toRoute('commend', ['action' => 'listbytype', 'id' => $type]);
     }
 
     public function requestTypeAction() {

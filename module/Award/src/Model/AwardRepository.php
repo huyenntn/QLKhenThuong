@@ -56,6 +56,12 @@ class AwardRepository extends AbstractTableGateway{
     }
 
     public function findAll() {
+        $sqlSelect = $this->tableGateway->getSql()
+                ->select()
+                ->order('id ASC');
+        return $this->tableGateway->selectWith($sqlSelect);
+        
+        
         return $this->tableGateway->select();
     }
 
