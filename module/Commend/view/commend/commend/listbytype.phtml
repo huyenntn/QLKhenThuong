@@ -9,9 +9,18 @@ $this->headTitle($title);
 <div class="container">
     <h3><?php echo $title; ?></h3>
     <hr>
-    <p style="text-align: right">
-        <a class="btn btn-success"  href="<?php echo $this->url('commend', ['action' => 'add', 'type' => $type]); ?>">Thêm mới</a>
-    </p>
+    <div align="right">
+        <span>
+            <?php
+            $form->setAttribute('action', '/commend/listbytype');
+            $form->prepare();
+            echo $this->form()->openTag($form);
+            echo $this->formRow($form->get('selectYear'));
+            echo $this->form()->closeTag();
+            ?>
+        </span>
+            <a class="btn btn-success"  href="<?php echo $this->url('commend', ['action' => 'add', 'type' => $type]); ?>">Thêm mới</a>
+    </div>
     <table class="table">
         <thead>
             <tr>
@@ -26,6 +35,21 @@ $this->headTitle($title);
         <tbody id = "list"> 
         </tbody>
     </table>
+    <?php
+    // add at the end of the file after the table
+    echo $this->paginationControl(
+            // the paginator object
+            $this->paginator,
+            // the scrolling style
+            'sliding',
+            // the partial to use to render the control
+            'commend/partials/paginator.phtml',
+            // the route to link to when a user clicks a control link
+            array(
+        'type' => $type,
+            )
+    );
+    ?>
 </div>
 <script language = "javascript">
     $(document).ready(function () {
@@ -47,7 +71,7 @@ $this->headTitle($title);
                     $('#awardName', e).html(commend['awardName']);
                     commend['institute'] == 1 ? $('#institute', e).html('Cá nhân') : $('#institute', e).html('Tập thể');
                     $('#year', e).html(commend['year']);
-                    $('#btnedit', e).html("<a class='btn btn-danger' href='/commend/edit?type="+commend['institute']+"&id="+commend['idCmd']+"'>Sửa</a> | <a class='btn btn-warning' href='/commend/delete?id="+commend['idCmd']+"'>Xóa</a>");
+                    $('#btnedit', e).html("<a class='btn btn-danger' href='/commend/edit?type=" + commend['institute'] + "&id=" + commend['idCmd'] + "'>Sửa</a> | <a class='btn btn-warning' href='/commend/delete?id=" + commend['idCmd'] + "'>Xóa</a>");
                     $('#list').append(e);
                 }
 
@@ -56,5 +80,43 @@ $this->headTitle($title);
                 alert('Ajax request failed.');
             }
         });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#selectYear").change(function () {
+            var yearselect = $(this).val();
+            if (yearselect !== "") {
+                $.ajax({
+                    url: '/commend/listbytype/'.$type,
+                    type: 'POST',
+                    data: {'year': yearselect},
+                    dataType: 'json',
+                    async: true,
+                    success: function (data, status) {
+                        $('#list').html('');
+                        for (i = 0; i < data.length; i++) {
+                            commend = data[i];
+                            idvalue = commend['idCmd'];
+                            urledit = "/commend/edit/".idvalue;
+                            var e = $('<tr><td id = "idCmd" style="display: none"><td id = "nameS"></td><td id = "subAwardName"><td id = "awardName"></td><td id = "institute"></td><td id = "year"></td><td id = "btnedit"></td></tr>');
+                            $('#idCmd', e).html(commend['idCmd']);
+                            $('#nameS', e).html(commend['nameS']);
+                            $('#subAwardName', e).html(commend['subAwardName']);
+                            $('#awardName', e).html(commend['awardName']);
+                            commend['institute'] == 1 ? $('#institute', e).html('Cá nhân') : $('#institute', e).html('Tập thể');
+                            $('#year', e).html(commend['year']);
+                            $('#btnedit', e).html("<a class='btn btn-danger' href='/commend/edit?type=" + commend['institute'] + "&id=" + commend['idCmd'] + "'>Sửa</a> | <a class='btn btn-warning' href='/commend/delete?id=" + commend['idCmd'] + "'>Xóa</a>");
+                            $('#list').append(e);
+                        }
+
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        alert('Ajax request failed.');
+                    }
+                });
+            }
+        });
+
     });
 </script>

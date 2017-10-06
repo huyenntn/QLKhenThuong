@@ -22,6 +22,19 @@ class CommendForm extends Form{
         $this->setAttribute('id','form');
         
         $this->add([
+            'name' => 'selectYear',
+            'type' => 'select',
+            'options' => [
+                'empty_option'  => '--- Xem theo năm ---',
+                'onchange' => 'this.form.submit();'
+            ],
+            'attributes' => [
+                'class' => 'form-control',
+                'required' => 'required',
+                'id' => 'selectYear',
+            ]
+        ]);
+        $this->add([
             'name' => 'idCmd',
             'type' => 'text',
             'options' => [

@@ -28,7 +28,20 @@ class CommendRepository extends AbstractTableGateway {
         return $this->tableGateway->select();
     }
 
-    public function fetchByType($where1,$where2) {
+    public function fetchByTypeAndYear($where1,$where2,$paginated = false) {
+        if ($paginated) {
+            $sql = $this->tableGateway->getSql();
+            $select = $sql->select();
+            $select->join(array('a' => 'subaward'), 'a.id = commend.idSubAward', array('subAwardName', 'institute'));
+            $select->join(array('b' => 'subject'), 'b.idS = commend.idS', array('nameS'));
+            $select->join(array('c' => 'award'), 'a.awardId = c.id', array('awardName'));
+            $select->where(['a.institute' => $where1, 'year'=>$where2]);
+            $select->order('subAwardName ASC');
+            $adapter = new \Zend\Paginator\Adapter\DbSelect($select, $sql);
+            $paginator = new \Zend\Paginator\Paginator($adapter);
+            return $paginator;
+        }
+
         $sqlSelect = $this->tableGateway->getSql()
                 ->select()
                 ->join(array('a' => 'subaward'), 'a.id = commend.idSubAward', array('subAwardName', 'institute'))
@@ -38,7 +51,31 @@ class CommendRepository extends AbstractTableGateway {
                 ->order('subAwardName ASC');
         return $this->tableGateway->selectWith($sqlSelect);
     }
+    
+    public function fetchByType($where,$paginated = false) {
+        if ($paginated) {
+            $sql = $this->tableGateway->getSql();
+            $select = $sql->select();
+            $select->join(array('a' => 'subaward'), 'a.id = commend.idSubAward', array('subAwardName', 'institute'));
+            $select->join(array('b' => 'subject'), 'b.idS = commend.idS', array('nameS'));
+            $select->join(array('c' => 'award'), 'a.awardId = c.id', array('awardName'));
+            $select->where(['a.institute' => $where]);
+            $select->order('subAwardName ASC');
+            $adapter = new \Zend\Paginator\Adapter\DbSelect($select, $sql);
+            $paginator = new \Zend\Paginator\Paginator($adapter);
+            return $paginator;
+        }
 
+        $sqlSelect = $this->tableGateway->getSql()
+                ->select()
+                ->join(array('a' => 'subaward'), 'a.id = commend.idSubAward', array('subAwardName', 'institute'))
+                ->join(array('b' => 'subject'), 'b.idS = commend.idS', array('nameS'))
+                ->join(array('c' => 'award'), 'a.awardId = c.id', array('awardName'))
+                ->where(['a.institute' => $where])
+                ->order('subAwardName ASC');
+        return $this->tableGateway->selectWith($sqlSelect);
+    }
+    
     public function getRow($id) {
         $sqlSelect = $this->tableGateway->getSql()
                 ->select()
@@ -82,6 +119,16 @@ class CommendRepository extends AbstractTableGateway {
                 ->join(array('a' => 'subaward'), 'a.id = commend.idSubAward', array('subAwardName', 'institute'))
                 ->join(array('b' => 'subject'), 'b.idS = commend.idS', array('nameS'))
                 ->join(array('c' => 'award'), 'a.awardId = c.id', array('awardName'));
+        return $this->tableGateway->selectWith($sqlSelect);
+    }
+    
+    public function getListYear(){
+        $sqlSelect = $this->tableGateway->getSql()
+                ->select()
+                ->columns(array('year'))
+                ->group('year')
+                ->order('year ASC');
+
         return $this->tableGateway->selectWith($sqlSelect);
     }
 

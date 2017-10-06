@@ -20,7 +20,8 @@ return [
                     'route'    => '/',
                     'defaults' => [
                         'controller' => CommendController::class,
-                        'action'     => 'index',
+                        'action'     => 'listbytype',
+                        'type' => 1,
                     ],
                 ],
             ],

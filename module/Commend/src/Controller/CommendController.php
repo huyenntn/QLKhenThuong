@@ -39,27 +39,55 @@ class CommendController extends AbstractActionController {
         $listSubaward = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
         $this->layout()->setVariable('listSub', $listSubaward);
         $type = (int) $this->params()->fromRoute('type', 0);
-        $commends = $this->containerinterface->get(CommendRepository::class)->fetchByType($type,'2015');
+
         $request = $this->getRequest();
         $query = $request->getQuery();
+
+
+        $selectOptionSubject = $this->containerinterface->get(CommendRepository::class)->getListYear();
+        $selectDataSubject = [];
+
+        foreach ($selectOptionSubject as $resS) {
+            $selectDataSubject[$resS->year] = $resS->year;
+        }
+        $form = new \Commend\Form\CommendForm();
+        $form->get('selectYear')->setAttribute('options', $selectDataSubject);
+        $paginator = $this->containerinterface->get(CommendRepository::class)->fetchByType($type, true);
+        $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+        // set the number of items per page to 10
+        $paginator->setItemCountPerPage(10);
         if ($request->isXmlHttpRequest() || $query->get('showJson') == 1) {
+            $year = $this->request->getPost('year');
+            if ($year) {
+                $paginator = $this->containerinterface->get(CommendRepository::class)->fetchByTypeAndYear($type, $year, true);
+            } else {
+                $paginator = $this->containerinterface->get(CommendRepository::class)->fetchByType($type, true);
+            }
+            $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+            // set the number of items per page to 10
+            $paginator->setItemCountPerPage(10);
             $jsData = array();
             $idx = 0;
-            foreach ($commends as $sampledata) {
+            foreach ($paginator as $sampledata) {
                 $jsData[$idx++] = $sampledata;
             }
             $view = new JsonModel($jsData);
             $view->setTerminal(true);
         } else {
-            $view = new ViewModel(['type' => $type]);
+
+            $view = new ViewModel([
+                'paginator' => $paginator,
+                'type' => $type,
+                'form' => $form,
+            ]);
         }
         return $view;
     }
 
     public function addAction() {
-        if((int) $this->params()->fromRoute('type', 0) == 0){
+        if ((int) $this->params()->fromRoute('type', 0) == 0) {
             $type = (int) $this->params()->fromQuery('type', 0);
-        }else{
+        } else {
             $type = (int) $this->params()->fromRoute('type', 0);
         }
         $selectOptionSubject = $this->containerinterface->get(\Subject\Model\SubjectTable::class)->selectByType($type);
