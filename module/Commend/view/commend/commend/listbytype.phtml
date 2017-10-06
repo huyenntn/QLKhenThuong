@@ -6,47 +6,12 @@ $this->headTitle($title);
 ?>
 
 <meta charset='utf-8'>
-<script type="text/javascript">
-    $(document).ready(function () {
-
-        $("#selectYear").change(function ($type) {
-            var yearselect = $(this).val();
-            if (yearselect !== "") {
-                // you might want to change this
-                var url = "/commend/listbytype/1/1?year="+yearselect;
-                $.getJSON(url, function (data) {
-                    var options = "";
-                    $.each(data, function (key, year) {
-                        options += "<option value='" + key + "'>" + year + "</option>";
-                    });
-                    $("#selectYear").html(options).fadeIn();
-                });
-            }
-        });
-
-    });
-</script>
 <div class="container">
     <h3><?php echo $title; ?></h3>
     <hr>
-
-    <table style="width: 100%; margin-bottom: 20px;">
-        <tr>
-            <td> 
-                <?php
-                $form->setAttribute('action', '/commend/listbytype');
-                $form->prepare();
-                echo $this->form()->openTag($form);
-                echo $this->formRow($form->get('selectYear'));
-                echo $this->form()->closeTag();
-                ?>
-            </td>
-            <td><p style="text-align: right">
-                    <a class="btn btn-success"  href="<?php echo '/commend/add?type=' . $type ?>">Thêm mới</a>
-                </p></td>
-        </tr>
-    </table>
-
+    <p style="text-align: right">
+        <a class="btn btn-success"  href="<?php echo $this->url('commend', ['action' => 'add', 'type' => $type]); ?>">Thêm mới</a>
+    </p>
     <table class="table">
         <thead>
             <tr>
@@ -58,46 +23,38 @@ $this->headTitle($title);
                 <th></th>
             </tr>
         </thead>
-        <tbody>
-
-            <?php
-            foreach ($this->paginator as $item):
-                ?>
-                <tr>
-                    <td><?= $this->escapeHtml($item->nameS) ?></td>
-                    <td><?= $this->escapeHtml($item->subAwardName) ?></td>
-                    <td><?= $this->escapeHtml($item->awardName) ?></td>
-                    <td><?php
-                        if ($this->escapeHtml($item->institute) == 1) {
-                            echo 'Cá nhân';
-                        } else if ($this->escapeHtml($item->institute) == 2) {
-                            echo 'Tập thể';
-                        } else {
-                            echo '';
-                        }
-                        ?></td>
-                    <td><?= $this->escapeHtml($item->year) ?></td>
-                    <td>
-                        <a class="btn btn-danger" href=" <?php echo '/commend/edit?id=' . $item->idCmd . '&type=' . $type ?> ">Sửa</a>  
-                        <a class="btn btn-warning" href="<?php echo '/commend/delete?id=' . $item->idCmd . '&type=' . $type ?>">Xóa</a>  
-                    </td>
-                </tr>
-            <?php endforeach; ?>
+        <tbody id = "list"> 
         </tbody>
     </table>
-    <?php
-    // add at the end of the file after the table
-    echo $this->paginationControl(
-            // the paginator object
-            $this->paginator,
-            // the scrolling style
-            'sliding',
-            // the partial to use to render the control
-            'commend/partials/paginator.phtml',
-            // the route to link to when a user clicks a control link
-            array(
-        'type' => $type,
-            )
-    );
-    ?>
 </div>
+<script language = "javascript">
+    $(document).ready(function () {
+        $.ajax({
+            url: '/commend/listbytype/'.$type,
+            type: 'POST',
+            dataType: 'json',
+            async: true,
+            success: function (data, status) {
+                $('#list').html('');
+                for (i = 0; i < data.length; i++) {
+                    commend = data[i];
+                    idvalue = commend['idCmd'];
+                    urledit = "/commend/edit/".idvalue;
+                    var e = $('<tr><td id = "idCmd" style="display: none"><td id = "nameS"></td><td id = "subAwardName"><td id = "awardName"></td><td id = "institute"></td><td id = "year"></td><td id = "btnedit"></td></tr>');
+                    $('#idCmd', e).html(commend['idCmd']);
+                    $('#nameS', e).html(commend['nameS']);
+                    $('#subAwardName', e).html(commend['subAwardName']);
+                    $('#awardName', e).html(commend['awardName']);
+                    commend['institute'] == 1 ? $('#institute', e).html('Cá nhân') : $('#institute', e).html('Tập thể');
+                    $('#year', e).html(commend['year']);
+                    $('#btnedit', e).html("<a class='btn btn-danger' href='/commend/edit?type="+commend['institute']+"&id="+commend['idCmd']+"'>Sửa</a> | <a class='btn btn-warning' href='/commend/delete?id="+commend['idCmd']+"'>Xóa</a>");
+                    $('#list').append(e);
+                }
+
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                alert('Ajax request failed.');
+            }
+        });
+    });
+</script>

@@ -17,7 +17,7 @@ return [
             'home' => [
                 'type' => Literal::class,
                 'options' => [
-                    'route'    => '/commend/listbytype/1',
+                    'route'    => '/',
                     'defaults' => [
                         'controller' => CommendController::class,
                         'action'     => 'index',
@@ -27,7 +27,7 @@ return [
             'commend' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/commend[/:action[/:id[/:page]]]',
+                    'route'    => '/commend[/:action[/:type[/:id[/:page]]]]',
                     'defaults' => [
                         'controller' => CommendController::class,
                         'action'     => 'index',

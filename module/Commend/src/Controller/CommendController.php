@@ -12,6 +12,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Commend\Model\CommendRepository;
 use Interop\Container\ContainerInterface;
+use Zend\View\Model\JsonModel;
 
 class CommendController extends AbstractActionController {
 
@@ -37,40 +38,28 @@ class CommendController extends AbstractActionController {
         }
         $listSubaward = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
         $this->layout()->setVariable('listSub', $listSubaward);
-        $selectOptionSubject = $this->containerinterface->get(CommendRepository::class)->getListYear();
-        $selectDataSubject = [];
-
-        foreach ($selectOptionSubject as $resS) {
-            $selectDataSubject[$resS->year] = $resS->year;
+        $type = (int) $this->params()->fromRoute('type', 0);
+        $commends = $this->containerinterface->get(CommendRepository::class)->fetchByType($type,'2015');
+        $request = $this->getRequest();
+        $query = $request->getQuery();
+        if ($request->isXmlHttpRequest() || $query->get('showJson') == 1) {
+            $jsData = array();
+            $idx = 0;
+            foreach ($commends as $sampledata) {
+                $jsData[$idx++] = $sampledata;
+            }
+            $view = new JsonModel($jsData);
+            $view->setTerminal(true);
+        } else {
+            $view = new ViewModel(['type' => $type]);
         }
-        $form = new \Commend\Form\CommendForm();
-        $yearselect = 0;
-        $form->get('selectYear')->setAttribute('options', $selectDataSubject);
-
-
-        $type = (int) $this->params()->fromRoute('id', 0);
-
-        $paginator = $this->containerinterface->get(CommendRepository::class)->fetchByType($type, $yearselect, true);
-        // set the current page to what has been passed in query string, or to 1 if none set
-        $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
-        // set the number of items per page to 10
-        $paginator->setItemCountPerPage(10);
-
-        
-        
-        
-        return new ViewModel(array(
-            'paginator' => $paginator,
-            'type' => $type,
-            'form' => $form,
-        ));
+        return $view;
     }
 
     public function addAction() {
-        $typeObj = (int) $this->params()->fromRoute('type', 0);
-        if ($typeObj == 0) {
+        if((int) $this->params()->fromRoute('type', 0) == 0){
             $type = (int) $this->params()->fromQuery('type', 0);
-        } else {
+        }else{
             $type = (int) $this->params()->fromRoute('type', 0);
         }
         $selectOptionSubject = $this->containerinterface->get(\Subject\Model\SubjectTable::class)->selectByType($type);
@@ -110,16 +99,12 @@ class CommendController extends AbstractActionController {
         $commend->exchangeArray($form->getData());
 
         $this->containerinterface->get(CommendRepository::class)->saveRow($commend);
-        return $this->redirect()->toRoute('commend', ['action' => 'listbytype', 'id' => $type, 'type' => '1', 'page' => '1']);
+        return $this->redirect()->toRoute('commend', ['action' => 'listbytype', 'type' => $type]);
     }
 
     public function editAction() {
-        if ($this->params()->fromRoute('type', 0) == 0) {
-            $type = (int) $this->params()->fromQuery('type', 0);
-        } else {
-            $type = $this->params()->fromRoute('type', 0);
-        }
         $id = (int) $this->params()->fromQuery('id', 0);
+        $type = (int) $this->params()->fromQuery('type', 0);
         if ($id == 0) {
             exit('invalid');
         }
@@ -157,6 +142,7 @@ class CommendController extends AbstractActionController {
             ]);
         }
         $form->setData($request->getPost());
+        var_dump($form);
         if (!$form->isValid()) {
             exit('not valid');
         }
@@ -166,7 +152,7 @@ class CommendController extends AbstractActionController {
     }
 
     public function deleteAction() {
-        $id = (int) $this->params()->fromRoute('id', 0);
+        $id = (int) $this->params()->fromQuery('id', 0);
         try {
             $commend = $this->containerinterface->get(CommendRepository::class)->getRow($id);
         } catch (\Exception $e) {
@@ -177,7 +163,7 @@ class CommendController extends AbstractActionController {
             exit('invalid');
         }
         $this->containerinterface->get(CommendRepository::class)->delete($id);
-        return $this->redirect()->toRoute('commend', ['action' => 'listbytype', 'id' => $type]);
+        return $this->redirect()->toRoute('commend', ['action' => 'listbytype', 'type' => $type]);
     }
 
     public function requestTypeAction() {

@@ -10,8 +10,6 @@ namespace Commend\Model;
 
 use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\TableGateway\TableGateway;
-use Zend\Paginator\Paginator;
-use Zend\Paginator\Adapter\DbTableGateway;
 
 /**
  * Description of CommendRepository
@@ -26,30 +24,18 @@ class CommendRepository extends AbstractTableGateway {
         $this->tableGateway = $tableGateway;
     }
 
-    public function fetchAll($paginated = false) {
+    public function fetchAll() {
         return $this->tableGateway->select();
     }
 
-    public function fetchByType($where1, $where2, $paginated = false) {
-        if ($paginated) {
-            $sql = $this->tableGateway->getSql();
-            $select = $sql->select();
-            $select->join(array('a' => 'subaward'), 'a.id = commend.idSubAward', array('subAwardName', 'institute'));
-            $select->join(array('b' => 'subject'), 'b.idS = commend.idS', array('nameS'));
-            $select->join(array('c' => 'award'), 'a.awardId = c.id', array('awardName'));
-            $select->where(['a.institute' => $where1, 'year' => $where2]);
-            $select->order('nameS ASC');
-            $adapter = new \Zend\Paginator\Adapter\DbSelect($select, $sql);
-            $paginator = new \Zend\Paginator\Paginator($adapter);
-            return $paginator;
-        }
-
+    public function fetchByType($where1,$where2) {
         $sqlSelect = $this->tableGateway->getSql()
                 ->select()
                 ->join(array('a' => 'subaward'), 'a.id = commend.idSubAward', array('subAwardName', 'institute'))
                 ->join(array('b' => 'subject'), 'b.idS = commend.idS', array('nameS'))
                 ->join(array('c' => 'award'), 'a.awardId = c.id', array('awardName'))
-                ->where(['a.institute' => $where]);
+                ->where(['a.institute' => $where1, 'year'=>$where2])
+                ->order('subAwardName ASC');
         return $this->tableGateway->selectWith($sqlSelect);
     }
 
@@ -93,20 +79,9 @@ class CommendRepository extends AbstractTableGateway {
     public function JoinfetchAll() {
         $sqlSelect = $this->tableGateway->getSql()
                 ->select()
-                ->order('year ASC')
                 ->join(array('a' => 'subaward'), 'a.id = commend.idSubAward', array('subAwardName', 'institute'))
                 ->join(array('b' => 'subject'), 'b.idS = commend.idS', array('nameS'))
                 ->join(array('c' => 'award'), 'a.awardId = c.id', array('awardName'));
-        return $this->tableGateway->selectWith($sqlSelect);
-    }
-    
-    public function getListYear(){
-        $sqlSelect = $this->tableGateway->getSql()
-                ->select()
-                ->columns(array('year'))
-                ->group('year')
-                ->order('year ASC');
-
         return $this->tableGateway->selectWith($sqlSelect);
     }
 

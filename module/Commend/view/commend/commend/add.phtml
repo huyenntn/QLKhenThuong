@@ -10,6 +10,7 @@ $this->headTitle($title);
     <hr>
 </div>
 <?php
+    $form->setAttribute('action',$this->url('commend',['action'=>'add','id'=>'1', 'type' => $type]));
     $form->prepare();
 ?>
 <?php
