@@ -37,6 +37,7 @@ class Module implements \Zend\ModuleManager\Feature\BootstrapListenerInterface, 
             }
         }
                 , 100);
+        
     }
 
     public function getServiceConfig() {
@@ -46,6 +47,16 @@ class Module implements \Zend\ModuleManager\Feature\BootstrapListenerInterface, 
                 Model\CommendRepository::class=> Model\Factory\CommendRepositoryFactory::class,
             ]
         ];
+    }
+   
+
+    public function setFormToView($event)
+    {
+        $form = new Form\CommendForm();
+        $viewModel = $event->getViewModel();
+        $viewModel->setVariables(array(
+            'form' => $form,
+        ));
     }
 
 }

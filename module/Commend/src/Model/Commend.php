@@ -21,6 +21,7 @@ class Commend {
     public $subAwardName;
     public $institute;
     public $nameS;
+    public $nameF;
     public $awardName;
     
     public function exchangeArray(array $data)
@@ -32,6 +33,7 @@ class Commend {
         $this->subAwardName = !empty($data['subAwardName'])?$data['subAwardName']:NULL;
         $this->institute = !empty($data['institute'])?$data['institute']:NULL;
         $this->nameS = !empty($data['nameS'])?$data['nameS']:NULL;
+        $this->nameF = !empty($data['nameF'])?$data['nameF']:NULL;
         $this->awardName = !empty($data['awardName'])?$data['awardName']:NULL;
         
     }
@@ -45,6 +47,7 @@ class Commend {
             'subAwardName' => $this->subAwardName,
             'institute' => $this->institute,
             'nameS' => $this->nameS,
+            'nameF' => $this->nameF,
             'awardName' => $this->awardName,
         ];
     }

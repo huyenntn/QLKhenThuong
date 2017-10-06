@@ -1,10 +1,10 @@
 <?php if ($this->pageCount): ?>
-<div style="text-align: center">
+<div style="text-align: right">
         <ul class="pagination">
             <!-- Previous page link -->
             <?php if (isset($this->previous)): ?>
                 <li>
-                    <a href="\commend\index\<?php echo $this->type; ?>?page=<?php echo $this->previous; ?>">
+                    <a href="\commend\listbytype\<?php echo $this->type; ?>?page=<?php echo $this->previous; ?>">
                         <<
                     </a>
                 </li>
@@ -20,7 +20,7 @@
             <?php foreach ($this->pagesInRange as $page): ?>
                 <?php if ($page != $this->current): ?>
                     <li>
-                        <a href="\commend\index\<?php echo $this->type; ?>?page=<?php echo $page; ?>">
+                        <a href="\commend\listbytype\<?php echo $this->type; ?>?page=<?php echo $page; ?>">
                             <?php echo $page; ?>
                         </a>
                     </li>
@@ -34,7 +34,7 @@
             <!-- Next page link -->
             <?php if (isset($this->next)): ?>
                 <li>
-                    <a href="\commend\index\<?php echo $this->type; ?>?page=<?php echo $this->next; ?>">
+                    <a href="\commend\listbytype\<?php echo $this->type; ?>?page=<?php echo $this->next; ?>">
                         >>
                     </a>
                 </li>

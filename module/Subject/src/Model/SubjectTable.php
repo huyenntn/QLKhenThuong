@@ -40,6 +40,7 @@ class SubjectTable extends AbstractTableGateway {
 
     public function saveRow(Subject $subject) {
         $data = [
+            'nameF' => $subject->nameF,
             'nameS' => $subject->nameS,
             'email' => $subject->email,
             'typeS' => $subject->typeS,

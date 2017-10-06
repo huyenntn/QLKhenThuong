@@ -46,21 +46,36 @@ class CommendController extends AbstractActionController {
 
         $selectOptionSubject = $this->containerinterface->get(CommendRepository::class)->getListYear();
         $selectDataSubject = [];
-
+        $selectDataSubject[0] = 'Xóa bộ lọc năm';
         foreach ($selectOptionSubject as $resS) {
             $selectDataSubject[$resS->year] = $resS->year;
         }
+        
+        $selectOptionAward = $this->containerinterface->get(\Subaward\Model\SubawardRepository::class)->fetchByType($type);
+        $selectDataAward = [];
+        $selectDataAward[0] = 'Xóa bộ lọc danh hiệu';
+        foreach ($selectOptionAward as $resAw) {
+            $selectDataAward[$resAw->id] = $resAw->subAwardName;
+        }
+        
         $form = new \Commend\Form\CommendForm();
         $form->get('selectYear')->setAttribute('options', $selectDataSubject);
+        $form->get('selectsubaward')->setAttribute('options', $selectDataAward);
         $paginator = $this->containerinterface->get(CommendRepository::class)->fetchByType($type, true);
         $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
         // set the number of items per page to 10
         $paginator->setItemCountPerPage(10);
         if ($request->isXmlHttpRequest() || $query->get('showJson') == 1) {
             $year = $this->request->getPost('year');
-            if ($year) {
+            $idSub = $this->request->getPost('idSub');
+            if ($year!=0 && $idSub==0) {
                 $paginator = $this->containerinterface->get(CommendRepository::class)->fetchByTypeAndYear($type, $year, true);
-            } else {
+            } else if($year==0 && $idSub!=0){
+                $paginator = $this->containerinterface->get(CommendRepository::class)->fetchByTypeAndSubAward($type, $idSub, true);
+            }else if($year!=0 && $idSub!=0){
+                $paginator = $this->containerinterface->get(CommendRepository::class)->fetchByTypeSubAwardYear($type, $idSub, $year, true);
+            }
+            else {
                 $paginator = $this->containerinterface->get(CommendRepository::class)->fetchByType($type, true);
             }
             $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
@@ -93,7 +108,7 @@ class CommendController extends AbstractActionController {
         $selectOptionSubject = $this->containerinterface->get(\Subject\Model\SubjectTable::class)->selectByType($type);
         $selectDataSubject = [];
         foreach ($selectOptionSubject as $resS) {
-            $selectDataSubject[$resS->idS] = $resS->nameS;
+            $selectDataSubject[$resS->idS] = $resS->nameF.' '.$resS->nameS;
         }
 
         $selectOptionAward = $this->containerinterface->get(\Subaward\Model\SubawardRepository::class)->fetchByType($type);
@@ -144,7 +159,7 @@ class CommendController extends AbstractActionController {
         $selectOptionSubject = $this->containerinterface->get(\Subject\Model\SubjectTable::class)->fetchAll();
         $selectDataSubject = [];
         foreach ($selectOptionSubject as $resS) {
-            $selectDataSubject[$resS->idS] = $resS->nameS;
+            $selectDataSubject[$resS->idS] = $resS->nameF.' '.$resS->nameS;
         }
 
         $selectOptionAward = $this->containerinterface->get(\Subaward\Model\SubawardRepository::class)->findAll();
@@ -194,8 +209,17 @@ class CommendController extends AbstractActionController {
         return $this->redirect()->toRoute('commend', ['action' => 'listbytype', 'type' => $type]);
     }
 
-    public function requestTypeAction() {
+    public function detailAction() {
+        if (!$this->identity()) {
+            return $this->redirect()->toRoute('login');
+        }
+        $listSubaward = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
+        $this->layout()->setVariable('listSub', $listSubaward);
         
+        $id = (int) $this->params()->fromQuery('id', 0);
+        $subject = $this->containerinterface->get(\Subject\Model\SubjectTable::class)->getRow($id);
+        $info = $this->containerinterface->get(CommendRepository::class)->getDetail($id);
+        return new ViewModel(['info' => $info, 'subject'=>$subject]);
     }
 
 }

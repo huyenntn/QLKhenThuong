@@ -22,10 +22,22 @@ class SubjectForm extends Form
         $this->setAttribute('class','col-md-4 col-md-offset-4');
         
         $this->add([
+            'name' => 'nameF',
+            'type' => 'text',
+            'options' => [
+                'label' => 'Họ và tên đệm',
+            ],
+            'attributes' => [
+                'class' => 'form-control',
+                'id' => 'nameF',
+                'required' => 'required'
+            ]
+        ]);
+        $this->add([
             'name' => 'nameS',
             'type' => 'text',
             'options' => [
-                'label' => 'Họ tên cá nhân/Tập thể ',
+                'label' => 'Tên',
             ],
             'attributes' => [
                 'class' => 'form-control',
@@ -66,7 +78,7 @@ class SubjectForm extends Form
             'type' => 'submit',
             'attributes' => [
                 'id' => 'btnLogin',
-                'class' => 'btn btn-success'
+                'class' => 'btn btn-success '
             ]
         ]);
         $this->add([

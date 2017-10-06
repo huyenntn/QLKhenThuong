@@ -521,3 +521,6 @@ nav.sidebar, .main{
       background-color: #68b604;
       border-color: #68b604;
   }
+  .formselect{
+      display: inline-block;
+  }

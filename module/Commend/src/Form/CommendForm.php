@@ -18,14 +18,28 @@ class CommendForm extends Form{
     public function __construct($name = null) {
         parent::__construct('commend');
         $this->setAttribute('method', 'POST');
-        $this->setAttribute('class','col-md-4 col-md-offset-4 form');
+        $this->setAttribute('class','col-md-4 col-md-offset-4 form formselect');
         $this->setAttribute('id','form');
         
+        
+        $this->add([
+            'name' => 'selectsubaward',
+            'type' => 'select',
+            'options' => [
+                'empty_option'  => '--- Lựa chọn danh hiệu ---',
+                'onchange' => 'this.form.submit();'
+            ],
+            'attributes' => [
+                'class' => 'form-control',
+                'required' => 'required',
+                'id' => 'selectsubaward',
+            ]
+        ]);
         $this->add([
             'name' => 'selectYear',
             'type' => 'select',
             'options' => [
-                'empty_option'  => '--- Xem theo năm ---',
+                'empty_option'  => '--- Lựa chọn năm ---',
                 'onchange' => 'this.form.submit();'
             ],
             'attributes' => [
