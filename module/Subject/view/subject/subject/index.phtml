@@ -1,6 +1,6 @@
 <?php
 // module/Album/view/album/album/index.phtml:
-$title = 'Danh sách cá nhân/tập thể';
+$title = $type==1?'Danh sách cá nhân':'Danh sách tập thể';
 $this->headTitle($title);
 ?>
 
@@ -16,7 +16,6 @@ $this->headTitle($title);
             <tr>
                 <th><?php echo $type==1?'Họ tên':'Tập thể'?></th>
                 <th>Email</th>
-                <th>Đối tượng</th>
                 <th></th>
             </tr>
         </thead>
@@ -25,10 +24,9 @@ $this->headTitle($title);
             foreach ($this->paginator as $subject):
                 ?>
                 <tr>
-                    <td><?= $this->escapeHtml($subject->nameF).' '?> <?= $this->escapeHtml($subject->nameS) ?></td>
+                    <td><a href="/commend/detail/<?php echo $subject->typeS?>?id=<?php echo $subject->idS?>"><?= $this->escapeHtml($subject->nameF).' '?> <?= $this->escapeHtml($subject->nameS) ?></a></td>
                     <td><?= $this->escapeHtml($subject->email) ?></td>
-                    <td><?= $this->escapeHtml($subject->typeS) == 1 ? 'Cá nhân' : 'Tập thể' ?></td>
-                    <td><a class="btn btn-danger" href="<?php echo '/subject/edit?id='.$subject->idS?>">Sửa</a>  
+                    <td><a class="btn btn-danger" href="<?php echo '/subject/edit/'.$subject->typeS.'?id='.$subject->idS?>">Sửa</a>  
                         <a class="btn btn-warning" href="<?php echo '/subject/delete?id='.$subject->idS?>">Xóa</a></td>
                 </tr>
             <?php endforeach; ?>

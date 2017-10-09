@@ -94,6 +94,8 @@ form[role=login] > button {
 .form-control {
     padding-left: 20px;
     width: auto;
+    margin-right: 10px;
+    min-width: 300px;
 }
 .form-control + .glyphicon {
     position: absolute;
@@ -524,4 +526,7 @@ nav.sidebar, .main{
   }
   .formselect{
       display: inline-block;
+  }
+  #btnLogin{
+      min-width: 300px;
   }

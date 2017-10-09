@@ -77,5 +77,12 @@ class UserRepository {
 //            return $this->getUser($user->id);
         }
     }
+    
+    public function getUserByAcc($where){
+        $sqlSelect = $this->tableGateway->getSql()
+                ->select()
+                ->where(['acc' => $where]);
+        return $this->tableGateway->selectWith($sqlSelect);
+    }
 
 }

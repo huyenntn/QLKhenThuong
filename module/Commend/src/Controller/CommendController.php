@@ -64,7 +64,7 @@ class CommendController extends AbstractActionController {
         $paginator = $this->containerinterface->get(CommendRepository::class)->fetchByType($type, true);
         $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
         // set the number of items per page to 10
-        $paginator->setItemCountPerPage(10);
+        $paginator->setItemCountPerPage(20);
         if ($request->isXmlHttpRequest() || $query->get('showJson') == 1) {
             $year = $this->request->getPost('year');
             $idSub = $this->request->getPost('idSub');
@@ -80,7 +80,7 @@ class CommendController extends AbstractActionController {
             }
             $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
             // set the number of items per page to 10
-            $paginator->setItemCountPerPage(10);
+            $paginator->setItemCountPerPage(20);
             $jsData = array();
             $idx = 0;
             foreach ($paginator as $sampledata) {
@@ -100,6 +100,11 @@ class CommendController extends AbstractActionController {
     }
 
     public function addAction() {
+        if (!$this->identity()) {
+            return $this->redirect()->toRoute('login');
+        }
+        $listSubaward = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
+        $this->layout()->setVariable('listSub', $listSubaward);
         if ((int) $this->params()->fromRoute('type', 0) == 0) {
             $type = (int) $this->params()->fromQuery('type', 0);
         } else {

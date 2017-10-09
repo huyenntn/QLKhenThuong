@@ -54,7 +54,11 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="<?= $this->url('logout') ?>"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> Admin</a></li>
+                        <li><a href="<?= $this->url('logout') ?>"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> <?php 
+                            $user_session = new Zend\Session\Container('user'); 
+                            $username = $user_session->acc;
+                            echo $username;
+                        ?></a></li>
                     </ul>
                     <form class="navbar-form navbar-right" action="\commend\search" method="GET">
                         <div class="input-group">
@@ -91,7 +95,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="<?= $this->url('award') ?>"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Quản lý hạng mục </a>
+                            <a href="<?= $this->url('award') ?>"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Quản lý danh mục </a>
                         </li>
                         <li>
                             <a href="#" data-target="#item3" data-toggle="collapse"><i class="fa fa-list"></i> <span class="collapse in hidden-xs"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Quản lý danh hiệu <span class="caret"></span></span></a>

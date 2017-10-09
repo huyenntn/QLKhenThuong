@@ -28,7 +28,7 @@ class SubjectForm extends Form
                 'label' => 'Họ và tên đệm',
             ],
             'attributes' => [
-                'class' => 'form-control',
+                'class' => 'form-control flexbox',
                 'id' => 'nameF',
                 'required' => 'required'
             ]
@@ -40,7 +40,7 @@ class SubjectForm extends Form
                 'label' => 'Tên',
             ],
             'attributes' => [
-                'class' => 'form-control',
+                'class' => 'form-control flexbox',
                 'id' => 'nameS',
                 'required' => 'required'
             ]
@@ -52,7 +52,7 @@ class SubjectForm extends Form
                 'label' => 'Email',
             ],
             'attributes' => [
-                'class' => 'form-control',
+                'class' => 'form-control flexbox',
                 'required' => 'required',
                 'id' => 'email'
             ]
@@ -68,7 +68,7 @@ class SubjectForm extends Form
                 ]
             ],
             'attributes' => [
-                'class' => 'form-control',
+                'class' => 'form-control flexbox',
                 'required' => 'required',
                 'id' => 'typeS'
             ]
@@ -78,7 +78,7 @@ class SubjectForm extends Form
             'type' => 'submit',
             'attributes' => [
                 'id' => 'btnLogin',
-                'class' => 'btn btn-success '
+                'class' => 'btn btn-success flexbox'
             ]
         ]);
         $this->add([

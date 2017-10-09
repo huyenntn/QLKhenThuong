@@ -26,7 +26,7 @@ class SubawardForm extends Form {
             'name' => 'subAwardName',
             'type' => 'text',
             'options' => [
-                'label' => 'Khen thưởng',
+                'label' => 'Tên danh hiệu thi đua - khen thưởng',
             ],
             'attributes' => [
                 'class' => 'form-control',
@@ -56,7 +56,7 @@ class SubawardForm extends Form {
             'name' => 'awardId',
             'type' => 'select',
             'options' => [
-                'label' => 'Loại khen thưởng',
+                'label' => 'Danh mục',
                 'value_options' => [
                     
                 ]

@@ -1,13 +1,13 @@
 <?php
 // module/Album/view/album/album/index.phtml:
 
-$title = 'Thêm cá nhân/Tập thể';
+$title = $type==1?'Thêm mới cá nhân':'Thêm mới tập thể';
 $this->headTitle($title);
 ?>
 <meta charset='utf-8'>
 <div class="container">
     <h3><?php echo $title; ?></h3>
-    <hr>
+<hr>
 </div>
 <?php
     $form->setAttribute('action',$this->url('subject',['action'=>'add']));
@@ -16,6 +16,10 @@ $this->headTitle($title);
 
 <?php
     echo $this->form()->openTag($form);
+    echo $this->formRow($form->get('nameF'));
+?>
+<br>
+<?php
     echo $this->formRow($form->get('nameS'));
 ?>
 <br>

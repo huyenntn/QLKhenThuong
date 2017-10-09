@@ -25,7 +25,7 @@ class AddUserForm extends Form
             'name' => 'acc',
             'type' => 'text',
             'options' => [
-                'label' => 'Tài khoản',
+                'label' => 'Tên đăng nhập',
             ],
             'attributes' => [
                 'class' => 'form-control',

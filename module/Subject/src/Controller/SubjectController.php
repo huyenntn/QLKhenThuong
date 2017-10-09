@@ -33,7 +33,7 @@ class SubjectController extends AbstractActionController {
         // set the current page to what has been passed in query string, or to 1 if none set
         $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
         // set the number of items per page to 10
-        $paginator->setItemCountPerPage(10);
+        $paginator->setItemCountPerPage(20);
 
         return new ViewModel(array(
             'paginator' => $paginator,
@@ -49,6 +49,9 @@ class SubjectController extends AbstractActionController {
         $this->layout()->setVariable('listSub', $listSubaward);
         $type = (int) $this->params()->fromQuery('type', 0);
         $form = new SubjectForm();
+        if($type == 2){
+            $form->get('nameF')->setAttribute('type', 'hidden');
+        }
         $form->get('submit')->setAttribute('class', 'btn btn-danger');
         $form->get('submit')->setAttribute('value', 'Lưu');
         $form->get('typeS')->setAttribute('value', $type);
@@ -56,7 +59,8 @@ class SubjectController extends AbstractActionController {
         $request = $this->getRequest();
         if (!$request->isPost()) {
             $viewModel = new ViewModel([
-                'form' => $form
+                'form' => $form,
+                'type' => $type
             ]);
             return $viewModel;
         }
@@ -76,7 +80,13 @@ class SubjectController extends AbstractActionController {
     }
 
     public function editAction() {
+        if (!$this->identity()) {
+            return $this->redirect()->toRoute('login');
+        }
+        $listSubaward = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
+        $this->layout()->setVariable('listSub', $listSubaward);
         $id = (int) $this->params()->fromQuery('id', 0);
+        $type = (int) $this->params()->fromRoute('id',0);
       
         if ($id == 0) {
             exit('invalid accccc');
@@ -87,6 +97,9 @@ class SubjectController extends AbstractActionController {
             exit('Error with User table');
         }
         $form = new SubjectForm();
+        if($type == 2){
+            $form->get('nameF')->setAttribute('type', 'hidden');
+        }
         $form->get('idS')->setAttribute('type', 'hidden');
         $form->get('submit')->setAttribute('value', 'Lưu');
 
@@ -97,7 +110,8 @@ class SubjectController extends AbstractActionController {
         if (!$request->isPost()) {
             return new ViewModel([
                 'form' => $form,
-                'id' => $id
+                'id' => $id,
+                'type' => $type,
             ]);
         }
         $form->setData($request->getPost());
@@ -130,6 +144,11 @@ class SubjectController extends AbstractActionController {
     }
 
     public function selectByType() {
+        if (!$this->identity()) {
+            return $this->redirect()->toRoute('login');
+        }
+        $listSubaward = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
+        $this->layout()->setVariable('listSub', $listSubaward);
         $type = (int) $this->params()->fromRoute('type', 0);
         return new ViewModel([
             'subjects' => $this->containerinterface->selectByType(['typeS' => $type]),
