@@ -33,6 +33,11 @@ class AwardController extends AbstractActionController
     }
     
     public function addAction() {
+        $listSubaward = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
+        $this->layout()->setVariable('listSub', $listSubaward);
+        if (!$this->identity()) {
+            return $this->redirect()->toRoute('login');
+        }
         $form = new AwardForm();
         $form->get('submit')->setAttribute('class', 'btn btn-danger');
         $form->get('submit')->setAttribute('value', 'Lưu');
@@ -56,6 +61,11 @@ class AwardController extends AbstractActionController
     }
 
     public function editAction() {
+        $listSubaward = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
+        $this->layout()->setVariable('listSub', $listSubaward);
+        if (!$this->identity()) {
+            return $this->redirect()->toRoute('login');
+        }
         $id = (int) $this->params()->fromRoute('id', 0);
         
         if ($id == 0) {

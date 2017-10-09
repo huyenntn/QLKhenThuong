@@ -40,6 +40,7 @@ return [
     'controllers' => [
         'factories' => [
             CommendController::class => \Commend\Controller\Factory\CommendControllerFactory::class,
+            
         ],
     ],
     'view_manager' => [
@@ -59,4 +60,5 @@ return [
         ],
         'strategies' => array('ViewJsonStrategy',),
     ],
+    
 ];

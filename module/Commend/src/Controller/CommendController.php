@@ -221,5 +221,16 @@ class CommendController extends AbstractActionController {
         $info = $this->containerinterface->get(CommendRepository::class)->getDetail($id);
         return new ViewModel(['info' => $info, 'subject'=>$subject]);
     }
+    
+    public function searchAction(){
+        $listSubaward = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
+        $this->layout()->setVariable('listSub', $listSubaward);
+        if (!$this->identity()) {
+            return $this->redirect()->toRoute('login');
+        }
+        $searchvalue = $this->params()->fromQuery('search','');
+        $searchrs = $this->containerinterface->get(CommendRepository::class)->searchByName($searchvalue);
+        return new ViewModel(['searchvalue' => $searchrs]);
+    }
 
 }

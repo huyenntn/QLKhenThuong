@@ -14,6 +14,7 @@ use Auth\Storage\Result;
 use Interop\Container\ContainerInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\Session\Container;
 
 class LoginController extends AbstractActionController {
 
@@ -52,6 +53,9 @@ class LoginController extends AbstractActionController {
             if ($form->isValid()) {
                 //RECUPERA OS DADOS VALIDADOS DO FORMULARIO
                 $dataform = $form->getData();
+                $user_session = new Container('user');
+		$user_session->acc = $dataform['acc'];
+                $user_session->pass = $dataform['pass'];
                 //VERIFICA SE O USUARIO EXISTE
                 $result = $auth->login(
                         $dataform['acc'], $dataform['pass'], $this->getRequest()->getServer('HTTP_USER_AGENT'), $this->getRequest()->getServer('REMOTE_ADDR'));
@@ -65,7 +69,7 @@ class LoginController extends AbstractActionController {
                     // $request['message']=$messagesResult->getMessage();
                     // $request['success']=$result->getCode();
                     // $request['redirect']="/admin";
-                    return $this->redirect()->toRoute('commend');
+                    return $this->redirect()->toRoute('commend',['action' => 'listbytype', 'type' => '1']);
                 }
             }
         endif;

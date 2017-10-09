@@ -25,7 +25,7 @@ class AwardForm extends Form
             'name' => 'awardName',
             'type' => 'text',
             'options' => [
-                'label' => 'Loại khen thưởng',
+                'label' => 'Tên danh mục',
             ],
             'attributes' => [
                 'class' => 'form-control',

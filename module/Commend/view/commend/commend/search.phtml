@@ -1,0 +1,37 @@
+<?php
+// module/Album/view/album/album/index.phtml:
+
+$title = 'Kết quả tìm kiếm' ;
+$this->headTitle($title);
+?>
+
+<meta charset='utf-8'>
+<div class="container">
+    <h3><?php echo $title; ?></h3>
+    <hr>
+    
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Họ tên</th>
+                <th>Danh hiệu</th>
+                <th>Danh Mục</th>
+                <th>Năm</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id = "list"> 
+            <?php foreach ($searchvalue as $searchitem){ ?>
+            <tr>
+                <td><a href="/commend/detail/<?php echo $searchitem->institute?>?id=<?php echo $searchitem->idS?>"><?=$this->escapeHtml($searchitem->nameF)?> <?=$this->escapeHtml($searchitem->nameS)?></a></td>
+                <td><?=$this->escapeHtml($searchitem->subAwardName)?></td>
+                <td><?=$this->escapeHtml($searchitem->awardName)?></td>
+                <td><?=$this->escapeHtml($searchitem->year)?></td>
+                
+                <td><a class="btn btn-danger" href="/commend/edit?type=<?php echo $searchitem->institute?>&id=<?php echo $searchitem->idCmd?>">Sửa</a>|<a class="btn btn-warning" href="/commend/delete?id=<?php echo $searchitem->idCmd?>">Xóa</a></td>
+                        
+            </tr>
+            <?php }?>
+        </tbody>
+    </table>

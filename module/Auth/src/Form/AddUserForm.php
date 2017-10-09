@@ -25,7 +25,7 @@ class AddUserForm extends Form
             'name' => 'acc',
             'type' => 'text',
             'options' => [
-                'label' => 'Account',
+                'label' => 'Tài khoản',
             ],
             'attributes' => [
                 'class' => 'form-control',
@@ -36,7 +36,7 @@ class AddUserForm extends Form
             'name' => 'name',
             'type' => 'text',
             'options' => [
-                'label' => 'User name',
+                'label' => 'Tên người dùng',
             ],
             'attributes' => [
                 'class' => 'form-control',
@@ -47,7 +47,7 @@ class AddUserForm extends Form
             'name' => 'pass',
             'type' => 'text',
             'options' => [
-                'label' => 'Password'
+                'label' => 'Mật khẩu'
             ],
             'attributes' => [
                 'class' => 'form-control',

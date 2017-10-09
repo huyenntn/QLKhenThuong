@@ -118,6 +118,7 @@ form[role=login] > button {
 }
 .input-login{
     width: 100%;
+    padding-left: 50px;
 }
 
 
