@@ -3,8 +3,9 @@
 
 $title = 'Danh sách người dùng';
 $this->headTitle($title);
-?>
 
+
+?>
 <meta charset='utf-8'>
 <div class="container">
     <h3><?php echo $title; ?></h3>
@@ -28,7 +29,7 @@ $this->headTitle($title);
           <td><?=$this->escapeHtml($use->acc)  ?></td>
           <td><?=$this->escapeHtml($use->name)  ?></td>
           <td><a class="btn btn-danger" href="<?php echo $this->url('auth',['action' => 'edit', 'acc' => $use->id]);?>">Sửa</a>  
-              <a class="btn btn-warning" href="<?php echo $this->url('auth',['action' => 'delete', 'acc' => $use->id]);?>">Xóa</a></td>
+              <a style="display:  <?php echo $use->acc=='admin'?'none':'';  ?>" class="btn btn-warning" href="<?php echo $this->url('auth',['action' => 'delete', 'acc' => $use->id]);?>" onclick='if (confirm("Bạn chắc chắn muốn xóa?")) { document.location = this.href; } return false;'>Xóa</a></td>
       </tr>
       <?php endforeach; ?>
     </tbody>

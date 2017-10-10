@@ -66,7 +66,6 @@ class CommendRepository extends AbstractTableGateway {
             $paginator = new \Zend\Paginator\Paginator($adapter);
             return $paginator;
         }
-
         $sqlSelect = $this->tableGateway->getSql()
                 ->select()
                 ->join(array('a' => 'subaward'), 'a.id = commend.idSubAward', array('subAwardName', 'institute'))
@@ -192,22 +191,15 @@ class CommendRepository extends AbstractTableGateway {
         return $this->tableGateway->selectWith($sqlSelect);
     }
 
-    public function searchByName($where) {
+    public function searchByName($like) {
+        $where = new \Zend\Db\Sql\Where();
+        $where->addPredicate(new Like('nameF', '%'.$like.'%'))->orPredicate(new Like('nameS', '%'.$like.'%'));
         $sqlSelect = $this->tableGateway->getSql()
-        ->select()
-        ->join(array('a' => 'subaward'), 'a.id = commend.idSubAward', array('subAwardName', 'institute'))
-        ->join(array('b' => 'subject'), 'b.idS = commend.idS', array('nameF', 'nameS'))
-        ->join(array('c' => 'award'), 'a.awardId = c.id', array('awardName'))
-        ->where([
-                    new \Zend\Db\Sql\Predicate\PredicateSet(
-                        [
-                            new \Zend\Db\Sql\Predicate\Operator('nameF', \Zend\Db\Sql\Predicate\Operator::OPERATOR_EQUAL_TO, $where),
-                new \Zend\Db\Sql\Predicate\Operator('nameS', \Zend\Db\Sql\Predicate\Operator::OPERATOR_EQUAL_TO, $where)
-                        ], \Zend\Db\Sql\Predicate\PredicateSet::COMBINED_BY_OR
-                    ),
-                ])
-               
-                ->order('year DESC');
+                ->select()
+                ->join(array('a' => 'subaward'), 'a.id = commend.idSubAward', array('subAwardName', 'institute'))
+                ->join(array('b' => 'subject'), 'b.idS = commend.idS', array('nameF', 'nameS'))
+                ->join(array('c' => 'award'), 'a.awardId = c.id', array('awardName'))
+                ->where($where);
         return $this->tableGateway->selectWith($sqlSelect);
     }
 

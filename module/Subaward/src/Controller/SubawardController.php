@@ -84,10 +84,24 @@ class SubawardController extends AbstractActionController
         }
         $subaward->exchangeArray($form->getData());
         $this->containerinterface->get(SubawardRepository::class)->saveRow($subaward);
-        return $this->redirect()->toRoute('subaward', [
+        
+        $flashMessenger = $this->flashMessenger();
+        $success = true;
+        if ($success){
+            $flashMessenger->addSuccessMessage('Cập nhật thành công');
+            return $this->redirect()->toRoute('subaward', [
                                             'action' => 'index',
                                             'id' => $subaward->awardId,
                                         ]);
+            
+        } else {
+            $flashMessenger->addErrorMessage('Có lỗi xảy ra');
+            return $this->redirect()->toRoute('subaward', [
+                                            'action' => 'add',
+                                            'id' => $subaward->awardId,
+                                        ]);
+             
+        }
     }
 
     public function editAction() {
@@ -124,10 +138,24 @@ class SubawardController extends AbstractActionController
         }
         
         $this->containerinterface->get(SubawardRepository::class)->saveRow($subaward);
-        return $this->redirect()->toRoute('subaward', [
+        
+        $flashMessenger = $this->flashMessenger();
+        $success = true;
+        if ($success){
+            $flashMessenger->addSuccessMessage('Cập nhật thành công');
+            return $this->redirect()->toRoute('subaward', [
                                             'action' => 'index',
                                             'id' => $subaward->awardId,
                                         ]);
+            
+        } else {
+            $flashMessenger->addErrorMessage('Có lỗi xảy ra');
+            return $this->redirect()->toRoute('subaward', [
+                                            'action' => 'edit',
+                                            'id' => $id,
+                                        ]);
+             
+        }
     }
 
     public function deleteAction() {
@@ -146,5 +174,9 @@ class SubawardController extends AbstractActionController
                                             'action' => 'index',
                                             'id' => $subaward->awardId,
                                         ]);
+    }
+    public function getAllSubAward(){
+        $subaward = $this->containerinterface->get(SubawardRepository::class)->findAll();
+        return $subaward;
     }
 }

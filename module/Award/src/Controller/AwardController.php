@@ -57,7 +57,17 @@ class AwardController extends AbstractActionController
         }
         $award->exchangeArray($form->getData());
         $this->containerinterface->get(AwardRepository::class)->saveRow($award);
-        return $this->redirect()->toRoute('award');
+
+        $flashMessenger = $this->flashMessenger();
+        $success = true;
+        if ($success){
+            $toRoute = 'award';
+            $flashMessenger->addSuccessMessage('Cập nhật thành công');
+        } else {
+            $toRoute = 'award/add';
+             $flashMessenger->addErrorMessage('Có lỗi xảy ra');
+        }
+        return $this->redirect()->toRoute($toRoute);
     }
 
     public function editAction() {
@@ -93,7 +103,16 @@ class AwardController extends AbstractActionController
             exit('not valid');
         }
         $this->containerinterface->get(AwardRepository::class)->saveRow($award);
-        return $this->redirect()->toRoute('award');
+        $flashMessenger = $this->flashMessenger();
+        $success = true;
+        if ($success){
+            $toRoute = 'award';
+            $flashMessenger->addSuccessMessage('Cập nhật thành công');
+        } else {
+            $toRoute = 'award/edit/'.$id;
+             $flashMessenger->addErrorMessage('Có lỗi xảy ra');
+        }
+        return $this->redirect()->toRoute($toRoute);
     }
 
     public function deleteAction() {

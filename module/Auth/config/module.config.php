@@ -63,6 +63,13 @@ return [
             __DIR__ . '/../view',
         ],
     ],
+    'view_helper_config' => [
+        'flashmessenger' => [
+            'message_open_format' => '<div%s><ul><li>',
+            'message_separator_string' => '</li><li>',
+            'message_close_string' => '</li></ul></div>',
+        ],
+    ],
 ];
 
 

@@ -39,12 +39,13 @@ $this->headTitle($title);
                     subaward = data[i];
                     idvalue = subaward['id'];
                     urledit = "/subaward/edit/".idvalue;
+                    stringconfirm = "Bạn chắc chắn muốn xóa?";
                     var e = $('<tr><td id = "id" style="display: none"><td id = "name"></td><td id = "awardname"></td><td id = "institute"></td><td id = "btnedit"></td></tr>');
                     $('#id', e).html(subaward['id']);
                     $('#name', e).html(subaward['subAwardName']);
                     $('#awardname', e).html(subaward['awardName']);
                     subaward['institute'] == 1 ? $('#institute', e).html('Cá nhân') : $('#institute', e).html('Tập thể');
-                    $('#btnedit', e).html("<a class='btn btn-danger' href='/subaward/edit/"+subaward['id']+"'>Sửa</a> | <a class='btn btn-warning' href='/subaward/delete/"+subaward['id']+"'>Xóa</a>");
+                    $('#btnedit', e).html("<a class='btn btn-danger' href='/subaward/edit/"+subaward['id']+"'>Sửa</a> | <a class='btn btn-warning' href='/subaward/delete/"+subaward['id']+"' onclick='if (confirm(\""+stringconfirm+"\")) { document.location = this.href; } return false;'>Xóa</a>");
                     $('#list').append(e);
                 }
 

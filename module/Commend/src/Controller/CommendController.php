@@ -39,11 +39,8 @@ class CommendController extends AbstractActionController {
         $listSubaward = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
         $this->layout()->setVariable('listSub', $listSubaward);
         $type = (int) $this->params()->fromRoute('type', 0);
-
         $request = $this->getRequest();
         $query = $request->getQuery();
-
-
         $selectOptionSubject = $this->containerinterface->get(CommendRepository::class)->getListYear();
         $selectDataSubject = [];
         $selectDataSubject[0] = 'Xóa bộ lọc năm';
@@ -89,7 +86,6 @@ class CommendController extends AbstractActionController {
             $view = new JsonModel($jsData);
             $view->setTerminal(true);
         } else {
-
             $view = new ViewModel([
                 'paginator' => $paginator,
                 'type' => $type,
@@ -147,7 +143,18 @@ class CommendController extends AbstractActionController {
         $commend->exchangeArray($form->getData());
 
         $this->containerinterface->get(CommendRepository::class)->saveRow($commend);
-        return $this->redirect()->toRoute('commend', ['action' => 'listbytype', 'type' => $type]);
+        
+        $flashMessenger = $this->flashMessenger();
+        $success = true;
+        if ($success){
+            $flashMessenger->addSuccessMessage('Cập nhật thành công');
+            return $this->redirect()->toRoute('commend', ['action' => 'listbytype', 'type' => $type]);
+            
+        } else {
+            $flashMessenger->addErrorMessage('Có lỗi xảy ra');
+            return $this->redirect()->toRoute('commend', ['action' => 'listbytype', 'type' => $type]);
+             
+        }
     }
 
     public function editAction() {

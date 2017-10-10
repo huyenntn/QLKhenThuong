@@ -23,7 +23,9 @@
         "zendframework/zend-crypt": "^3.2",
         "zendframework/zend-mvc-plugins": "^1.0",
         "zendframework/zend-json": "^3.0",
-        "zendframework/zend-paginator": "^2.7"
+        "zendframework/zend-paginator": "^2.7",
+        "zendframework/zend-mvc-plugin-flashmessenger": "^1.0",
+        "jenzri-nizar/zf3-jquerydatatable": " ^1.0"
     },
     "autoload": {
         "psr-4": {

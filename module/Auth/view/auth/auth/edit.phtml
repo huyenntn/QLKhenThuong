@@ -9,6 +9,7 @@ $this->headTitle($title);
     <h3><?php echo $title; ?></h3>
     <hr>
 </div>
+
 <?php
     $form->setAttribute('action',$this->url('auth',['action'=>'edit','acc'=>$id]));
     $form->prepare();

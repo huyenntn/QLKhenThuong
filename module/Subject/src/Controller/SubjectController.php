@@ -73,10 +73,24 @@ class SubjectController extends AbstractActionController {
         $subject->exchangeArray($form->getData());
         $this->containerinterface->get(\Subject\Model\SubjectTable::class)->saveRow($subject);
 
-        return $this->redirect()->toRoute('subject', [
+        
+        $flashMessenger = $this->flashMessenger();
+        $success = true;
+        if ($success){
+            $flashMessenger->addSuccessMessage('Cập nhật thành công');
+            return $this->redirect()->toRoute('subject', [
                     'action' => 'index',
                     'id' => $subject->typeS,
         ]);
+            
+        } else {
+            $flashMessenger->addErrorMessage('Có lỗi xảy ra');
+            return $this->redirect()->toRoute('subject', [
+                    'action' => 'index',
+                    'id' => $subject->typeS,
+        ]);
+             
+        }
     }
 
     public function editAction() {
@@ -119,10 +133,24 @@ class SubjectController extends AbstractActionController {
             exit('not valid');
         }
         $this->containerinterface->get(\Subject\Model\SubjectTable::class)->saveRow($subject);
-        return $this->redirect()->toRoute('subject', [
+        
+        $flashMessenger = $this->flashMessenger();
+        $success = true;
+        if ($success){
+            $flashMessenger->addSuccessMessage('Cập nhật thành công');
+            return $this->redirect()->toRoute('subject', [
                     'action' => 'index',
                     'id' => $subject->typeS,
         ]);
+            
+        } else {
+            $flashMessenger->addErrorMessage('Có lỗi xảy ra');
+            return $this->redirect()->toRoute('subject', [
+                    'action' => 'index',
+                    'id' => $subject->typeS,
+        ]);
+             
+        }
     }
 
     public function deleteAction() {

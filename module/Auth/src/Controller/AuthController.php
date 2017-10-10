@@ -12,6 +12,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Auth\Model\UserRepository;
 use Interop\Container\ContainerInterface;
 use Zend\View\Model\ViewModel;
+use Zend\Mvc\Plugin\FlashMessenger\FlashMessenger;
 class AuthController extends AbstractActionController {
     public $containerinterface;
     public function __construct(ContainerInterface $containerinterface) {
@@ -24,7 +25,7 @@ class AuthController extends AbstractActionController {
             return $this->redirect()->toRoute('login');
         }
         $alluser = $this->containerinterface->get(UserRepository::class)->findAll();
-        return new ViewModel(['alluser' => $alluser,]);
+        return new ViewModel(['alluser' => $alluser]);
     }
     
     public function addAction() {
@@ -47,7 +48,18 @@ class AuthController extends AbstractActionController {
         }
         $user->exchangeArray($form->getData());
         $this->containerinterface->get(UserRepository::class)->saveUser($user);
-        return $this->redirect()->toRoute('auth');
+        
+        
+        $flashMessenger = $this->flashMessenger();
+        $success = true;
+        if ($success){
+            $toRoute = 'auth';
+            $flashMessenger->addSuccessMessage('Thêm người dùng mới thành công');
+        } else {
+            $toRoute = 'auth/add';
+             $flashMessenger->addErrorMessage('Có lỗi xảy ra');
+        }
+        return $this->redirect()->toRoute($toRoute);
     }
 
     public function editAction() {
@@ -78,7 +90,17 @@ class AuthController extends AbstractActionController {
             exit('not valid');
         }
         $this->containerinterface->get(UserRepository::class)->saveUser($user);
-        return $this->redirect()->toRoute('auth');
+
+        $flashMessenger = $this->flashMessenger();
+        $success = true;
+        if ($success){
+            $toRoute = 'auth';
+            $flashMessenger->addSuccessMessage('Cập nhật thành công');
+        } else {
+            $toRoute = 'auth/edit/'.$id;
+             $flashMessenger->addErrorMessage('Có lỗi xảy ra');
+        }
+        return $this->redirect()->toRoute($toRoute);
     }
 
     public function deleteAction() {

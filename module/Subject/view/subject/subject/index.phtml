@@ -27,7 +27,7 @@ $this->headTitle($title);
                     <td><a href="/commend/detail/<?php echo $subject->typeS?>?id=<?php echo $subject->idS?>"><?= $this->escapeHtml($subject->nameF).' '?> <?= $this->escapeHtml($subject->nameS) ?></a></td>
                     <td><?= $this->escapeHtml($subject->email) ?></td>
                     <td><a class="btn btn-danger" href="<?php echo '/subject/edit/'.$subject->typeS.'?id='.$subject->idS?>">Sửa</a>  
-                        <a class="btn btn-warning" href="<?php echo '/subject/delete?id='.$subject->idS?>">Xóa</a></td>
+                        <a class="btn btn-warning" href="<?php echo '/subject/delete?id='.$subject->idS?>" onclick="if (confirm('Bạn chắc chắn muốn xóa?')) { document.location = this.href; } return false;">Xóa</a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
