@@ -13,17 +13,20 @@ $this->headTitle($title);
 <?php
     $form->setAttribute('action',$this->url('auth',['action'=>'add']));
     $form->prepare();
-?>
-
-<?php
     echo $this->form()->openTag($form);
+?>
+<label>Tên đăng nhập</label>
+<?php
+    
     echo $this->formRow($form->get('acc'));
 ?>
 <br>
+<label>Mật khẩu</label>
 <?php
     echo $this->formRow($form->get('pass'));
 ?>
 <br>
+<label>Tên người dùng</label>
 <?php
     echo $this->formRow($form->get('name'));
 ?>

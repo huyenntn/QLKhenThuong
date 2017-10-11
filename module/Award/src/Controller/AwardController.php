@@ -29,7 +29,22 @@ class AwardController extends AbstractActionController
             return $this->redirect()->toRoute('login');
         }
         $awards = $this->containerinterface->get(AwardRepository::class)->findAll();
-        return new ViewModel(['awards' => $awards,]);
+        $request = $this->getRequest();
+        if ($request->isXmlHttpRequest()) {
+            $jsData = array();
+            $idx = 0;
+            foreach ($awards as $sampledata) {
+                $jsData[$idx++] = $sampledata;
+            }
+            $view = new \Zend\View\Model\JsonModel($jsData);
+            $view->setTerminal(true);
+        } else {
+            $view = new ViewModel([
+                'awards' => $awards,
+            ]);
+        }
+        
+        return $view;
     }
     
     public function addAction() {
@@ -39,7 +54,6 @@ class AwardController extends AbstractActionController
             return $this->redirect()->toRoute('login');
         }
         $form = new AwardForm();
-        $form->get('submit')->setAttribute('class', 'btn btn-danger');
         $form->get('submit')->setAttribute('value', 'Lưu');
         $request = $this->getRequest();
         if (!$request->isPost()) {

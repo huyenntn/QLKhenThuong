@@ -101,7 +101,7 @@ class CommendForm extends Form{
             'type' => 'submit',
             'attributes' => [
                 'id' => 'btnLogin',
-                'class' => 'btn btn-success'
+                'class' => 'btn btn-primary'
             ]
         ]);
         

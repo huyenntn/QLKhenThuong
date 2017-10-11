@@ -25,10 +25,9 @@ class AddUserForm extends Form
             'name' => 'acc',
             'type' => 'text',
             'options' => [
-                'label' => 'Tên đăng nhập',
             ],
             'attributes' => [
-                'class' => 'form-control',
+                'class' => 'form-control input-sm',
                 'required' => 'required'
             ]
         ]);
@@ -36,10 +35,9 @@ class AddUserForm extends Form
             'name' => 'name',
             'type' => 'text',
             'options' => [
-                'label' => 'Tên người dùng',
             ],
             'attributes' => [
-                'class' => 'form-control',
+                'class' => 'form-control input-sm',
                 'required' => 'required'
             ]
         ]);
@@ -47,10 +45,9 @@ class AddUserForm extends Form
             'name' => 'pass',
             'type' => 'text',
             'options' => [
-                'label' => 'Mật khẩu'
             ],
             'attributes' => [
-                'class' => 'form-control',
+                'class' => 'form-control input-sm',
                 'required' => 'required'
             ]
         ]);
@@ -59,7 +56,7 @@ class AddUserForm extends Form
             'type' => 'submit',
             'attributes' => [
                 'id' => 'btnLogin',
-                'class' => 'btn btn-success'
+                'class' => 'btn btn-primary submit-button btn-sm'
             ]
         ]);
         $this->add([
@@ -69,7 +66,7 @@ class AddUserForm extends Form
                 'label' => 'ID'
             ],
             'attributes' => [
-                'class' => 'form-control'
+                'class' => 'form-control input-sm'
             ]
         ]);
     }

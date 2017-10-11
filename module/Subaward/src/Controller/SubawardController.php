@@ -62,7 +62,6 @@ class SubawardController extends AbstractActionController
              $selectData[$res->id] = $res->awardName;
         }
         $form = new SubawardForm();
-        $form->get('submit')->setAttribute('class', 'btn btn-danger');
         $form->get('submit')->setAttribute('value', 'Lưu');
         $form->get('awardId')->setAttribute('options', $selectData);
         $form->get('awardId')->setAttribute('value', $id);
@@ -105,6 +104,11 @@ class SubawardController extends AbstractActionController
     }
 
     public function editAction() {
+         if (!$this->identity()) {
+            return $this->redirect()->toRoute('login');
+        }
+        $listSubaward = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
+        $this->layout()->setVariable('listSub', $listSubaward);
         $id = (int) $this->params()->fromRoute('id', 0);
         $selectOption = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
         $selectData = [];

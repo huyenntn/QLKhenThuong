@@ -26,10 +26,9 @@ class SubawardForm extends Form {
             'name' => 'subAwardName',
             'type' => 'text',
             'options' => [
-                'label' => 'Tên danh hiệu thi đua - khen thưởng',
             ],
             'attributes' => [
-                'class' => 'form-control',
+                'class' => 'form-control input-sm',
                 'required' => 'required'
             ]
         ]);
@@ -39,7 +38,7 @@ class SubawardForm extends Form {
             'type' => 'submit',
             'attributes' => [
                 'id' => 'btnLogin',
-                'class' => 'btn btn-success'
+                'class' => 'btn btn-primary submit-button btn-sm'
             ]
         ]);
         $this->add([
@@ -49,14 +48,13 @@ class SubawardForm extends Form {
                 'label' => 'ID'
             ],
             'attributes' => [
-                'class' => 'form-control'
+                'class' => 'form-control input-sm'
             ]
         ]);
         $this->add([
             'name' => 'awardId',
             'type' => 'select',
             'options' => [
-                'label' => 'Danh mục',
                 'value_options' => [
                     
                 ]
@@ -69,14 +67,13 @@ class SubawardForm extends Form {
             'name' => 'institute',
             'type' => 'select',
             'options' => [
-                'label' => 'Đối tượng',
                 'value_options' => [
                     '1' => 'Cá nhân',
                     '2' => 'Tập thể',
                 ]
             ],
             'attributes' => [
-                'class' => 'form-control'
+                'class' => 'form-control input-sm'
             ]
         ]);
     }

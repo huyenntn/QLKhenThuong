@@ -18,9 +18,12 @@ $this->headTitle($title);
     echo $this->formRow($form->get('id'));
 ?>
 <br>
+<label>Tên danh mục</label>
+ <div class="text-input-container">
 <?php
     echo $this->formRow($form->get('awardName'));
 ?>
+ </div>
 <br>
 <?php
     echo $this->formRow($form->get('submit'));

@@ -22,7 +22,7 @@ class SubjectTable extends AbstractTableGateway {
         $this->tableGateway = $tableGateway;
     }
 
-    public function fetchAll($paginated = false) {
+    public function fetchAll() {
         return $this->tableGateway->select();
     }
 
@@ -60,17 +60,8 @@ class SubjectTable extends AbstractTableGateway {
         return $this->tableGateway->delete(['idS' => $id]);
     }
 
-    public function selectByType($where, $paginated = false) {
-        if ($paginated) {
-            $sql = $this->tableGateway->getSql();
-            $select = $sql->select();
-            $select->where(['typeS' => $where]);
-            $select->order('nameS ASC');
-            $adapter = new \Zend\Paginator\Adapter\DbSelect($select, $sql);
-            $paginator = new \Zend\Paginator\Paginator($adapter);
-            return $paginator;
-        }
-
+    public function selectByType($where) {
+     
         $sqlSelect = $this->tableGateway->getSql()
                 ->select()
                 ->where(['typeS' => $where]);

@@ -9,26 +9,82 @@ $this->headTitle($title);
 <div class="container">
     <h3><?php echo $title; ?></h3>
     <hr>
-    <p style="text-align: right">
-        <a class="btn btn-success"  href="<?php echo $this->url('award',['action' => 'add']); ?>">Thêm mới</a>
-    </p>
-    <table class="table">
-    <thead>
-      <tr>
-        <th>Tên danh mục</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-        <?php
-        foreach ($awards as $award):
-        ?>
-      <tr>
-          <td><?=$this->escapeHtml($award->awardName)?></td>
-          <td><a class="btn btn-danger" href="<?php echo $this->url('award',['action' => 'edit', 'id' => $award->id]);?>">Sửa</a>  
-              <a class="btn btn-warning" href="<?php echo $this->url('award',['action' => 'delete', 'id' => $award->id]);?>" onclick='if (confirm("Bạn chắc chắn muốn xóa?")) { document.location = this.href; } return false;'>Xóa</a></td>
-      </tr>
-      <?php endforeach; ?>
-    </tbody>
-  </table>
+    <table style="margin-bottom: 30px; width: 100%; text-align: right">
+        <tr>
+            <td style="width:200px; display:inline-block; text-align: right;">
+                <a class="btn btn-primary"  href="<?php echo $this->url('award',['action' => 'add']); ?>">Thêm mới <span class="glyphicon glyphicon-plus"></span></a>
+            </td>
+        </tr>
+    </table>
+    <table id="example" class="table table-bordered dt-responsive " cellspacing="0" >
+        <thead>
+            <tr>
+                <th>Tên danh mục</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Tên danh mục</th>
+                <td></td>
+            </tr>
+        </tfoot>
+        <tbody> 
+        </tbody>
+    </table>
+    
 </div>
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            $('#example tfoot th').each(function () {
+                var title = $(this).text();
+                $(this).html('<input type="text" placeholder="Lọc: ' + title + '" />');
+            });
+            var table = $('#example').DataTable({
+                "processing": true, // for show processing bar
+                "orderMulti": false, // for disable multi column order
+                
+                "language": {
+                    "lengthMenu": "Hiển thị _MENU_ bản ghi/trang",
+                    "zeroRecords": "Không có thông tin",
+                    "info": "Trang _PAGE_ / _PAGES_",
+                    "infoEmpty": "Không có bản ghi nào để hiển thị",
+                    "infoFiltered": "(Lọc từ _MAX_ bản ghi)",
+                    "search": "Lọc nội dung",
+                    "oPaginate": {
+                        "sFirst": "<<", // This is the link to the first page
+                        "sPrevious": "<", // This is the link to the previous page
+                        "sNext": ">", // This is the link to the next page
+                        "sLast": ">>" // This is the link to the last page
+                    }
+
+                },
+                "ajax": {
+                    "url": "/award/index",
+                    "dataSrc": ""
+                },
+                "columns": [
+                    {"data": "awardName"},
+                    {"data": getBtn}
+                ],
+            });
+
+            table.columns().every(function () {
+                var that = this;
+
+                $('input', this.footer()).on('keyup change', function () {
+                    if (that.search() !== this.value) {
+                        that
+                                .search(this.value)
+                                .draw();
+                    }
+                });
+            });
+
+        });
+        function getBtn(data, type, dataToSet) {
+            return "<a class='btn btn-success btn-sm' href='/award/edit/"+data.id+"']);'>Sửa <span class='glyphicon glyphicon-edit'></span></a> | <a class='btn btn-danger btn-sm' href='/award/delete/"+data.id+"' onclick='if (confirm(\"Bạn chắc chắn muốn xóa?\")) { document.location = this.href; } return false;'>Xóa <span class='glyphicon glyphicon-minus'></span></a>";
+        }
+        
+    </script>

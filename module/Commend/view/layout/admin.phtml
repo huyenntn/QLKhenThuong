@@ -40,11 +40,11 @@
 
     </head>
     <body>
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
+                        <span class="sr-only">Quản lý thi đua - khen thưởng</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -75,7 +75,7 @@
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Tìm kiếm cá nhân/tập thể theo tên" id="query" name="search" value="">
                             <div class="input-group-btn">
-                                <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search"></span></button>
+                                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
                             </div>
                         </div>
                     </form>
@@ -138,18 +138,8 @@
                         <li>
                             <a href="#" data-target="#item4" data-toggle="collapse"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Danh sách cá nhân/tập thể <span class="caret"></span></span></a>
                             <ul class="nav nav-stacked collapse" id="item4">
-                                <li><a href="<?=
-                                    $this->url('subject', [
-                                        'action' => 'index',
-                                        'id' => '1',
-                                    ])
-                                    ?>">Cá nhân</a></li>
-                                <li><a href="<?=
-                                    $this->url('subject', [
-                                        'action' => 'index',
-                                        'id' => '2',
-                                    ])
-                                    ?>">Tập thể</a></li>
+                                <li><a href="/subject/index?type=1">Cá nhân</a></li>
+                                <li><a href="/subject/index?type=2"">Tập thể</a></li>
                             </ul>
                         </li>
                         <li>

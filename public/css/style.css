@@ -151,7 +151,7 @@ form[role=login] > button {
     margin-left: -250px;
     width: 0;
     height: 100%;
-    background: #000;
+    background: #ecf0f1;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -191,18 +191,19 @@ form[role=login] > button {
 
 .sidebar-nav li a {
     display: block;
-    color: #999999;
     text-decoration: none;
 }
 
 .sidebar-nav li a:hover {
     background: rgba(255, 255, 255, 0.2);
-    color: #fff;
+    color: #545C67;
     text-decoration: none;
 }
 
 .sidebar-nav li a:active,
 .sidebar-nav li a:focus {
+    background: rgba(255, 255, 255, 0.2);
+    color: #545C67;
     text-decoration: none;
 }
 
@@ -526,7 +527,7 @@ section{
     display: inline-block;
 }
 #btnLogin{
-    min-width: 300px;
+   
 }
 tfoot input {
     width: 100%;
@@ -536,4 +537,48 @@ tfoot input {
 
 .dataTables_wrapper .dataTables_paginate .paginate_button{
     padding: 0;
+}
+.submit-button {
+   width: 100%;
+}
+ 
+.text-input-container {
+   width: 100%;
+   overflow: hidden;
+}
+ 
+.text-input {
+   width: 100%;
+}
+
+.navbar-custom {
+    background-color: #545C67;
+    border-color: #474D55;
+}
+.navbar-custom a{
+    color: #fff;
+}
+
+.navbar-custom .navbar-nav > li > a:hover,
+.navbar-custom .navbar-nav > li > a:focus,
+.navbar-custom .navbar-nav > .active > a:hover,
+.navbar-custom .navbar-nav > .active > a:focus,
+.navbar-custom .navbar-nav > .open >a {
+    text-decoration: none;
+    color: #fff;
+}
+.navbar-brand:hover{
+    color: #fff;
+}
+.navbar-custom .navbar-toggle {
+    background-color:#eeeeee;
+}
+.navbar-custom .icon-bar {
+    background-color:#33aa33;
+}
+.navbar-custom .navbar-toggle :focus, .navbar-custom .navbar-toggle :hover, .navbar-custom .navbar-toggle :active,.navbar-custom .navbar-toggle :visited, .navbar-custom .navbar-toggle :link{
+    color: #fff;
+}
+.navbar-custom a:hover, .navbar-custom a:focus, .navbar-custom a:active{
+    color: #bdc3c7;
 }

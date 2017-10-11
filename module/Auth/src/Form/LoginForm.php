@@ -30,7 +30,7 @@ class LoginForm extends Form
             'name' => 'acc',
             'type' => 'text',
             'attributes' => [
-                'class' => 'form-control input-lg input-login',
+                'class' => 'form-control input-sm input-login',
                 'placeholder' => 'Tên đăng nhập',
                 'required' => 'required'
             ]
@@ -39,7 +39,7 @@ class LoginForm extends Form
             'name' => 'pass',
             'type' => 'password',
             'attributes' => [
-                'class' => 'form-control input-lg input-login',
+                'class' => 'form-control input-sm input-login',
                 'placeholder' => 'Mật khẩu',
                 'required' => 'required'
             ]
@@ -48,7 +48,7 @@ class LoginForm extends Form
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
-                'class' => 'btn btn-block btn-success btn-lg',
+                'class' => 'btn btn-block btn-primary btn-sm',
                 'value' => 'Đăng nhập',
                 'id' => 'btnLogin'
             ]

@@ -11,7 +11,7 @@ $this->headTitle($title);
     <table style="margin-bottom: 30px; width: 100%; text-align: right">
         <tr>
             <td style="width:200px; display:inline-block; text-align: right;">
-                <a class="btn btn-success"  href="<?php echo $this->url('commend', ['action' => 'add', 'type' => $type]); ?>">Thêm mới</a>
+                <a class="btn btn-primary"  href="<?php echo $this->url('commend', ['action' => 'add', 'type' => $type]); ?>">Thêm mới <span class="glyphicon glyphicon-plus"></span></a>
             </td>
         </tr>
     </table>
@@ -31,7 +31,7 @@ $this->headTitle($title);
                 <th>Danh hiệu</th>
                 <th>Danh Mục</th>
                 <th>Năm</th>
-                <th>Thao tác</th>
+                <td></td>
             </tr>
         </tfoot>
         <tbody> 
@@ -40,20 +40,28 @@ $this->headTitle($title);
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#example').DataTable({
-
+            $('#example tfoot th').each(function () {
+                var title = $(this).text();
+                $(this).html('<input type="text" placeholder="Lọc: ' + title + '" />');
+            });
+            var table = $('#example').DataTable({
+                "processing": true, // for show processing bar
+                "orderMulti": false, // for disable multi column order
+                
                 "language": {
                     "lengthMenu": "Hiển thị _MENU_ bản ghi/trang",
                     "zeroRecords": "Không có thông tin",
                     "info": "Trang _PAGE_ / _PAGES_",
                     "infoEmpty": "Không có bản ghi nào để hiển thị",
-                    "infoFiltered": "(filtered from _MAX_ total records)",
+                    "infoFiltered": "(Lọc từ _MAX_ bản ghi)",
+                    "search": "Lọc nội dung",
                     "oPaginate": {
                         "sFirst": "<<", // This is the link to the first page
                         "sPrevious": "<", // This is the link to the previous page
                         "sNext": ">", // This is the link to the next page
                         "sLast": ">>" // This is the link to the last page
                     }
+
                 },
                 "ajax": {
                     "url": "/commend/listbytype/".$type,
@@ -68,11 +76,25 @@ $this->headTitle($title);
                 ],
             });
 
+            table.columns().every(function () {
+                var that = this;
+
+                $('input', this.footer()).on('keyup change', function () {
+                    if (that.search() !== this.value) {
+                        that
+                                .search(this.value)
+                                .draw();
+                    }
+                });
+            });
+
         });
         function getFullName(data, type, dataToSet) {
             return "<a href='/commend/detail/" + data.institute + "?id=" + data.idS + "'>" + data.nameF + " " + data.nameS + "</a>";
         }
         function getBtn(data, type, dataToSet) {
-            return "<a class='btn btn-danger' href='/commend/edit?type=" + data.institute + "&id=" + data.idCmd + "'>Sửa</a> | <a class='btn btn-warning' href='/commend/delete?id=" + data.idCmd + "'>Xóa</a>";
+            return "<a class='btn btn-success' href='/commend/edit?type=" + data.institute + "&id=" + data.idCmd + "'>Sửa <span class='glyphicon glyphicon-edit'></span></a> | <a class='btn btn-danger' href='/commend/delete?id=" + data.idCmd + "' onclick='if (confirm(\"Bạn chắc chắn muốn xóa?\")) { document.location = this.href; } return false;' >Xóa <span class='glyphicon glyphicon-minus'></span></a>";
         }
+        
     </script>
+

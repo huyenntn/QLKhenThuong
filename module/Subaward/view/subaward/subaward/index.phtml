@@ -9,50 +9,95 @@ $this->headTitle($title);
 <div class="container">
     <h3><?php echo $title; ?></h3>
     <hr>
-    <p style="text-align: right">
-        <a class="btn btn-success"  href="<?php echo $this->url('subaward', ['action' => 'add', 'id' => $idAward]); ?>">Thêm mới</a>
-    </p>
-    <table class = "table"> 
+    <table style="margin-bottom: 30px; width: 100%; text-align: right">
+        <tr>
+            <td style="width:200px; display:inline-block; text-align: right;">
+                <a class="btn btn-primary"  href="<?php echo $this->url('subaward', ['action' => 'add', 'id' => $idAward]); ?>">Thêm mới <span class="glyphicon glyphicon-plus"></span></a>
+            </td>
+        </tr>
+    </table>
+    <table id="example" class="table table-bordered dt-responsive " cellspacing="0" >
         <thead>
             <tr>
                 <th>Danh hiệu</th>
                 <th>Danh mục</th>
                 <th>Đối tượng</th>
-                <th></th>
+                <th>Thao tác</th>
             </tr>
         </thead>
-        <tbody id = "list"> 
-        </tbody> 
+        <tfoot>
+            <tr>
+                <th>Danh hiệu</th>
+                <th>Danh mục</th>
+                <th>Đối tượng</th>
+                <td></td>
+            </tr>
+        </tfoot>
+        <tbody> 
+        </tbody>
     </table>
 </div>
 
-<script language = "javascript">
-    $(document).ready(function () {
-        $.ajax({
-            url: '/subaward/index/'.$idAward,
-            type: 'POST',
-            dataType: 'json',
-            async: true,
-            success: function (data, status) {
-                $('#list').html('');
-                for (i = 0; i < data.length; i++) {
-                    subaward = data[i];
-                    idvalue = subaward['id'];
-                    urledit = "/subaward/edit/".idvalue;
-                    stringconfirm = "Bạn chắc chắn muốn xóa?";
-                    var e = $('<tr><td id = "id" style="display: none"><td id = "name"></td><td id = "awardname"></td><td id = "institute"></td><td id = "btnedit"></td></tr>');
-                    $('#id', e).html(subaward['id']);
-                    $('#name', e).html(subaward['subAwardName']);
-                    $('#awardname', e).html(subaward['awardName']);
-                    subaward['institute'] == 1 ? $('#institute', e).html('Cá nhân') : $('#institute', e).html('Tập thể');
-                    $('#btnedit', e).html("<a class='btn btn-danger' href='/subaward/edit/"+subaward['id']+"'>Sửa</a> | <a class='btn btn-warning' href='/subaward/delete/"+subaward['id']+"' onclick='if (confirm(\""+stringconfirm+"\")) { document.location = this.href; } return false;'>Xóa</a>");
-                    $('#list').append(e);
-                }
 
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                alert('Ajax request failed.');
-            }
+
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            $('#example tfoot th').each(function () {
+                var title = $(this).text();
+                $(this).html('<input type="text" placeholder="Lọc: ' + title + '" />');
+            });
+            var table = $('#example').DataTable({
+                "processing": true, // for show processing bar
+                "orderMulti": false, // for disable multi column order
+                
+                "language": {
+                    "lengthMenu": "Hiển thị _MENU_ bản ghi/trang",
+                    "zeroRecords": "Không có thông tin",
+                    "info": "Trang _PAGE_ / _PAGES_",
+                    "infoEmpty": "Không có bản ghi nào để hiển thị",
+                    "infoFiltered": "(Lọc từ _MAX_ bản ghi)",
+                    "search": "Lọc nội dung",
+                    "oPaginate": {
+                        "sFirst": "<<", // This is the link to the first page
+                        "sPrevious": "<", // This is the link to the previous page
+                        "sNext": ">", // This is the link to the next page
+                        "sLast": ">>" // This is the link to the last page
+                    }
+
+                },
+                "ajax": {
+                    "url": "/subaward/index/".$idAward,
+                    "dataSrc": ""
+                },
+                "columns": [
+                    {"data": "subAwardName"},
+                    {"data": "awardName"},
+                    {"data": getDoituong},
+                    {"data": getBtn}
+                ],
+            });
+
+            table.columns().every(function () {
+                var that = this;
+
+                $('input', this.footer()).on('keyup change', function () {
+                    if (that.search() !== this.value) {
+                        that
+                                .search(this.value)
+                                .draw();
+                    }
+                });
+            });
+
         });
-    });
-</script>
+        function getBtn(data, type, dataToSet) {
+            return "<a class='btn btn-success' href='/subaward/edit/"+data.id+"'>Sửa <span class='glyphicon glyphicon-edit'></span></a> | <a class='btn btn-danger' href='/subaward/delete/'"+data.id+" onclick='if (confirm(\"Bạn chắc chắn muốn xóa?\")) { document.location = this.href; } return false;'>Xóa <span class='glyphicon glyphicon-minus'></span></a>";
+            
+        }
+        function getDoituong(data, type, dataToSet) {
+            return data.institute==1?"Cá nhân":"Tập thể";
+            
+        }
+        
+    </script>

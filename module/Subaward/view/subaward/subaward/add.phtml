@@ -16,13 +16,19 @@ $this->headTitle($title);
 
 <?php
     echo $this->form()->openTag($form);
-    echo $this->formRow($form->get('subAwardName'));
+    
 ?>
 <br>
+<label>Tên danh hiệu thi đua - khen thưởng</label>
 <?php
-    echo $this->formRow($form->get('awardId'));
+    echo $this->formRow($form->get('subAwardName'));
+    
 ?>
 <br>
+<label>Loại danh mục</label>
+<?php echo $this->formRow($form->get('awardId')); ?>
+<br>
+<label>Đối tượng</label>
 <?php
     echo $this->formRow($form->get('institute'));
 ?>

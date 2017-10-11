@@ -25,11 +25,12 @@ class AwardForm extends Form
             'name' => 'awardName',
             'type' => 'text',
             'options' => [
-                'label' => 'Tên danh mục',
+                
             ],
             'attributes' => [
-                'class' => 'form-control',
-                'required' => 'required'
+                'class' => 'form-control text-input input-sm',
+                'required' => 'required',
+                'label' => 'Tên danh mục',
             ]
         ]);
         
@@ -38,7 +39,7 @@ class AwardForm extends Form
             'type' => 'submit',
             'attributes' => [
                 'id' => 'btnLogin',
-                'class' => 'btn btn-success'
+                'class' => 'btn btn-primary submit-button btn-sm'
             ]
         ]);
         $this->add([
@@ -48,7 +49,7 @@ class AwardForm extends Form
                 'label' => 'ID'
             ],
             'attributes' => [
-                'class' => 'form-control'
+                'class' => 'form-control input-sm'
             ]
         ]);
     }

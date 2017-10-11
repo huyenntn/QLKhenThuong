@@ -12,12 +12,15 @@ $this->headTitle($title);
 <?php
     $form->setAttribute('action',$this->url('award',['action'=>'add']));
     $form->prepare();
-?>
-
-<?php
     echo $this->form()->openTag($form);
+?>
+<label>Tên danh mục</label>
+ <div class="text-input-container">
+<?php
+    
     echo $this->formRow($form->get('awardName'));
 ?>
+ </div>
 <br>
 <?php
     echo $this->formRow($form->get('submit'));

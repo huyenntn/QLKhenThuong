@@ -13,6 +13,7 @@ use Zend\View\Model\ViewModel;
 use Subject\Form\SubjectForm;
 use Subject\Model\Subject;
 use Interop\Container\ContainerInterface;
+use Zend\View\Model\JsonModel;
 
 class SubjectController extends AbstractActionController {
 
@@ -26,19 +27,29 @@ class SubjectController extends AbstractActionController {
         if (!$this->identity()) {
             return $this->redirect()->toRoute('login');
         }
-        $id = (int) $this->params()->fromRoute('id', 0);
+        $type = (int) $this->params()->fromQuery('type', 0);
         $listSubaward = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
         $this->layout()->setVariable('listSub', $listSubaward);
-        $paginator = $this->containerinterface->get(\Subject\Model\SubjectTable::class)->selectByType($id,true);
-        // set the current page to what has been passed in query string, or to 1 if none set
-        $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
-        // set the number of items per page to 10
-        $paginator->setItemCountPerPage(20);
+        
+        $request = $this->getRequest();
+        $query = $request->getQuery();
+        $paginator = $this->containerinterface->get(\Subject\Model\SubjectTable::class)->selectByType($type);
 
-        return new ViewModel(array(
-            'paginator' => $paginator,
-            'type' => $id,
-        ));
+        if ($request->isXmlHttpRequest()) {
+            $jsData = array();
+            $idx = 0;
+            foreach ($paginator as $sampledata) {
+                $jsData[$idx++] = $sampledata;
+            }
+            $view = new JsonModel($jsData);
+            $view->setTerminal(true);
+        } else {
+            $view = new ViewModel([
+                'paginator' => $paginator,
+                'type' => $type,
+            ]);
+        }
+        return $view;
     }
 
     public function addAction() {
@@ -49,7 +60,7 @@ class SubjectController extends AbstractActionController {
         $this->layout()->setVariable('listSub', $listSubaward);
         $type = (int) $this->params()->fromQuery('type', 0);
         $form = new SubjectForm();
-        if($type == 2){
+        if ($type == 2) {
             $form->get('nameF')->setAttribute('type', 'hidden');
         }
         $form->get('submit')->setAttribute('class', 'btn btn-danger');
@@ -73,23 +84,21 @@ class SubjectController extends AbstractActionController {
         $subject->exchangeArray($form->getData());
         $this->containerinterface->get(\Subject\Model\SubjectTable::class)->saveRow($subject);
 
-        
+
         $flashMessenger = $this->flashMessenger();
         $success = true;
-        if ($success){
+        if ($success) {
             $flashMessenger->addSuccessMessage('Cập nhật thành công');
             return $this->redirect()->toRoute('subject', [
-                    'action' => 'index',
-                    'id' => $subject->typeS,
-        ]);
-            
+                        'action' => 'index',
+                        'id' => $subject->typeS,
+            ]);
         } else {
             $flashMessenger->addErrorMessage('Có lỗi xảy ra');
             return $this->redirect()->toRoute('subject', [
-                    'action' => 'index',
-                    'id' => $subject->typeS,
-        ]);
-             
+                        'action' => 'index',
+                        'id' => $subject->typeS,
+            ]);
         }
     }
 
@@ -100,8 +109,8 @@ class SubjectController extends AbstractActionController {
         $listSubaward = $this->containerinterface->get(\Award\Model\AwardRepository::class)->findAll();
         $this->layout()->setVariable('listSub', $listSubaward);
         $id = (int) $this->params()->fromQuery('id', 0);
-        $type = (int) $this->params()->fromRoute('id',0);
-      
+        $type = (int) $this->params()->fromQuery('type', 0);
+
         if ($id == 0) {
             exit('invalid accccc');
         }
@@ -111,7 +120,7 @@ class SubjectController extends AbstractActionController {
             exit('Error with User table');
         }
         $form = new SubjectForm();
-        if($type == 2){
+        if ($type == 2) {
             $form->get('nameF')->setAttribute('type', 'hidden');
         }
         $form->get('idS')->setAttribute('type', 'hidden');
@@ -133,23 +142,21 @@ class SubjectController extends AbstractActionController {
             exit('not valid');
         }
         $this->containerinterface->get(\Subject\Model\SubjectTable::class)->saveRow($subject);
-        
+
         $flashMessenger = $this->flashMessenger();
         $success = true;
-        if ($success){
+        if ($success) {
             $flashMessenger->addSuccessMessage('Cập nhật thành công');
             return $this->redirect()->toRoute('subject', [
-                    'action' => 'index',
-                    'id' => $subject->typeS,
-        ]);
-            
+                        'action' => 'index',
+                        'id' => $subject->typeS,
+            ]);
         } else {
             $flashMessenger->addErrorMessage('Có lỗi xảy ra');
             return $this->redirect()->toRoute('subject', [
-                    'action' => 'index',
-                    'id' => $subject->typeS,
-        ]);
-             
+                        'action' => 'index',
+                        'id' => $subject->typeS,
+            ]);
         }
     }
 

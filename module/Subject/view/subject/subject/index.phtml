@@ -1,6 +1,6 @@
 <?php
 // module/Album/view/album/album/index.phtml:
-$title = $type==1?'Danh sách cá nhân':'Danh sách tập thể';
+$title = $type == 1 ? 'Thống kê Thi đua - Khen thưởng Cá nhân' : 'Thống kê Thi đua - Khen thưởng Tập thể';
 $this->headTitle($title);
 ?>
 
@@ -8,45 +8,87 @@ $this->headTitle($title);
 <div class="container">
     <h3><?php echo $title; ?></h3>
     <hr>
-    <p style="text-align: right">
-        <a class="btn btn-success"  href="<?php echo '/subject/add?type='.$type ?>">Thêm mới</a>
-    </p>
-    <table class="table">
+    <table style="margin-bottom: 30px; width: 100%; text-align: right">
+        <tr>
+            <td style="width:200px; display:inline-block; text-align: right;">
+                <a class="btn btn-primary"  href="<?php echo $this->url('subject', ['action' => 'add', 'id' => $type]); ?>">Thêm mới <span class="glyphicon glyphicon-plus"></span></a>
+            </td>
+        </tr>
+    </table>
+    <table id="example" class="table table-bordered dt-responsive " cellspacing="0" >
         <thead>
             <tr>
-                <th><?php echo $type==1?'Họ tên':'Tập thể'?></th>
+                <th><?php  echo $type == 1 ? 'Họ tên' : 'Tập thể' ?></th>
                 <th>Email</th>
-                <th></th>
+                <th>Thao tác</th>
             </tr>
         </thead>
-        <tbody>
-            <?php
-            foreach ($this->paginator as $subject):
-                ?>
-                <tr>
-                    <td><a href="/commend/detail/<?php echo $subject->typeS?>?id=<?php echo $subject->idS?>"><?= $this->escapeHtml($subject->nameF).' '?> <?= $this->escapeHtml($subject->nameS) ?></a></td>
-                    <td><?= $this->escapeHtml($subject->email) ?></td>
-                    <td><a class="btn btn-danger" href="<?php echo '/subject/edit/'.$subject->typeS.'?id='.$subject->idS?>">Sửa</a>  
-                        <a class="btn btn-warning" href="<?php echo '/subject/delete?id='.$subject->idS?>" onclick="if (confirm('Bạn chắc chắn muốn xóa?')) { document.location = this.href; } return false;">Xóa</a></td>
-                </tr>
-            <?php endforeach; ?>
+        <tfoot>
+            <tr>
+                <th><?php echo $type == 1 ? 'Họ tên' : 'Tập thể' ?></th>
+                <th>Email</th>
+                <td></td>
+            </tr>
+        </tfoot>
+        <tbody> 
         </tbody>
     </table>
 
-    <?php
-    // add at the end of the file after the table
-    echo $this->paginationControl(
-            // the paginator object
-            $this->paginator,
-            // the scrolling style
-            'sliding',
-            // the partial to use to render the control
-            'subject/partials/paginator.phtml',
-            // the route to link to when a user clicks a control link
-            array(
-                'type' => $type,
-            )
-    );
-    ?>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#example tfoot th').each(function () {
+                var title = $(this).text();
+                $(this).html('<input type="text" placeholder="Lọc: ' + title + '" />');
+            });
+            var table = $('#example').DataTable({
+                "processing": true, // for show processing bar
+                "orderMulti": false, // for disable multi column order
+                
+                "language": {
+                    "lengthMenu": "Hiển thị _MENU_ bản ghi/trang",
+                    "zeroRecords": "Không có thông tin",
+                    "info": "Trang _PAGE_ / _PAGES_",
+                    "infoEmpty": "Không có bản ghi nào để hiển thị",
+                    "infoFiltered": "(Lọc từ _MAX_ bản ghi)",
+                    "search": "Lọc nội dung",
+                    "oPaginate": {
+                        "sFirst": "<<", // This is the link to the first page
+                        "sPrevious": "<", // This is the link to the previous page
+                        "sNext": ">", // This is the link to the next page
+                        "sLast": ">>" // This is the link to the last page
+                    }
 
-</div>
+                },
+                "ajax": {
+                    "url": "/subject/index/".$type,
+                    "dataSrc": ""
+                },
+                "columns": [
+                    {"data": getFullName},
+                    {"data": "email"},
+                    {"data": getBtn}
+                ],
+            });
+
+            table.columns().every(function () {
+                var that = this;
+
+                $('input', this.footer()).on('keyup change', function () {
+                    if (that.search() !== this.value) {
+                        that
+                                .search(this.value)
+                                .draw();
+                    }
+                });
+            });
+
+        });
+        function getFullName(data, type, dataToSet) {
+            return data.typeS==1?"<a href='/commend/detail?id=" + data.idS + "'>" + data.nameF + " " + data.nameS + "</a>":"<a href='/commend/detail?id=" + data.idS + "'>" + data.nameS + "</a>";
+        }
+        function getBtn(data, type, dataToSet) {
+            return "<a class='btn btn-success' href='/subject/edit?type=" + data.typeS + "&id=" + data.idS + "'>Sửa <span class='glyphicon glyphicon-edit'></span></a> | <a class='btn btn-danger' href='/commend/delete?id=" + data.idS + "' onclick='if (confirm(\"Bạn chắc chắn muốn xóa?\")) { document.location = this.href; } return false;' >Xóa <span class='glyphicon glyphicon-minus'></span></a>";
+        }
+        
+    </script>
+

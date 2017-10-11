@@ -59,10 +59,8 @@ class CommendController extends AbstractActionController {
         $form->get('selectYear')->setAttribute('options', $selectDataSubject);
         $form->get('selectsubaward')->setAttribute('options', $selectDataAward);
         $paginator = $this->containerinterface->get(CommendRepository::class)->fetchByType($type, true);
-        $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
-        // set the number of items per page to 10
-        $paginator->setItemCountPerPage(20);
-        if ($request->isXmlHttpRequest() || $query->get('showJson') == 1) {
+
+        if ($request->isXmlHttpRequest()) {
             $year = $this->request->getPost('year');
             $idSub = $this->request->getPost('idSub');
             if ($year!=0 && $idSub==0) {
@@ -75,9 +73,7 @@ class CommendController extends AbstractActionController {
             else {
                 $paginator = $this->containerinterface->get(CommendRepository::class)->fetchByType($type, true);
             }
-            $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
-            // set the number of items per page to 10
-            $paginator->setItemCountPerPage(20);
+
             $jsData = array();
             $idx = 0;
             foreach ($paginator as $sampledata) {
@@ -231,7 +227,22 @@ class CommendController extends AbstractActionController {
         $id = (int) $this->params()->fromQuery('id', 0);
         $subject = $this->containerinterface->get(\Subject\Model\SubjectTable::class)->getRow($id);
         $info = $this->containerinterface->get(CommendRepository::class)->getDetail($id);
-        return new ViewModel(['info' => $info, 'subject'=>$subject]);
+        $request = $this->getRequest();
+        if ($request->isXmlHttpRequest()) {            
+            $jsData = array();
+            $idx = 0;
+            foreach ($info as $sampledata) {
+                $jsData[$idx++] = $sampledata;
+            }
+            $view = new JsonModel($jsData);
+            $view->setTerminal(true);
+        } else {
+            $view = new ViewModel([
+                'info' => $info,
+                'subject' => $subject,
+            ]);
+        }
+        return $view;
     }
     
     public function searchAction(){

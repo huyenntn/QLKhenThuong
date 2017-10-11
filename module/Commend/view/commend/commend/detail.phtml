@@ -7,22 +7,76 @@ $this->headTitle($title);
 
 <meta charset='utf-8'>
 <div class="container">
-    <h3><?php echo $title; ?></h3>
+    <h3><?php echo $title; 
+    $iditem = $subject->idS ?></h3>
     <hr>
-    <table class="table table-hover table-striped ">
+<table id="example" class="table table-bordered dt-responsive " cellspacing="0" >
         <thead>
-        <th>Năm</th>
-        <th>Danh hiệu</th>
-        <th>Hạng mục</th>
-        </thead>
-        <tbody>
-            <?php foreach ($info as $item): ?>
             <tr>
-                <td><?php echo $item->year; ?></td>
-                <td><?php echo $item->subAwardName; ?></td>
-                <td><?php echo $item->awardName; ?></td>
+                <th>Năm</th>
+                <th>Danh hiệu</th>
+                <th>Hạng mục</th>
             </tr>
-            <?php endforeach; ?>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Năm</th>
+                <th>Danh hiệu</th>
+                <th>Hạng mục</th>
+            </tr>
+        </tfoot>
+        <tbody> 
         </tbody>
     </table>
 </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#example tfoot th').each(function () {
+                var title = $(this).text();
+                $(this).html('<input type="text" placeholder="Lọc: ' + title + '" />');
+            });
+            var table = $('#example').DataTable({
+                "processing": true, // for show processing bar
+                "orderMulti": false, // for disable multi column order
+                
+                "language": {
+                    "lengthMenu": "Hiển thị _MENU_ bản ghi/trang",
+                    "zeroRecords": "Không có thông tin",
+                    "info": "Trang _PAGE_ / _PAGES_",
+                    "infoEmpty": "Không có bản ghi nào để hiển thị",
+                    "infoFiltered": "(Lọc từ _MAX_ bản ghi)",
+                    "search": "Lọc nội dung",
+                    "oPaginate": {
+                        "sFirst": "<<", // This is the link to the first page
+                        "sPrevious": "<", // This is the link to the previous page
+                        "sNext": ">", // This is the link to the next page
+                        "sLast": ">>" // This is the link to the last page
+                    }
+
+                },
+                "ajax": {
+                    "url": "/commend/detail?id=".$iditem,
+                    "dataSrc": ""
+                },
+                "columns": [
+                    {"data": "year"},
+                    {"data": "subAwardName"},
+                    {"data": "awardName"}
+                ],
+            });
+
+            table.columns().every(function () {
+                var that = this;
+
+                $('input', this.footer()).on('keyup change', function () {
+                    if (that.search() !== this.value) {
+                        that
+                                .search(this.value)
+                                .draw();
+                    }
+                });
+            });
+
+        });
+        
+    </script>

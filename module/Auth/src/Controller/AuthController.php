@@ -25,12 +25,27 @@ class AuthController extends AbstractActionController {
             return $this->redirect()->toRoute('login');
         }
         $alluser = $this->containerinterface->get(UserRepository::class)->findAll();
-        return new ViewModel(['alluser' => $alluser]);
+        $request = $this->getRequest();
+        if ($request->isXmlHttpRequest()) {
+            
+            $jsData = array();
+            $idx = 0;
+            foreach ($alluser as $sampledata) {
+                $jsData[$idx++] = $sampledata;
+            }
+            $view = new \Zend\View\Model\JsonModel($jsData);
+            $view->setTerminal(true);
+        } else {
+            $view = new ViewModel([
+                'alluser' => $alluser,
+            ]);
+        }
+        
+        return $view;
     }
     
     public function addAction() {
         $form = new \Auth\Form\AddUserForm();
-        $form->get('submit')->setAttribute('class', 'btn btn-danger');
         $form->get('submit')->setAttribute('value', 'Lưu');
         $request = $this->getRequest();
         if (!$request->isPost()) {
