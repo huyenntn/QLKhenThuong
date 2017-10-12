@@ -10,6 +10,9 @@ html {
   line-height: 30px;
   background-color: #474D55;
   color: #fff;
+  position: fixed;
+  bottom: 0;
+  z-index: 99;
 }
 
 body {
@@ -19,7 +22,9 @@ body {
 .zf-green {
     color: #68b604;
 }
-
+#page-content-wrapper{
+    padding-bottom: 100px;
+}
 .btn-success {
     background-color: #57a900;
     background-image: -moz-linear-gradient(top, #70d900, #57a900);

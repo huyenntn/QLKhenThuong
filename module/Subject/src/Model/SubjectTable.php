@@ -64,7 +64,8 @@ class SubjectTable extends AbstractTableGateway {
      
         $sqlSelect = $this->tableGateway->getSql()
                 ->select()
-                ->where(['typeS' => $where]);
+                ->where(['typeS' => $where])
+                ->order('nameS ASC');
         return $this->tableGateway->selectWith($sqlSelect);
     }
 

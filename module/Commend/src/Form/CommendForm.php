@@ -75,7 +75,7 @@ class CommendForm extends Form{
             'name' => 'idSubAward',
             'type' => 'select',
             'options' => [
-                'label' => 'Hình thức khen thưởng',
+                'label' => 'Danh hiệu',
             ],
             'attributes' => [
                 'class' => 'form-control',
@@ -92,7 +92,8 @@ class CommendForm extends Form{
             ],
             'attributes' => [
                 'class' => 'form-control',
-                'id' => 'year'
+                'id' => 'year',
+                'required' => 'required'
             ]
         ]);
         
@@ -101,7 +102,7 @@ class CommendForm extends Form{
             'type' => 'submit',
             'attributes' => [
                 'id' => 'btnLogin',
-                'class' => 'btn btn-primary'
+                'class' => 'btn btn-primary submit-button btn-sm'
             ]
         ]);
         

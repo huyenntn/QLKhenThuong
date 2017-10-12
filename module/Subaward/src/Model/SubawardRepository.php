@@ -64,7 +64,11 @@ class SubawardRepository extends AbstractTableGateway {
     }
     
     public function fetchByType($where){
-        return $this->tableGateway->select(['institute' => $where]);
+        $sqlSelect = $this->tableGateway->getSql()
+                ->select()
+                ->where(['institute' => $where])
+                ->order(['subAwardName ASC']);
+        return $this->tableGateway->selectWith($sqlSelect);
     }
 
     public function saveRow(Subaward $subaward) {

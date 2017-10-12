@@ -61,7 +61,7 @@ class CommendRepository extends AbstractTableGateway {
                 ->join(array('b' => 'subject'), 'b.idS = commend.idS', array('nameF', 'nameS'))
                 ->join(array('c' => 'award'), 'a.awardId = c.id', array('awardName'))
                 ->where(['a.institute' => $where])
-                ->order(['nameS ASC', 'year DESC']);
+                ->order(['nameS ASC']);
         return $this->tableGateway->selectWith($sqlSelect);
     }
 

@@ -43,7 +43,7 @@ class AddUserForm extends Form
         ]);
         $this->add([
             'name' => 'pass',
-            'type' => 'text',
+            'type' => 'password',
             'options' => [
             ],
             'attributes' => [

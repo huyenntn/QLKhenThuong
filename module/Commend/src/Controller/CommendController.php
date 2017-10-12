@@ -102,7 +102,6 @@ class CommendController extends AbstractActionController {
         }
 
         $form = new \Commend\Form\CommendForm();
-        $form->get('submit')->setAttribute('class', 'btn btn-danger');
         $form->get('idCmd')->setAttribute('type', 'hidden');
         $form->get('submit')->setAttribute('value', 'Lưu');
         $form->get('idS')->setAttribute('options', $selectDataSubject);
@@ -151,20 +150,19 @@ class CommendController extends AbstractActionController {
         } catch (\Exception $e) {
             exit('Errorrrrrr');
         }
-        $selectOptionSubject = $this->containerinterface->get(\Subject\Model\SubjectTable::class)->fetchAll();
+        $selectOptionSubject = $this->containerinterface->get(\Subject\Model\SubjectTable::class)->selectByType($type);
         $selectDataSubject = [];
         foreach ($selectOptionSubject as $resS) {
             $selectDataSubject[$resS->idS] = $resS->nameF.' '.$resS->nameS;
         }
 
-        $selectOptionAward = $this->containerinterface->get(\Subaward\Model\SubawardRepository::class)->findAll();
+        $selectOptionAward = $this->containerinterface->get(\Subaward\Model\SubawardRepository::class)->fetchByType($type);
         $selectDataAward = [];
         foreach ($selectOptionAward as $resAw) {
             $selectDataAward[$resAw->id] = $resAw->subAwardName;
         }
 
         $form = new \Commend\Form\CommendForm();
-        $form->get('submit')->setAttribute('class', 'btn btn-danger');
         $form->get('idCmd')->setAttribute('type', 'hidden');
         $form->get('submit')->setAttribute('value', 'Lưu');
         $form->get('idS')->setAttribute('options', $selectDataSubject);
