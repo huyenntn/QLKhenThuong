@@ -58,22 +58,9 @@ class CommendController extends AbstractActionController {
         $form = new \Commend\Form\CommendForm();
         $form->get('selectYear')->setAttribute('options', $selectDataSubject);
         $form->get('selectsubaward')->setAttribute('options', $selectDataAward);
-        $paginator = $this->containerinterface->get(CommendRepository::class)->fetchByType($type, true);
+        $paginator = $this->containerinterface->get(CommendRepository::class)->fetchByType($type);
 
         if ($request->isXmlHttpRequest()) {
-            $year = $this->request->getPost('year');
-            $idSub = $this->request->getPost('idSub');
-            if ($year!=0 && $idSub==0) {
-                $paginator = $this->containerinterface->get(CommendRepository::class)->fetchByTypeAndYear($type, $year, true);
-            } else if($year==0 && $idSub!=0){
-                $paginator = $this->containerinterface->get(CommendRepository::class)->fetchByTypeAndSubAward($type, $idSub, true);
-            }else if($year!=0 && $idSub!=0){
-                $paginator = $this->containerinterface->get(CommendRepository::class)->fetchByTypeSubAwardYear($type, $idSub, $year, true);
-            }
-            else {
-                $paginator = $this->containerinterface->get(CommendRepository::class)->fetchByType($type, true);
-            }
-
             $jsData = array();
             $idx = 0;
             foreach ($paginator as $sampledata) {

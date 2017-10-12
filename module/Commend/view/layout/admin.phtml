@@ -36,7 +36,7 @@
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
-        
+
 
     </head>
     <body>
@@ -63,7 +63,8 @@
                     ])
                     ?>">Quản lý thi đua khen thưởng</a>
                 </div>
-                <div id="navbar" class="navbar-collapse collapse">
+                <div class="container">
+                    <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="<?= $this->url('logout') ?>"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> <?php
                                 $user_session = new Zend\Session\Container('user');
@@ -79,6 +80,7 @@
                             </div>
                         </div>
                     </form>
+                </div>
                 </div>
             </div>
         </nav>
@@ -100,7 +102,7 @@
                 <div id="sidebar-wrapper">
                     <ul class="sidebar-nav">
                         <li>
-                            <a href="#" data-target="#item2" data-toggle="collapse"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Kết quả khen thưởng <span class="caret"></span></span></a>
+                            <a href="#" data-target="#item2" data-toggle="collapse"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Kết quả thi đua <span class="caret"></span></span></a>
                             <ul class="nav nav-stacked collapse" id="item2">
                                 <li><a href="<?=
                                     $this->url('commend', [
@@ -161,12 +163,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="container">
-                    <hr>
-                    <footer>
-                        <p>&copy; <?= date('Y') ?> Quản lý Thi đua - Khen thưởng - CỤC TẦN SỐ VÔ TUYẾN ĐIỆN</p>
-                    </footer>
-                </div>
+
+
+
                 <!-- /#page-content-wrapper -->
             </div>
         </div>
@@ -174,6 +173,11 @@
 
 
         <?= $this->inlineScript() ?>
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; <?= date('Y') ?> Quản lý Thi đua - Khen thưởng - CỤC TẦN SỐ VÔ TUYẾN ĐIỆN</p>
+            </div>
+        </footer>
         <script>
             $("#menu-toggle").click(function (e) {
                 e.preventDefault();

@@ -53,19 +53,8 @@ class CommendRepository extends AbstractTableGateway {
         return $this->tableGateway->selectWith($sqlSelect);
     }
 
-    public function fetchByType($where, $paginated = false) {
-        if ($paginated) {
-            $sql = $this->tableGateway->getSql();
-            $select = $sql->select();
-            $select->join(array('a' => 'subaward'), 'a.id = commend.idSubAward', array('subAwardName', 'institute'));
-            $select->join(array('b' => 'subject'), 'b.idS = commend.idS', array('nameF', 'nameS'));
-            $select->join(array('c' => 'award'), 'a.awardId = c.id', array('awardName'));
-            $select->where(['a.institute' => $where]);
-            $select->order(['nameS ASC', 'year DESC']);
-            $adapter = new \Zend\Paginator\Adapter\DbSelect($select, $sql);
-            $paginator = new \Zend\Paginator\Paginator($adapter);
-            return $paginator;
-        }
+    public function fetchByType($where) {
+        
         $sqlSelect = $this->tableGateway->getSql()
                 ->select()
                 ->join(array('a' => 'subaward'), 'a.id = commend.idSubAward', array('subAwardName', 'institute'))
